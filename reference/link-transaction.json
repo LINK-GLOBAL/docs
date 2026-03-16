@@ -1,1 +1,2791 @@
-{"openapi":"3.1.0","info":{"title":"link-transaction","version":"1.0"},"servers":[{"url":"https://api.linkio.world/transactions/v2"}],"components":{"securitySchemes":{"sec0":{"type":"apiKey","in":"header","name":"ngnc-sec-key","x-default":""}}},"security":[{"sec0":[]}],"paths":{"/onramp":{"post":{"summary":"Initiate Onramp","description":"","operationId":"onramp","requestBody":{"content":{"application/json":{"schema":{"type":"object","required":["currency","amount","stables"],"properties":{"currency":{"type":"string","description":"Currency in which user wants to pay for onramp asset. (NGN, USD)","default":"NGN","enum":["NGN","USD"]},"amount":{"type":"string","description":"Amount user wishes to onramp based on currency selected. (Min ~ 15K NGN,  20USD)"},"stables":{"type":"string","description":"Stable coin in which user wants to be settle in.(USDC, USDT)","enum":["USDC","USDT"]},"vendor_bank":{"type":"string","description":"Use the \"Fetch Payment Vendors\" ENDPOINT to fetch the list of supported payment vendors"},"vendor_number":{"type":"string","description":"Use the \"Fetch Payment Vendors\" ENDPOINT."},"vendor_name":{"type":"string","description":"Use the \"Fetch Payment Vendors\" ENDPOINT."},"wallet_address":{"type":"string","description":"Wallet address where the on-ramp stablecoin token will be sent to."},"network":{"type":"string","description":"The address network to disburse payment. Our supported networks are (Wallet address network. Our supported networks are (Arbitrum, Avalanche, Stellar, Base, Polygon, Solana, Stellar, Tron, XRPL)."},"bank_name":{"type":"string","description":"Proof of payment Bank used to send money to the vendor account"},"account_number":{"type":"string","description":"Proof of payment Account number of bank used to send money to the vendor account."},"routing_number":{"type":"string","description":"Proof of payment Bank Routing number used to send money to the vendor account"},"bank_address":{"type":"string","description":"Optional for transactions that provide bank transaction address"},"developer_fee":{"type":"boolean","description":"Businesses that wish to charge a certain percentage on your their users for each transaction made.","default":false}}}}}},"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{\n    \"status\": \"success\",\n    \"message\": \"Transaction Request successful\",\n    \"transaction\": {\n        \"transaction_id\": \"645c329afc3ac414bf70f9a1\",\n        \"business\": {\n            \"business_id\": \"0123456789\"\n        },\n        \"type\": \"Buy\",\n        \"reference\": \"0984938271\",\n        \"amount\": 25639.55,\n        \"link_account_name\": \"Okemdinachi Nwaejie\",\n        \"link_account_number\": \"8180789670\",\n        \"link_bank_name\": \"Wema Bank\",\n        \"account_number\": \"3338900202\",\n        \"bank_name\": \"Providus Bank\",\n        \"link_tag\": \"Link_eng\",\n        \"network\": \"Avalanche\",\n        \"wallet_address\": \"x.fie9383jEU8394jdnc\",\n        \"date_created\": \"May 11, 2023\"\n    }\n}"}},"schema":{"type":"object","properties":{"status":{"type":"string","example":"success"},"message":{"type":"string","example":"Transaction Request successful"},"transaction":{"type":"object","properties":{"transaction_id":{"type":"string","example":"645c329afc3ac414bf70f9a1"},"business":{"type":"object","properties":{"business_id":{"type":"string","example":"0123456789"}}},"type":{"type":"string","example":"Buy"},"reference":{"type":"string","example":"0984938271"},"amount":{"type":"number","example":25639.55,"default":0},"link_account_name":{"type":"string","example":"Okemdinachi Nwaejie"},"link_account_number":{"type":"string","example":"8180789670"},"link_bank_name":{"type":"string","example":"Wema Bank"},"account_number":{"type":"string","example":"3338900202"},"bank_name":{"type":"string","example":"Providus Bank"},"link_tag":{"type":"string","example":"Link_eng"},"network":{"type":"string","example":"Avalanche"},"wallet_address":{"type":"string","example":"x.fie9383jEU8394jdnc"},"date_created":{"type":"string","example":"May 11, 2023"}}}}}}}},"401":{"description":"401","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}},"404":{"description":"404","content":{"text/plain":{"examples":{"Result":{"value":""}}}}}},"deprecated":false}},"/offramp":{"post":{"summary":"Initiate Offramp","description":"","operationId":"offramp","requestBody":{"content":{"application/json":{"schema":{"type":"object","required":["stables","amount","currency"],"properties":{"stables":{"type":"string","description":"Stable coin in which user wants to off-ramp in. (USDC, USDT)","enum":["USDC","USDT"]},"amount":{"type":"string","description":"Amount in (USDC/USDT) that the users wishes to offramp into a USD or NGN bank account. (Min ~ 20 USDT / USDC).","default":"20"},"currency":{"type":"string","description":"Currency in which user wants to receive funds. (NGN,USD)","default":"NGN","enum":["NGN","USD"]},"bank_name":{"type":"string","description":"Use the \"fetch Payment banks\" ENDPOINT to fetch the list of supported payment banks. Only the name needs to be passed"},"account_number":{"type":"string","description":"Customer's bank account number for where funds should be sent to."},"account_name":{"type":"string","description":"Bank name associated with bank account number provided above."},"wallet_address":{"type":"string","description":"Origin wallet address where funds would be sent from."},"network":{"type":"string","description":"Wallet address network. Our supported networks are (Arbitrum, Avalanche, Stellar, Base, Polygon, Solana, Stellar, Tron, XRPL)"},"routing_number":{"type":"string","description":"Please provide routing number for USD request."},"account_type":{"type":"string","description":"Please select either checkings or savings for USD request.","default":"checkings"},"chargeFeeOnRequest":{"type":"boolean","description":"Setting this option to true, allows users see what amount they receive after the fee has been deducted. Currently available for payout to NGN accounts only.","default":true}}}}}},"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{\n    \"status\": \"success\",\n    \"message\": \"Transaction Request successful\",\n    \"transaction\": {\n        \"transaction_id\": \"645c31fdedd472fb04b3be53\",\n        \"business\": {\n            \"business_id\": \"0123456789\"\n        },\n        \"type\": \"Sell\",\n        \"reference\": \"64125118694\",\n        \"amount\": 102094,\n        \"account_name\": \"Tansi Jones\",\n        \"account_number\": \"9480948372\",\n        \"bank_name\": \"Wema bank\",\n        \"link_tag\": \"Link_eng\",\n        \"date_created\": \"May 11, 2023\"\n    }\n}"}},"schema":{"type":"object","properties":{"status":{"type":"string","example":"success"},"message":{"type":"string","example":"Transaction Request successful"},"transaction":{"type":"object","properties":{"transaction_id":{"type":"string","example":"645c31fdedd472fb04b3be53"},"business":{"type":"object","properties":{"business_id":{"type":"string","example":"0123456789"}}},"type":{"type":"string","example":"Sell"},"reference":{"type":"string","example":"64125118694"},"amount":{"type":"integer","example":102094,"default":0},"account_name":{"type":"string","example":"Tansi Jones"},"account_number":{"type":"string","example":"9480948372"},"bank_name":{"type":"string","example":"Wema bank"},"link_tag":{"type":"string","example":"Link_eng"},"date_created":{"type":"string","example":"May 11, 2023"}}}}}}}},"401":{"description":"401","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}},"404":{"description":"404","content":{"text/plain":{"examples":{"Result":{"value":""}}}}}},"deprecated":false}},"/fetch_all_transactions":{"get":{"summary":"Fetch Transactions","description":"","operationId":"fetch_transactions","parameters":[],"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/fetch_transaction":{"get":{"summary":"Fetch single Transaction","description":"","operationId":"fetch_single_transaction","parameters":[{"name":"transaction_reference","in":"query","description":"Reference generated for each transaction request.","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/payment_vendors":{"get":{"summary":"Get payment vendors","description":"Query list of supported vendor account details for onramp transaction","operationId":"payment_vendors","parameters":[{"name":"currency","in":"query","description":"Pass selected currency NGN, USD to get vendor bank details","schema":{"type":"string","default":"NGN","enum":["NGN","USD"]},"required":true}],"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/payment_banks":{"get":{"summary":"Get payment banks","description":"Query all available banks for a specified currency","operationId":"payment_banks","parameters":[{"name":"currency","in":"query","description":"Pass selected currency NGN, USD, BRL to get Bank list.","schema":{"type":"string","default":"NGN","enum":["NGN","USD","BRL"]},"required":true}],"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/payment_wallets":{"get":{"summary":"Get payment wallets","description":".Query available wallet addresses for offramp transaction.","operationId":"payment_wallets","responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/initiate_idr_onramp":{},"/reg_bank_account":{"post":{"description":"","operationId":"post_reg_bank_account","responses":{"200":{"description":""}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"business_id ":{"type":"string","description":"Your LINK business identifier"},"user_name":{"type":"string","description":"Customer's user name"},"pix_key":{"type":"string","description":"Customer's bank pix_key"}},"type":"object","required":["business_id ","user_name","pix_key"]}}}}}},"/brl/initiate_onramp":{"post":{"description":"","operationId":"post_create_ticket","responses":{"200":{"description":"","content":{"application/json":{"examples":{"New Example":{"summary":"New Example","value":{"status":"Success","message":"Quote ticket created successfully","ticket_id":"ticket_123abc","payment_code":"000201010212...","validity":"5 minutes","qrcode_url":"data:image/png;base64,..."}}}}}}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"amount":{"type":"string","description":"Amount in BRL to convert."},"wallet_id":{"type":"string","description":"The beneficiary wallet ID from Register Wallet."},"stables":{"type":"string","description":"Stablecoin tøken to receive in USDC/USDT.","default":"USDC"}},"type":"object","required":["wallet_id","amount","stables"]}}}}}},"/brl/initiate_offramp":{"post":{"description":"","operationId":"post_initiate_brl_offramp","responses":{"200":{"description":"","content":{"application/json":{"examples":{"New Example":{"summary":"New Example","value":"{\n  \"status\": \"Success\",\n  \"message\": \"Off-ramp ticket created successfully\",\n  \"ticket_id\": \"ticket_789xyz\",\n  \"payment_code\": \"000201010212...\",\n  \"validity\": \"5 minutes\",\n  \"paymentWalletAddress\": \"0x211...\",// Valid  for Offramp. where to send USDC to.\n}"}}}}}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"pix_key":{"type":"string","description":"The registered PIX key (BRL payout account) where BRL will be sent after swap."},"amount":{"type":"string","description":"Amount in USDC/USDT to convert into BRL."},"wallet_address":{"type":"string","description":"On-chain address  customer used to send their USDC/USDT "},"stables":{"type":"string","description":"Stablecoin tøken to send in. USDC/USDT.","default":"USDC"}},"type":"object","required":["pix_key","amount","wallet_address","stables"]}}}}}},"/reg_wallet_address":{"post":{"description":"","operationId":"post_register_wallet","responses":{"200":{"description":"","content":{"application/json":{"examples":{"New Example":{"summary":"New Example","value":"{\n  \"status\": \"Success\",\n  \"message\": \"User's wallet address registered\",\n  \"wallet_id\": \"abc123def456\"    // Unique identifier for the new wallet\n}"}}}}}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"network":{"type":"string","description":"Blockchain network (must be \"POLYGON\").","default":"POLYGON"},"user_wallet_address":{"type":"string","description":"On-chain address (Polygon) where the customer will receive/send funds."},"user_name":{"type":"string","description":"Friendly alias for the customer (e.g. “Johnwick”)."}},"type":"object","required":["user_wallet_address","user_name","network"]}}}}}},"/idr/initiate_onramp":{"post":{"description":"","operationId":"post_initiate_idr_onram","responses":{"200":{"description":""}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"amount":{"type":"string","description":"IDR amount to convert (amount used in to get quote). "},"wallet_address":{"type":"string","description":"Wallet address where token will be sent to."},"stables":{"type":"string","description":"Stablecoin to receive in USDT.","enum":["USDT"]}},"type":"object","required":["amount","wallet_address","stables"]}}}}}},"/idr/direct_withdraw":{"post":{"description":"","operationId":"post_idrdirect_withdraw","responses":{"200":{"description":""}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"bankName":{"type":"string","description":"Full name of the beneficiary bank. Use the \"Fetch Payment banks\" ENDPOINT to fetch the list of supported payment banks for IDR."},"bankCode":{"type":"string","description":"The bank’s ISO/local code. Use the \"Fetch Payment banks\" ENDPOINT to fetch the bank code for IDR bank selected."}},"type":"object","required":["bankName","bankCode"]}}}}}},"/idr/onboarding":{"post":{"description":"","operationId":"post_idronboarding","responses":{"200":{"description":""}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"business_id":{"type":"string","description":"Your LINK business identifier"}},"type":"object"}}}}}},"/idr/rate":{"get":{"description":"","operationId":"get_new-endpoint-idr-rate","responses":{"200":{"description":""}},"parameters":[{"name":"amount","in":"query","required":true,"description":"Amount in BRL to convert. Minimum 20,000 IDR","schema":{"type":"string","default":""}},{"name":"business_id","in":"query","required":true,"description":"Your LINK business identifier","schema":{"type":"string","default":""}}]}},"/bus/onramp/aud":{},"/bus/onramp/brl":{},"/bus/onramp/cad":{},"/bus/onramp/cny":{},"/bus/onramp/eur":{},"/bus/onramp/gbp":{},"/bus/onramp/ngn":{},"/bus/onramp/hkd":{},"/rate_quote":{"get":{"description":"","operationId":"get_business-rate-quote","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"currency","schema":{"type":"string"},"required":true,"description":"Fiat currency used to onramp or receive offramp."},{"in":"query","name":"trx_type","schema":{"type":"string","enum":["onramp","offramp"]},"description":"Transaction type: \"onramp\" for \"Fiat\"→USDC, \"offramp\" for USDC→\"Fiat\".","required":true},{"in":"query","name":"amount","schema":{"type":"string"},"required":true,"description":"Amount Business wants to Onramp(Fiat) OR offramp(Stables)."}]}},"/verify_customer_kyc":{"post":{"summary":"ID Verification","description":"verify users identification. This endpoint is currently only available for Nigeria customers.","operationId":"id-verification","requestBody":{"content":{"application/json":{"schema":{"type":"object","required":["idType","idNumber"],"properties":{"idType":{"type":"string","description":"Verification ID types: NIN, BVN, Voters Card","enum":["NIN","BVN","Voters Card"]},"idNumber":{"type":"string","description":"Verification ID number"}}}}}},"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/business_offramp":{"post":{"description":"","operationId":"post_businessofframp","responses":{"200":{"description":""}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"customer_id":{"type":"string","description":"ID of your customer making the API request on your platform."},"stables":{"type":"string","enum":["USDC","USDT"],"description":"Stablecoin you will send (e.g., USDC, USDT)."},"amount":{"type":"string","description":"Stablecoin amount sent(string for precision)."},"currency":{"type":"string","description":"Fiat currency to receive (e.g., USD, GBP, NGN).","enum":["AED","AUD","BRL","CAD","CNY","DKK","EGP","EUR","GBP","HKD","IDR","ILS","INR","KRW","MXN","MYR","NGN","PHP","SGD","USD","ZAR"]},"wallet_address":{"type":"string","description":"Walllet address USDC/USDT is sent from"},"network":{"type":"string","description":"Wallet address network (e.g., Solana, Polygon)."},"usd_payout":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"ach_routing_number":{"type":"string"},"fedwire_routing_number":{"type":"string"},"swift_code":{"type":"string"},"intermediary_swift":{"type":"string"}},"description":"US payouts via ACH, Fedwire, or SWIFT. Include whichever routing code applies (ACH, Fedwire, or SWIFT)."},"gbp_payout":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"sort_code":{"type":"string"},"iban":{"type":"string"}},"description":"UK payouts via FPS, CHAPS, or SWIFT. "},"eur_payout":{"type":"object","properties":{"account_name":{"type":"string"},"intermediary_swift ":{"type":"string"},"iban":{"type":"string"}},"description":"Euro payouts via SEPA (default) or SWIFT. "},"cad_payout":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"institution_number":{"type":"string"},"transit_number":{"type":"string"},"swift_code":{"type":"string"},"intermediary_swift":{"type":"string"}},"description":"Euro payouts via SEPA (default) or SWIFT. "},"cad_interac":{"type":"object","properties":{"interac_email":{"type":"string"},"account_name":{"type":"string"}},"description":"Canadian Interac e‑Transfer via email."},"cad_bill_payment":{"type":"object","properties":{"biller":{"type":"string"},"account_number":{"type":"string"}},"description":"Canadian Bill Payment."},"sgd_payout":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"swift_code":{"type":"string"},"intermediary_swift":{"type":"string"},"phone_number":{"type":"string"}},"description":"Singapore payouts via FAST (PayNow), GIRO/RTGS, or SWIFT."},"aud_payout":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"bsb":{"type":"string"},"swift_code":{"type":"string"}},"description":"Australian bank payouts—bank transfer (BSB + account), or SWIFT."},"aud_bpay":{"type":"object","properties":{"biller_code":{"type":"string"},"customer_reference_number":{"type":"string"}},"description":"Australian BPAY."},"hkd_payout":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"bank_code":{"type":"string"},"swift_code":{"type":"string"},"intermediary_swift":{"type":"string"}},"description":"Hong Kong payouts via ACH/FPS (account) or SWIFT/RTGS."},"cny_payout":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"bank_code":{"type":"string"},"swift_code":{"type":"string"},"intermediary_swift":{"type":"string"}},"description":"Mainland China payouts via ACH/FPS (account) or SWIFT/RTGS."},"mxn_payout":{"type":"object","properties":{"account_name":{"type":"string"},"clabe":{"type":"string"},"swift_code":{"type":"string"},"intermediary_swift":{"type":"string"}},"description":"Mexico payouts—local bank transfer (CLABE) or SWIFT."},"<cci>_payout":{"type":"object","description":"Applies to AED, ILS, EGP currencies. Unified IBAN/SWIFT payouts. Provide an IBAN and account name. Use the currency prefix as the object name (e.g., aed_payout).","properties":{"account_name":{"type":"string"},"iban":{"type":"string"},"intermediary_swift":{"type":"string"}}},"<ccy>_bank_transfer":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"account_type":{"type":"string"},"bank_code":{"type":"string"},"branch_code":{"type":"string"},"swift_code":{"type":"string"}},"description":"Applies to INR, IDR, KRW, MYR, ZAR, . Unified bank‑transfer corridors. Use the currency prefix as the object name (e.g., inr_bank_transfer)."},"ngn_bank_transfer":{"type":"object","properties":{"account_name":{"type":"string"},"account_number":{"type":"string"},"bank_name":{"type":"string"}},"description":"Nigerian local bank payout."},"brl_payout":{"type":"object","properties":{"bank_name":{"type":"string"},"account_number":{"type":"string"},"account_name":{"type":"string"},"account_type":{"type":"string"},"branch_code":{"type":"string"},"pix_key":{"type":"string"}},"description":"Brazil payouts via PIX or standard bank transfer. "},"php_payout":{"type":"object","properties":{"bank_name":{"type":"string"},"account_number":{"type":"string"},"account_name":{"type":"string"},"ewallet_provider":{"type":"string"}},"description":"Philippines payouts—either a bank account or an e‑wallet."}},"type":"object","required":["customer_id","stables","amount","currency","wallet_address","network"]}}}}}},"/by-ramp":{},"/business_payment_vendors":{"get":{"description":"","operationId":"get_business_payment_vendors","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"currency","schema":{"type":"string","enum":["AED","AUD","BRL","CAD","CNY","DKK","EUR","GBP","HKD","ILS","MXN","NGN","PHP","SGD","USD","ZAR"]},"description":"Pass selected currency to get vendor bank details.","required":true}]}},"/business_onramp":{"post":{"description":"","operationId":"get_busonrampaed","responses":{"200":{"description":"","content":{}}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"properties":{"customer_id":{"type":"string","default":"","description":"ID of your customer making the API request on your platform."},"currency":{"type":"string","description":"   Fiat you paid.","enum":["AED","AUD","BRL","CAD","CNY","DKK","EUR","GBP","HKD","ILS","MXN","NGN","PHP","SGD","USD","ZAR"]},"amount":{"type":"string","description":"Fiat amount you paid. For Limits see, Fees & Minimums under B2B API's."},"stables":{"type":"string","enum":["USDC","USDT"],"description":"Stablecoin you’d like to receive (e.g., USDC, USDT)."},"vendor_id":{"type":"string","description":"Payout banking rail to use. Retrieve via Get Business Vendors."},"wallet_address":{"type":"string","description":"Destination wallet address to receive the stablecoin."},"network":{"type":"string","description":"Destination blockchain network (e.g., Solana, Polygon)."},"bank _transfer":{"type":"object","properties":{"account_number":{"type":"string"},"bank_code":{"type":"string"},"branch_code":{"type":"string"},"swift_code":{"type":"string"}},"description":"Supported currencies: USD, SGD, HKD, CNY & ILS"},"iban":{"type":"object","properties":{"iban":{"type":"string"},"swift_code":{"type":"string"}},"description":"Use for domestic and  international IBAN transfers. Supported currencies: AED, EUR, GBP (international), USD (EU route), CAD (EU route), CNY, HKD, SGD, ZAR, MXN."},"usd_domestic":{"type":"object","properties":{"account_number":{"type":"string"},"routing_number":{"type":"string","description":"Use if you have a single routing number"},"ach_routing_number":{"type":"string","description":"Provide if your bank lists them separately."},"fedwire_routing_number":{"type":"string","description":"Provide if your bank lists them separately."},"bank_name":{"type":"string"}},"description":"Use for US domestic ACH / Fedwire transfers. Supported currency: USD"},"gbp_domestic":{"type":"object","properties":{"account_number":{"type":"string"},"sort_code":{"type":"string"},"bank_name":{"type":"string"}},"description":"Use for UK domestic transfers (Faster Payments, CHAPS & BACS). Supported currency: GBP"},"ngn_domestic":{"type":"object","properties":{"account_number":{"type":"string"},"bank_name":{"type":"string"}},"description":"Use for Nigerian domestic transfers. Supported currency: NGN"},"aud_domestic":{"type":"object","properties":{"account_number":{"type":"string"},"bsb":{"type":"string"}},"description":"Use for Australian domestic bank transfers. Supported currency: AUD"},"cad_eft":{"type":"object","properties":{"account_number":{"type":"string"},"transit_number":{"type":"string"},"institution_number":{"type":"string"}},"description":"Use for Canadian domestic EFT bank transfers. Supported currency: CAD"},"cad_interac":{"type":"object","properties":{"interac_email":{"type":"string"}},"description":"Use for Canadian Interac e-Transfers. Supported currency: CAD"},"brl_pix":{"type":"object","properties":{"pix_key":{"type":"string"}},"description":"Use for PIX transfers. Supported currency: BRL"},"mxn_clabe":{"type":"object","properties":{"clabe":{"type":"string"}},"description":"Use for Mexican domestic SPEI transfers. Supported currency: MXN"},"php_bank_transfer":{"type":"object","properties":{"account_number":{"type":"string"},"bank_name":{"type":"string"}},"description":"Use for Philippine domestic bank transfers. Supported currency: PHP"},"php_ewallet":{"type":"object","properties":{"ewallet_account_number":{"type":"string"}},"description":"Use for Philippine e-wallet transfers. Supported currency: PHP"},"proof_of_payment":{"type":"string","description":"A URL pointing to your payment proof. The uploaded file  must display your company letterhead, no larger than 5MB.  Accepted formats are PDF, JPEG, JPG, or PNG."}},"type":"object","required":["customer_id","currency","amount","stables","vendor_id","wallet_address","network","proof_of_payment"]}}}}}},"/business_customers":{"get":{"description":"","operationId":"get_business_customers","responses":{"200":{"description":""}},"parameters":[]}},"/verify_account_number":{"get":{"summary":"Verify account number","description":"This endpoint can be used to verify a Nigeria bank account number","operationId":"account_name","parameters":[{"name":"account_number","in":"query","description":"Customer account number.","required":true,"schema":{"type":"string"}},{"name":"bank_code","in":"query","description":"Get value for this field from the \"Get payment banks endpoint\".","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/wallet_balance":{"get":{"summary":"Get Available Balance","description":"For customer's who hold funds in house with LINK.","operationId":"get-account-balance","parameters":[],"responses":{"200":{"description":"200","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}},"400":{"description":"400","content":{"application/json":{"examples":{"Result":{"value":"{}"}},"schema":{"type":"object","properties":{}}}}}},"deprecated":false}},"/brl/ramp_quote":{"get":{"description":"","operationId":"get_fetch_quote_rate","responses":{"200":{"description":"","content":{"application/json":{"examples":{"New Example":{"summary":"New Example","value":{"status":"Success","message":"Rate retrieved successfully","data":{"baseRate":"5.574069","inputAmount":"4500","outputAmount":"797.586041","outputCurrency":"USDC","outputPaymentMethod":"POLYGON","validity":"15 seconds"}}}}}}}},"parameters":[{"name":"amount","in":"query","required":true,"description":"Amount of BRL (on-ramp min: 100 BRL) or USDC (off-ramp  min: 5 USDC/USDT) to convert.","schema":{"type":"string","default":"100"}},{"name":"trx_type","in":"query","required":true,"description":"Transaction type: \"onramp\" for BRL→USDC, \"offramp\" for USDC→BRL. ","schema":{"type":"string","default":"","enum":["onramp","offramp"]}}]}},"/idr/ramp_quote":{},"/direct_ramp/payment_methods":{"get":{"description":"","operationId":"get_direct_ramppayment_methods","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"currency","schema":{"type":"string","enum":["GHS","KES","NGN","ZAR","XAF","TZS"],"default":"NGN"},"required":true,"description":"Available currenies"}]}},"/direct_ramp/onboarding":{"post":{"description":"","operationId":"post_direct_ramponboarding","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"email","schema":{"type":"string"},"description":"Your customers email address.","required":true},{"in":"query","name":"first_name","schema":{"type":"string"},"required":true,"description":"Customer first name."},{"in":"query","name":"last_name","schema":{"type":"string"},"required":true,"description":"Customer last name."},{"in":"query","name":"country","schema":{"type":"string","enum":["Nigeria","Ghana","Kenya","South Africa","Botswana","Cameroon","Malawi","Mozambique","Sierra Leone","Tanzania","Uganda","Zambia","Cote D'Ivoire","Rwanda"]},"required":true}],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{}}}}}}},"/direct_ramp/deposit":{"post":{"description":"","operationId":"get_new-endpoint-1","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"quoteId","schema":{"type":"string"},"required":true,"description":"Id from get Rate Quote endpoint."},{"in":"query","name":"currency","schema":{"type":"string","enum":["NGN","GHS","KES","ZAR","XAF","TZS"],"default":"NGN"},"required":true},{"in":"query","name":"stables","schema":{"type":"string","enum":["USDC"],"default":"USDC"},"required":true,"description":"Stable coin in which user wants to be settled in (USDC)."},{"in":"query","name":"network","schema":{"type":"string","enum":["base"]},"required":true,"description":"The address network to disburse payment."},{"in":"query","name":"address","schema":{"type":"string"},"required":true,"description":"Wallet address stablecoin token will be sent to."},{"in":"query","name":"phone_number","schema":{"type":"string"},"description":"currency payment method is mobile money transfer. input phone number sending funds."},{"in":"query","name":"bankaccount_number","schema":{"type":"string"},"description":"Currency payment method is bank transfer. Input account number sending funds."}]}},"/direct_ramp/withdraw":{"post":{"description":"","operationId":"get_direct_rampwithdraw","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"quoteId","schema":{"type":"string"},"description":"Gotten from get Rate Quote endpoint.","required":true},{"in":"query","name":"payout_id","schema":{"type":"string"},"description":"Customer Payout method ID gotten from Add Payout method endpoint.","required":true},{"in":"query","name":"stables","schema":{"type":"string","enum":["USDT","USDC"]},"required":true,"description":"stable coin used for offramp"},{"in":"query","name":"offramp_amount","schema":{"type":"string"},"description":"Stables (USDT) amount based of generated quote.","required":true},{"in":"query","name":"payout_currency","schema":{"type":"string","enum":["NGN","GHS","KES","ZAR","XAF","TZS"],"default":"NGN"},"required":true,"description":"Currency to be settled in based of generated quote"},{"in":"query","name":"sender_address","schema":{"type":"string"},"description":"Wallet address funds sent from.","required":true},{"in":"query","name":"network","schema":{"type":"string","enum":["Bsc"]},"required":true}]}},"/direct_ramp/rate_quote":{"get":{"description":"","operationId":"get_ramp_quote","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"customer_id","schema":{"type":"string"},"required":true},{"in":"query","name":"asset","schema":{"type":"string","enum":["NGN","GHS","KES","ZAR","XAF","TZS","USDT","USDC"]},"required":true,"description":"Available currencies. NOTE: USDT/USDC are for offramp only"},{"in":"query","name":"amount","schema":{"type":"string"},"required":true,"description":"amount to on ramp or offramp based of currency."},{"in":"query","name":"trx_type","schema":{"type":"string","enum":["onramp","offramp"]},"description":"Transaction type: \"onramp\" for \"Fiat\"→Stables, \"offramp\" for Stables→\"Fiat\". ","required":true},{"in":"query","name":"payment_method","schema":{"type":"string"},"required":true,"description":"Differs for each currency. Call the Get payment Method endpoint."}]}},"/direct_ramp/stable_paid":{"post":{"description":"","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"reference","schema":{"type":"string","default":"ibx-717-222-uxa"},"required":true}],"operationId":"post_direct-ramp-stable-paid"}},"/direct_ramp/payout_account":{"post":{"description":"","operationId":"post_direct_ramppayout_account","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"customer_id","schema":{"type":"string"},"description":"ID of the customer who owns the payment method.","required":true},{"in":"query","name":"payment_method","schema":{"type":"string"},"description":"Differs for each currency. Call the Get payment Method endpoint","required":true},{"in":"query","name":"name","schema":{"type":"string"},"required":true,"description":"customer banking name related to payment method."},{"in":"query","name":"phone_number","schema":{"type":"string"},"description":"Mobile money phone number"},{"in":"query","name":"account_number","schema":{"type":"string"},"description":"Customer Bank account number"},{"in":"query","name":"bank_name","schema":{"type":"string"},"description":"Customer Bank name"}]}},"/direct_ramp/customer":{"get":{"description":"","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"email","schema":{"type":"string"},"required":true,"description":"Email address of you customer used when calling the {Direct Onboard} Endpoint"}],"operationId":"get_direct-ramp-customer"}},"/direct_ramp/payout/status":{"get":{"description":"","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"trx_reference","schema":{"type":"string"},"required":true,"description":"The reference code "}],"operationId":"get_direct-ramp-payout-status"}},"/direct_ramp/transfer_sent":{"post":{"description":"","operationId":"post_direct_rampdepositpayment_made","responses":{"200":{"description":""}},"parameters":[{"in":"query","name":"trx_type","schema":{"type":"string","enum":["onramp","offramp"]},"required":true},{"in":"query","name":"reference","schema":{"type":"string"},"required":true}]}},"/onramp-1":{},"/offramp-1":{},"/rate_quote-1":{},"/esp_onramp":{"post":{"description":"","responses":{"200":{"description":""}},"parameters":[],"requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"currency":{"type":"string"},"amount":{"type":"string"},"vendorId":{"type":"string"},"bankName":{"type":"string"},"accountNumber":{"type":"string"},"walletAddress":{"type":"string"},"kingschatUsername":{"type":"string"},"espeesCard":{"type":"string"},"emailAddress":{"type":"string"}},"required":["currency","amount","vendorId","bankName","accountNumber"]}}}},"operationId":"post_esp-onramp"}},"/esp_offramp":{"post":{"description":"","responses":{"200":{"description":""}},"parameters":[],"operationId":"post_esp-offramp","requestBody":{"content":{"application/json":{"schema":{"type":"object","properties":{"amount":{"type":"string"},"currency":{"type":"string"},"bankName":{"type":"string"},"accountNumber":{"type":"string"},"accountName":{"type":"string"},"walletAddress":{"type":"string"},"kingschatUsername":{"type":"string"},"espeesCard":{"type":"string"}},"required":["currency","amount","bankName","accountNumber"]}}}}}}},"x-readme":{"headers":[],"explorer-enabled":true,"proxy-enabled":true},"x-readme-fauxas":true}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "link-transaction",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.linkio.world/transactions/v2"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "ngnc-sec-key",
+        "x-default": ""
+      }
+    }
+  },
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "paths": {
+    "/onramp": {
+      "post": {
+        "summary": "Initiate Onramp",
+        "description": "",
+        "operationId": "onramp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "currency",
+                  "amount",
+                  "stables"
+                ],
+                "properties": {
+                  "currency": {
+                    "type": "string",
+                    "description": "Currency in which user wants to pay for onramp asset. (NGN, USD)",
+                    "default": "NGN",
+                    "enum": [
+                      "NGN",
+                      "USD"
+                    ]
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount user wishes to onramp based on currency selected. (Min ~ 15K NGN,  20USD)"
+                  },
+                  "stables": {
+                    "type": "string",
+                    "description": "Stable coin in which user wants to be settle in.(USDC, USDT)",
+                    "enum": [
+                      "USDC",
+                      "USDT"
+                    ]
+                  },
+                  "vendor_bank": {
+                    "type": "string",
+                    "description": "Use the \"Fetch Payment Vendors\" ENDPOINT to fetch the list of supported payment vendors"
+                  },
+                  "vendor_number": {
+                    "type": "string",
+                    "description": "Use the \"Fetch Payment Vendors\" ENDPOINT."
+                  },
+                  "vendor_name": {
+                    "type": "string",
+                    "description": "Use the \"Fetch Payment Vendors\" ENDPOINT."
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "Wallet address where the on-ramp stablecoin token will be sent to."
+                  },
+                  "network": {
+                    "type": "string",
+                    "description": "The address network to disburse payment. Our supported networks are (Wallet address network. Our supported networks are (Arbitrum, Avalanche, Stellar, Base, Polygon, Solana, Stellar, Tron, XRPL)."
+                  },
+                  "bank_name": {
+                    "type": "string",
+                    "description": "Proof of payment Bank used to send money to the vendor account"
+                  },
+                  "account_number": {
+                    "type": "string",
+                    "description": "Proof of payment Account number of bank used to send money to the vendor account."
+                  },
+                  "routing_number": {
+                    "type": "string",
+                    "description": "Proof of payment Bank Routing number used to send money to the vendor account"
+                  },
+                  "bank_address": {
+                    "type": "string",
+                    "description": "Optional for transactions that provide bank transaction address"
+                  },
+                  "developer_fee": {
+                    "type": "boolean",
+                    "description": "Businesses that wish to charge a certain percentage on your their users for each transaction made.",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"status\": \"success\",\n    \"message\": \"Transaction Request successful\",\n    \"transaction\": {\n        \"transaction_id\": \"645c329afc3ac414bf70f9a1\",\n        \"business\": {\n            \"business_id\": \"0123456789\"\n        },\n        \"type\": \"Buy\",\n        \"reference\": \"0984938271\",\n        \"amount\": 25639.55,\n        \"link_account_name\": \"Okemdinachi Nwaejie\",\n        \"link_account_number\": \"8180789670\",\n        \"link_bank_name\": \"Wema Bank\",\n        \"account_number\": \"3338900202\",\n        \"bank_name\": \"Providus Bank\",\n        \"link_tag\": \"Link_eng\",\n        \"network\": \"Avalanche\",\n        \"wallet_address\": \"x.fie9383jEU8394jdnc\",\n        \"date_created\": \"May 11, 2023\"\n    }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction Request successful"
+                    },
+                    "transaction": {
+                      "type": "object",
+                      "properties": {
+                        "transaction_id": {
+                          "type": "string",
+                          "example": "645c329afc3ac414bf70f9a1"
+                        },
+                        "business": {
+                          "type": "object",
+                          "properties": {
+                            "business_id": {
+                              "type": "string",
+                              "example": "0123456789"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "Buy"
+                        },
+                        "reference": {
+                          "type": "string",
+                          "example": "0984938271"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 25639.55,
+                          "default": 0
+                        },
+                        "link_account_name": {
+                          "type": "string",
+                          "example": "Okemdinachi Nwaejie"
+                        },
+                        "link_account_number": {
+                          "type": "string",
+                          "example": "8180789670"
+                        },
+                        "link_bank_name": {
+                          "type": "string",
+                          "example": "Wema Bank"
+                        },
+                        "account_number": {
+                          "type": "string",
+                          "example": "3338900202"
+                        },
+                        "bank_name": {
+                          "type": "string",
+                          "example": "Providus Bank"
+                        },
+                        "link_tag": {
+                          "type": "string",
+                          "example": "Link_eng"
+                        },
+                        "network": {
+                          "type": "string",
+                          "example": "Avalanche"
+                        },
+                        "wallet_address": {
+                          "type": "string",
+                          "example": "x.fie9383jEU8394jdnc"
+                        },
+                        "date_created": {
+                          "type": "string",
+                          "example": "May 11, 2023"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "404",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Retail FX"
+        ]
+      }
+    },
+    "/offramp": {
+      "post": {
+        "summary": "Initiate Offramp",
+        "description": "",
+        "operationId": "offramp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "stables",
+                  "amount",
+                  "currency"
+                ],
+                "properties": {
+                  "stables": {
+                    "type": "string",
+                    "description": "Stable coin in which user wants to off-ramp in. (USDC, USDT)",
+                    "enum": [
+                      "USDC",
+                      "USDT"
+                    ]
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount in (USDC/USDT) that the users wishes to offramp into a USD or NGN bank account. (Min ~ 20 USDT / USDC).",
+                    "default": "20"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Currency in which user wants to receive funds. (NGN,USD)",
+                    "default": "NGN",
+                    "enum": [
+                      "NGN",
+                      "USD"
+                    ]
+                  },
+                  "bank_name": {
+                    "type": "string",
+                    "description": "Use the \"fetch Payment banks\" ENDPOINT to fetch the list of supported payment banks. Only the name needs to be passed"
+                  },
+                  "account_number": {
+                    "type": "string",
+                    "description": "Customer's bank account number for where funds should be sent to."
+                  },
+                  "account_name": {
+                    "type": "string",
+                    "description": "Bank name associated with bank account number provided above."
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "Origin wallet address where funds would be sent from."
+                  },
+                  "network": {
+                    "type": "string",
+                    "description": "Wallet address network. Our supported networks are (Arbitrum, Avalanche, Stellar, Base, Polygon, Solana, Stellar, Tron, XRPL)"
+                  },
+                  "routing_number": {
+                    "type": "string",
+                    "description": "Please provide routing number for USD request."
+                  },
+                  "account_type": {
+                    "type": "string",
+                    "description": "Please select either checkings or savings for USD request.",
+                    "default": "checkings"
+                  },
+                  "chargeFeeOnRequest": {
+                    "type": "boolean",
+                    "description": "Setting this option to true, allows users see what amount they receive after the fee has been deducted. Currently available for payout to NGN accounts only.",
+                    "default": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"status\": \"success\",\n    \"message\": \"Transaction Request successful\",\n    \"transaction\": {\n        \"transaction_id\": \"645c31fdedd472fb04b3be53\",\n        \"business\": {\n            \"business_id\": \"0123456789\"\n        },\n        \"type\": \"Sell\",\n        \"reference\": \"64125118694\",\n        \"amount\": 102094,\n        \"account_name\": \"Tansi Jones\",\n        \"account_number\": \"9480948372\",\n        \"bank_name\": \"Wema bank\",\n        \"link_tag\": \"Link_eng\",\n        \"date_created\": \"May 11, 2023\"\n    }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction Request successful"
+                    },
+                    "transaction": {
+                      "type": "object",
+                      "properties": {
+                        "transaction_id": {
+                          "type": "string",
+                          "example": "645c31fdedd472fb04b3be53"
+                        },
+                        "business": {
+                          "type": "object",
+                          "properties": {
+                            "business_id": {
+                              "type": "string",
+                              "example": "0123456789"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "Sell"
+                        },
+                        "reference": {
+                          "type": "string",
+                          "example": "64125118694"
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "example": 102094,
+                          "default": 0
+                        },
+                        "account_name": {
+                          "type": "string",
+                          "example": "Tansi Jones"
+                        },
+                        "account_number": {
+                          "type": "string",
+                          "example": "9480948372"
+                        },
+                        "bank_name": {
+                          "type": "string",
+                          "example": "Wema bank"
+                        },
+                        "link_tag": {
+                          "type": "string",
+                          "example": "Link_eng"
+                        },
+                        "date_created": {
+                          "type": "string",
+                          "example": "May 11, 2023"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "404",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Retail FX"
+        ]
+      }
+    },
+    "/fetch_all_transactions": {
+      "get": {
+        "summary": "Get All Transactions",
+        "description": "",
+        "operationId": "fetch_transactions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Transactions"
+        ]
+      }
+    },
+    "/fetch_transaction": {
+      "get": {
+        "summary": "Get a Transaction",
+        "description": "",
+        "operationId": "fetch_single_transaction",
+        "parameters": [
+          {
+            "name": "transaction_reference",
+            "in": "query",
+            "description": "Reference generated for each transaction request.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Transactions"
+        ]
+      }
+    },
+    "/payment_vendors": {
+      "get": {
+        "summary": "Get Payment Vendors",
+        "description": "Query list of supported vendor account details for onramp transaction",
+        "operationId": "payment_vendors",
+        "parameters": [
+          {
+            "name": "currency",
+            "in": "query",
+            "description": "Pass selected currency NGN, USD to get vendor bank details",
+            "schema": {
+              "type": "string",
+              "default": "NGN",
+              "enum": [
+                "NGN",
+                "USD"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Static Details"
+        ]
+      }
+    },
+    "/payment_banks": {
+      "get": {
+        "summary": "Get Payment Banks",
+        "description": "Query all available banks for a specified currency",
+        "operationId": "payment_banks",
+        "parameters": [
+          {
+            "name": "currency",
+            "in": "query",
+            "description": "Pass selected currency NGN, USD, BRL to get Bank list.",
+            "schema": {
+              "type": "string",
+              "default": "NGN",
+              "enum": [
+                "NGN",
+                "USD",
+                "BRL"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Static Details"
+        ]
+      }
+    },
+    "/payment_wallets": {
+      "get": {
+        "summary": "Get Payment Wallets",
+        "description": ".Query available wallet addresses for offramp transaction.",
+        "operationId": "payment_wallets",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Static Details"
+        ]
+      }
+    },
+    "/initiate_idr_onramp": {},
+    "/reg_bank_account": {
+      "post": {
+        "description": "",
+        "operationId": "post_reg_bank_account",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "business_id ": {
+                    "type": "string",
+                    "description": "Your LINK business identifier"
+                  },
+                  "user_name": {
+                    "type": "string",
+                    "description": "Customer's user name"
+                  },
+                  "pix_key": {
+                    "type": "string",
+                    "description": "Customer's bank pix_key"
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "business_id ",
+                  "user_name",
+                  "pix_key"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "Static Details"
+        ],
+        "summary": "Register Bank Account"
+      }
+    },
+    "/brl/initiate_onramp": {
+      "post": {
+        "description": "",
+        "operationId": "post_create_ticket",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "New Example": {
+                    "summary": "New Example",
+                    "value": {
+                      "status": "Success",
+                      "message": "Quote ticket created successfully",
+                      "ticket_id": "ticket_123abc",
+                      "payment_code": "000201010212...",
+                      "validity": "5 minutes",
+                      "qrcode_url": "data:image/png;base64,..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount in BRL to convert."
+                  },
+                  "wallet_id": {
+                    "type": "string",
+                    "description": "The beneficiary wallet ID from Register Wallet."
+                  },
+                  "stables": {
+                    "type": "string",
+                    "description": "Stablecoin t\u00f8ken to receive in USDC/USDT.",
+                    "default": "USDC"
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "wallet_id",
+                  "amount",
+                  "stables"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "BRL Ramp"
+        ],
+        "summary": "BRL Auto Onramp"
+      }
+    },
+    "/brl/initiate_offramp": {
+      "post": {
+        "description": "",
+        "operationId": "post_initiate_brl_offramp",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "New Example": {
+                    "summary": "New Example",
+                    "value": "{\n  \"status\": \"Success\",\n  \"message\": \"Off-ramp ticket created successfully\",\n  \"ticket_id\": \"ticket_789xyz\",\n  \"payment_code\": \"000201010212...\",\n  \"validity\": \"5 minutes\",\n  \"paymentWalletAddress\": \"0x211...\",// Valid  for Offramp. where to send USDC to.\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "pix_key": {
+                    "type": "string",
+                    "description": "The registered PIX key (BRL payout account) where BRL will be sent after swap."
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount in USDC/USDT to convert into BRL."
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "On-chain address  customer used to send their USDC/USDT "
+                  },
+                  "stables": {
+                    "type": "string",
+                    "description": "Stablecoin t\u00f8ken to send in. USDC/USDT.",
+                    "default": "USDC"
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "pix_key",
+                  "amount",
+                  "wallet_address",
+                  "stables"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "BRL Ramp"
+        ],
+        "summary": "BRL Auto Offramp"
+      }
+    },
+    "/reg_wallet_address": {
+      "post": {
+        "description": "",
+        "operationId": "post_register_wallet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "New Example": {
+                    "summary": "New Example",
+                    "value": "{\n  \"status\": \"Success\",\n  \"message\": \"User's wallet address registered\",\n  \"wallet_id\": \"abc123def456\"    // Unique identifier for the new wallet\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "network": {
+                    "type": "string",
+                    "description": "Blockchain network (must be \"POLYGON\").",
+                    "default": "POLYGON"
+                  },
+                  "user_wallet_address": {
+                    "type": "string",
+                    "description": "On-chain address (Polygon) where the customer will receive/send funds."
+                  },
+                  "user_name": {
+                    "type": "string",
+                    "description": "Friendly alias for the customer (e.g. \u201cJohnwick\u201d)."
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "user_wallet_address",
+                  "user_name",
+                  "network"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "Static Details"
+        ],
+        "summary": "Register Wallet Address"
+      }
+    },
+    "/idr/initiate_onramp": {
+      "post": {
+        "description": "",
+        "operationId": "post_initiate_idr_onram",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "IDR amount to convert (amount used in to get quote). "
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "Wallet address where token will be sent to."
+                  },
+                  "stables": {
+                    "type": "string",
+                    "description": "Stablecoin to receive in USDT.",
+                    "enum": [
+                      "USDT"
+                    ]
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "amount",
+                  "wallet_address",
+                  "stables"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "IDR Ramp"
+        ],
+        "summary": "IDR Auto Onramp"
+      }
+    },
+    "/idr/direct_withdraw": {
+      "post": {
+        "description": "",
+        "operationId": "post_idrdirect_withdraw",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "bankName": {
+                    "type": "string",
+                    "description": "Full name of the beneficiary bank. Use the \"Fetch Payment banks\" ENDPOINT to fetch the list of supported payment banks for IDR."
+                  },
+                  "bankCode": {
+                    "type": "string",
+                    "description": "The bank\u2019s ISO/local code. Use the \"Fetch Payment banks\" ENDPOINT to fetch the bank code for IDR bank selected."
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "bankName",
+                  "bankCode"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "IDR Ramp"
+        ],
+        "summary": "IDR Auto Offramp"
+      }
+    },
+    "/idr/onboarding": {
+      "post": {
+        "description": "",
+        "operationId": "post_idronboarding",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "business_id": {
+                    "type": "string",
+                    "description": "Your LINK business identifier"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "tags": [
+          "IDR Ramp"
+        ],
+        "summary": "Onboarding"
+      }
+    },
+    "/idr/rate": {
+      "get": {
+        "description": "",
+        "operationId": "get_new-endpoint-idr-rate",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "required": true,
+            "description": "Amount in BRL to convert. Minimum 20,000 IDR",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "business_id",
+            "in": "query",
+            "required": true,
+            "description": "Your LINK business identifier",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "tags": [
+          "IDR Ramp"
+        ],
+        "summary": "IDR Rate Quote"
+      }
+    },
+    "/bus/onramp/aud": {},
+    "/bus/onramp/brl": {},
+    "/bus/onramp/cad": {},
+    "/bus/onramp/cny": {},
+    "/bus/onramp/eur": {},
+    "/bus/onramp/gbp": {},
+    "/bus/onramp/ngn": {},
+    "/bus/onramp/hkd": {},
+    "/rate_quote": {
+      "get": {
+        "description": "",
+        "operationId": "get_business-rate-quote",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "currency",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Fiat currency used to onramp or receive offramp."
+          },
+          {
+            "in": "query",
+            "name": "trx_type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "onramp",
+                "offramp"
+              ]
+            },
+            "description": "Transaction type: \"onramp\" for \"Fiat\"\u2192USDC, \"offramp\" for USDC\u2192\"Fiat\".",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "amount",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Amount Business wants to Onramp(Fiat) OR offramp(Stables)."
+          }
+        ],
+        "tags": [
+          "Rates"
+        ],
+        "summary": "Onramp Rates"
+      }
+    },
+    "/verify_customer_kyc": {
+      "post": {
+        "summary": "ID Verification",
+        "description": "verify users identification. This endpoint is currently only available for Nigeria customers.",
+        "operationId": "id-verification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "idType",
+                  "idNumber"
+                ],
+                "properties": {
+                  "idType": {
+                    "type": "string",
+                    "description": "Verification ID types: NIN, BVN, Voters Card",
+                    "enum": [
+                      "NIN",
+                      "BVN",
+                      "Voters Card"
+                    ]
+                  },
+                  "idNumber": {
+                    "type": "string",
+                    "description": "Verification ID number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/business_offramp": {
+      "post": {
+        "description": "",
+        "operationId": "post_businessofframp",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "customer_id": {
+                    "type": "string",
+                    "description": "ID of your customer making the API request on your platform."
+                  },
+                  "stables": {
+                    "type": "string",
+                    "enum": [
+                      "USDC",
+                      "USDT"
+                    ],
+                    "description": "Stablecoin you will send (e.g., USDC, USDT)."
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Stablecoin amount sent(string for precision)."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Fiat currency to receive (e.g., USD, GBP, NGN).",
+                    "enum": [
+                      "AED",
+                      "AUD",
+                      "BRL",
+                      "CAD",
+                      "CNY",
+                      "DKK",
+                      "EGP",
+                      "EUR",
+                      "GBP",
+                      "HKD",
+                      "IDR",
+                      "ILS",
+                      "INR",
+                      "KRW",
+                      "MXN",
+                      "MYR",
+                      "NGN",
+                      "PHP",
+                      "SGD",
+                      "USD",
+                      "ZAR"
+                    ]
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "Walllet address USDC/USDT is sent from"
+                  },
+                  "network": {
+                    "type": "string",
+                    "description": "Wallet address network (e.g., Solana, Polygon)."
+                  },
+                  "usd_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "ach_routing_number": {
+                        "type": "string"
+                      },
+                      "fedwire_routing_number": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      },
+                      "intermediary_swift": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "US payouts via ACH, Fedwire, or SWIFT. Include whichever routing code applies (ACH, Fedwire, or SWIFT)."
+                  },
+                  "gbp_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "sort_code": {
+                        "type": "string"
+                      },
+                      "iban": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "UK payouts via FPS, CHAPS, or SWIFT. "
+                  },
+                  "eur_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "intermediary_swift ": {
+                        "type": "string"
+                      },
+                      "iban": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Euro payouts via SEPA (default) or SWIFT. "
+                  },
+                  "cad_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "institution_number": {
+                        "type": "string"
+                      },
+                      "transit_number": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      },
+                      "intermediary_swift": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Euro payouts via SEPA (default) or SWIFT. "
+                  },
+                  "cad_interac": {
+                    "type": "object",
+                    "properties": {
+                      "interac_email": {
+                        "type": "string"
+                      },
+                      "account_name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Canadian Interac e\u2011Transfer via email."
+                  },
+                  "cad_bill_payment": {
+                    "type": "object",
+                    "properties": {
+                      "biller": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Canadian Bill Payment."
+                  },
+                  "sgd_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      },
+                      "intermediary_swift": {
+                        "type": "string"
+                      },
+                      "phone_number": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Singapore payouts via FAST (PayNow), GIRO/RTGS, or SWIFT."
+                  },
+                  "aud_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bsb": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Australian bank payouts\u2014bank transfer (BSB + account), or SWIFT."
+                  },
+                  "aud_bpay": {
+                    "type": "object",
+                    "properties": {
+                      "biller_code": {
+                        "type": "string"
+                      },
+                      "customer_reference_number": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Australian BPAY."
+                  },
+                  "hkd_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bank_code": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      },
+                      "intermediary_swift": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Hong Kong payouts via ACH/FPS (account) or SWIFT/RTGS."
+                  },
+                  "cny_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bank_code": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      },
+                      "intermediary_swift": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Mainland China payouts via ACH/FPS (account) or SWIFT/RTGS."
+                  },
+                  "mxn_payout": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "clabe": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      },
+                      "intermediary_swift": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Mexico payouts\u2014local bank transfer (CLABE) or SWIFT."
+                  },
+                  "<cci>_payout": {
+                    "type": "object",
+                    "description": "Applies to AED, ILS, EGP currencies. Unified IBAN/SWIFT payouts. Provide an IBAN and account name. Use the currency prefix as the object name (e.g., aed_payout).",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "iban": {
+                        "type": "string"
+                      },
+                      "intermediary_swift": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "<ccy>_bank_transfer": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "account_type": {
+                        "type": "string"
+                      },
+                      "bank_code": {
+                        "type": "string"
+                      },
+                      "branch_code": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Applies to INR, IDR, KRW, MYR, ZAR, . Unified bank\u2011transfer corridors. Use the currency prefix as the object name (e.g., inr_bank_transfer)."
+                  },
+                  "ngn_bank_transfer": {
+                    "type": "object",
+                    "properties": {
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bank_name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Nigerian local bank payout."
+                  },
+                  "brl_payout": {
+                    "type": "object",
+                    "properties": {
+                      "bank_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "account_type": {
+                        "type": "string"
+                      },
+                      "branch_code": {
+                        "type": "string"
+                      },
+                      "pix_key": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Brazil payouts via PIX or standard bank transfer. "
+                  },
+                  "php_payout": {
+                    "type": "object",
+                    "properties": {
+                      "bank_name": {
+                        "type": "string"
+                      },
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "account_name": {
+                        "type": "string"
+                      },
+                      "ewallet_provider": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Philippines payouts\u2014either a bank account or an e\u2011wallet."
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "customer_id",
+                  "stables",
+                  "amount",
+                  "currency",
+                  "wallet_address",
+                  "network"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "Business FX"
+        ],
+        "summary": "Business Offramp"
+      }
+    },
+    "/by-ramp": {},
+    "/business_payment_vendors": {
+      "get": {
+        "description": "",
+        "operationId": "get_business_payment_vendors",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "currency",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AED",
+                "AUD",
+                "BRL",
+                "CAD",
+                "CNY",
+                "DKK",
+                "EUR",
+                "GBP",
+                "HKD",
+                "ILS",
+                "MXN",
+                "NGN",
+                "PHP",
+                "SGD",
+                "USD",
+                "ZAR"
+              ]
+            },
+            "description": "Pass selected currency to get vendor bank details.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Static Details"
+        ],
+        "summary": "Get Business Payment Vendors"
+      }
+    },
+    "/business_onramp": {
+      "post": {
+        "description": "",
+        "operationId": "get_busonrampaed",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "customer_id": {
+                    "type": "string",
+                    "default": "",
+                    "description": "ID of your customer making the API request on your platform."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "   Fiat you paid.",
+                    "enum": [
+                      "AED",
+                      "AUD",
+                      "BRL",
+                      "CAD",
+                      "CNY",
+                      "DKK",
+                      "EUR",
+                      "GBP",
+                      "HKD",
+                      "ILS",
+                      "MXN",
+                      "NGN",
+                      "PHP",
+                      "SGD",
+                      "USD",
+                      "ZAR"
+                    ]
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Fiat amount you paid. For Limits see, Fees & Minimums under B2B API's."
+                  },
+                  "stables": {
+                    "type": "string",
+                    "enum": [
+                      "USDC",
+                      "USDT"
+                    ],
+                    "description": "Stablecoin you\u2019d like to receive (e.g., USDC, USDT)."
+                  },
+                  "vendor_id": {
+                    "type": "string",
+                    "description": "Payout banking rail to use. Retrieve via Get Business Vendors."
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "Destination wallet address to receive the stablecoin."
+                  },
+                  "network": {
+                    "type": "string",
+                    "description": "Destination blockchain network (e.g., Solana, Polygon)."
+                  },
+                  "bank _transfer": {
+                    "type": "object",
+                    "properties": {
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bank_code": {
+                        "type": "string"
+                      },
+                      "branch_code": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Supported currencies: USD, SGD, HKD, CNY & ILS"
+                  },
+                  "iban": {
+                    "type": "object",
+                    "properties": {
+                      "iban": {
+                        "type": "string"
+                      },
+                      "swift_code": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for domestic and  international IBAN transfers. Supported currencies: AED, EUR, GBP (international), USD (EU route), CAD (EU route), CNY, HKD, SGD, ZAR, MXN."
+                  },
+                  "usd_domestic": {
+                    "type": "object",
+                    "properties": {
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "routing_number": {
+                        "type": "string",
+                        "description": "Use if you have a single routing number"
+                      },
+                      "ach_routing_number": {
+                        "type": "string",
+                        "description": "Provide if your bank lists them separately."
+                      },
+                      "fedwire_routing_number": {
+                        "type": "string",
+                        "description": "Provide if your bank lists them separately."
+                      },
+                      "bank_name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for US domestic ACH / Fedwire transfers. Supported currency: USD"
+                  },
+                  "gbp_domestic": {
+                    "type": "object",
+                    "properties": {
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "sort_code": {
+                        "type": "string"
+                      },
+                      "bank_name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for UK domestic transfers (Faster Payments, CHAPS & BACS). Supported currency: GBP"
+                  },
+                  "ngn_domestic": {
+                    "type": "object",
+                    "properties": {
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bank_name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for Nigerian domestic transfers. Supported currency: NGN"
+                  },
+                  "aud_domestic": {
+                    "type": "object",
+                    "properties": {
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bsb": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for Australian domestic bank transfers. Supported currency: AUD"
+                  },
+                  "cad_eft": {
+                    "type": "object",
+                    "properties": {
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "transit_number": {
+                        "type": "string"
+                      },
+                      "institution_number": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for Canadian domestic EFT bank transfers. Supported currency: CAD"
+                  },
+                  "cad_interac": {
+                    "type": "object",
+                    "properties": {
+                      "interac_email": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for Canadian Interac e-Transfers. Supported currency: CAD"
+                  },
+                  "brl_pix": {
+                    "type": "object",
+                    "properties": {
+                      "pix_key": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for PIX transfers. Supported currency: BRL"
+                  },
+                  "mxn_clabe": {
+                    "type": "object",
+                    "properties": {
+                      "clabe": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for Mexican domestic SPEI transfers. Supported currency: MXN"
+                  },
+                  "php_bank_transfer": {
+                    "type": "object",
+                    "properties": {
+                      "account_number": {
+                        "type": "string"
+                      },
+                      "bank_name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for Philippine domestic bank transfers. Supported currency: PHP"
+                  },
+                  "php_ewallet": {
+                    "type": "object",
+                    "properties": {
+                      "ewallet_account_number": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Use for Philippine e-wallet transfers. Supported currency: PHP"
+                  },
+                  "proof_of_payment": {
+                    "type": "string",
+                    "description": "A URL pointing to your payment proof. The uploaded file  must display your company letterhead, no larger than 5MB.  Accepted formats are PDF, JPEG, JPG, or PNG."
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "customer_id",
+                  "currency",
+                  "amount",
+                  "stables",
+                  "vendor_id",
+                  "wallet_address",
+                  "network",
+                  "proof_of_payment"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "Business FX"
+        ],
+        "summary": "Business Onramp"
+      }
+    },
+    "/business_customers": {
+      "get": {
+        "description": "",
+        "operationId": "get_business_customers",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get Business Customers"
+      }
+    },
+    "/verify_account_number": {
+      "get": {
+        "summary": "Verify Account Number",
+        "description": "This endpoint can be used to verify a Nigeria bank account number",
+        "operationId": "account_name",
+        "parameters": [
+          {
+            "name": "account_number",
+            "in": "query",
+            "description": "Customer account number.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bank_code",
+            "in": "query",
+            "description": "Get value for this field from the \"Get payment banks endpoint\".",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/wallet_balance": {
+      "get": {
+        "summary": "Get Available Balance",
+        "description": "For customer's who hold funds in house with LINK.",
+        "operationId": "get-account-balance",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/brl/ramp_quote": {
+      "get": {
+        "description": "",
+        "operationId": "get_fetch_quote_rate",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "New Example": {
+                    "summary": "New Example",
+                    "value": {
+                      "status": "Success",
+                      "message": "Rate retrieved successfully",
+                      "data": {
+                        "baseRate": "5.574069",
+                        "inputAmount": "4500",
+                        "outputAmount": "797.586041",
+                        "outputCurrency": "USDC",
+                        "outputPaymentMethod": "POLYGON",
+                        "validity": "15 seconds"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "required": true,
+            "description": "Amount of BRL (on-ramp min: 100 BRL) or USDC (off-ramp  min: 5 USDC/USDT) to convert.",
+            "schema": {
+              "type": "string",
+              "default": "100"
+            }
+          },
+          {
+            "name": "trx_type",
+            "in": "query",
+            "required": true,
+            "description": "Transaction type: \"onramp\" for BRL\u2192USDC, \"offramp\" for USDC\u2192BRL. ",
+            "schema": {
+              "type": "string",
+              "default": "",
+              "enum": [
+                "onramp",
+                "offramp"
+              ]
+            }
+          }
+        ],
+        "tags": [
+          "BRL Ramp"
+        ],
+        "summary": "Rate Quote"
+      }
+    },
+    "/idr/ramp_quote": {},
+    "/direct_ramp/payment_methods": {
+      "get": {
+        "description": "",
+        "operationId": "get_direct_ramppayment_methods",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "currency",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "GHS",
+                "KES",
+                "NGN",
+                "ZAR",
+                "XAF",
+                "TZS"
+              ],
+              "default": "NGN"
+            },
+            "required": true,
+            "description": "Available currenies"
+          }
+        ],
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Payment Methods"
+      }
+    },
+    "/direct_ramp/onboarding": {
+      "post": {
+        "description": "",
+        "operationId": "post_direct_ramponboarding",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your customers email address.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "first_name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Customer first name."
+          },
+          {
+            "in": "query",
+            "name": "last_name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Customer last name."
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Nigeria",
+                "Ghana",
+                "Kenya",
+                "South Africa",
+                "Botswana",
+                "Cameroon",
+                "Malawi",
+                "Mozambique",
+                "Sierra Leone",
+                "Tanzania",
+                "Uganda",
+                "Zambia",
+                "Cote D'Ivoire",
+                "Rwanda"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Direct Ramp Onboard"
+      }
+    },
+    "/direct_ramp/deposit": {
+      "post": {
+        "description": "",
+        "operationId": "get_new-endpoint-1",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "quoteId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Id from get Rate Quote endpoint."
+          },
+          {
+            "in": "query",
+            "name": "currency",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NGN",
+                "GHS",
+                "KES",
+                "ZAR",
+                "XAF",
+                "TZS"
+              ],
+              "default": "NGN"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "stables",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "USDC"
+              ],
+              "default": "USDC"
+            },
+            "required": true,
+            "description": "Stable coin in which user wants to be settled in (USDC)."
+          },
+          {
+            "in": "query",
+            "name": "network",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base"
+              ]
+            },
+            "required": true,
+            "description": "The address network to disburse payment."
+          },
+          {
+            "in": "query",
+            "name": "address",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Wallet address stablecoin token will be sent to."
+          },
+          {
+            "in": "query",
+            "name": "phone_number",
+            "schema": {
+              "type": "string"
+            },
+            "description": "currency payment method is mobile money transfer. input phone number sending funds."
+          },
+          {
+            "in": "query",
+            "name": "bankaccount_number",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Currency payment method is bank transfer. Input account number sending funds."
+          }
+        ],
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Direct Onramp"
+      }
+    },
+    "/direct_ramp/withdraw": {
+      "post": {
+        "description": "",
+        "operationId": "get_direct_rampwithdraw",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "quoteId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Gotten from get Rate Quote endpoint.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "payout_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Customer Payout method ID gotten from Add Payout method endpoint.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "stables",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "USDT",
+                "USDC"
+              ]
+            },
+            "required": true,
+            "description": "stable coin used for offramp"
+          },
+          {
+            "in": "query",
+            "name": "offramp_amount",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Stables (USDT) amount based of generated quote.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "payout_currency",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NGN",
+                "GHS",
+                "KES",
+                "ZAR",
+                "XAF",
+                "TZS"
+              ],
+              "default": "NGN"
+            },
+            "required": true,
+            "description": "Currency to be settled in based of generated quote"
+          },
+          {
+            "in": "query",
+            "name": "sender_address",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Wallet address funds sent from.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "network",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Bsc"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Direct Offramp"
+      }
+    },
+    "/direct_ramp/rate_quote": {
+      "get": {
+        "description": "",
+        "operationId": "get_ramp_quote",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "customer_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "asset",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NGN",
+                "GHS",
+                "KES",
+                "ZAR",
+                "XAF",
+                "TZS",
+                "USDT",
+                "USDC"
+              ]
+            },
+            "required": true,
+            "description": "Available currencies. NOTE: USDT/USDC are for offramp only"
+          },
+          {
+            "in": "query",
+            "name": "amount",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "amount to on ramp or offramp based of currency."
+          },
+          {
+            "in": "query",
+            "name": "trx_type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "onramp",
+                "offramp"
+              ]
+            },
+            "description": "Transaction type: \"onramp\" for \"Fiat\"\u2192Stables, \"offramp\" for Stables\u2192\"Fiat\". ",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "payment_method",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Differs for each currency. Call the Get payment Method endpoint."
+          }
+        ],
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Rate Quote"
+      }
+    },
+    "/direct_ramp/stable_paid": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "reference",
+            "schema": {
+              "type": "string",
+              "default": "ibx-717-222-uxa"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "post_direct-ramp-stable-paid",
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Confirm Transfer"
+      }
+    },
+    "/direct_ramp/payout_account": {
+      "post": {
+        "description": "",
+        "operationId": "post_direct_ramppayout_account",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "customer_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the customer who owns the payment method.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "payment_method",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Differs for each currency. Call the Get payment Method endpoint",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "customer banking name related to payment method."
+          },
+          {
+            "in": "query",
+            "name": "phone_number",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Mobile money phone number"
+          },
+          {
+            "in": "query",
+            "name": "account_number",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Customer Bank account number"
+          },
+          {
+            "in": "query",
+            "name": "bank_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Customer Bank name"
+          }
+        ],
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Payout Account"
+      }
+    },
+    "/direct_ramp/customer": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Email address of you customer used when calling the {Direct Onboard} Endpoint"
+          }
+        ],
+        "operationId": "get_direct-ramp-customer",
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Customer Info"
+      }
+    },
+    "/direct_ramp/payout/status": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "trx_reference",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The reference code "
+          }
+        ],
+        "operationId": "get_direct-ramp-payout-status",
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Transaction Status"
+      }
+    },
+    "/direct_ramp/transfer_sent": {
+      "post": {
+        "description": "",
+        "operationId": "post_direct_rampdepositpayment_made",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "trx_type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "onramp",
+                "offramp"
+              ]
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "reference",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Transfer Sent"
+      }
+    },
+    "/onramp-1": {},
+    "/offramp-1": {},
+    "/rate_quote-1": {},
+    "/esp_onramp": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currency": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "string"
+                  },
+                  "vendorId": {
+                    "type": "string"
+                  },
+                  "bankName": {
+                    "type": "string"
+                  },
+                  "accountNumber": {
+                    "type": "string"
+                  },
+                  "walletAddress": {
+                    "type": "string"
+                  },
+                  "kingschatUsername": {
+                    "type": "string"
+                  },
+                  "espeesCard": {
+                    "type": "string"
+                  },
+                  "emailAddress": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "currency",
+                  "amount",
+                  "vendorId",
+                  "bankName",
+                  "accountNumber"
+                ]
+              }
+            }
+          }
+        },
+        "operationId": "post_esp-onramp",
+        "tags": [
+          "ESPESS"
+        ],
+        "summary": "Initiate ESP Onramp"
+      }
+    },
+    "/esp_offramp": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "operationId": "post_esp-offramp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string"
+                  },
+                  "currency": {
+                    "type": "string"
+                  },
+                  "bankName": {
+                    "type": "string"
+                  },
+                  "accountNumber": {
+                    "type": "string"
+                  },
+                  "accountName": {
+                    "type": "string"
+                  },
+                  "walletAddress": {
+                    "type": "string"
+                  },
+                  "kingschatUsername": {
+                    "type": "string"
+                  },
+                  "espeesCard": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "currency",
+                  "amount",
+                  "bankName",
+                  "accountNumber"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "ESPESS"
+        ],
+        "summary": "Initiate ESP Offramp"
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  },
+  "x-readme-fauxas": true,
+  "tags": [
+    {
+      "name": "Retail FX"
+    },
+    {
+      "name": "Rates"
+    },
+    {
+      "name": "Pan-Africa Ramp"
+    },
+    {
+      "name": "BRL Ramp"
+    },
+    {
+      "name": "IDR Ramp"
+    },
+    {
+      "name": "Business FX"
+    },
+    {
+      "name": "Customers"
+    },
+    {
+      "name": "Static Details"
+    },
+    {
+      "name": "Transactions"
+    },
+    {
+      "name": "Accounts"
+    },
+    {
+      "name": "ESPESS"
+    }
+  ]
+}
