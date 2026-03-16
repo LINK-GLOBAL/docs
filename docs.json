@@ -1,7 +1,8 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "sequoia",
+  "theme": "mint",
   "name": "Build with LINK",
+  "home": "docs/getting-started",
   "colors": {
     "primary": "#0038FF",
     "light": "#0038FF",
