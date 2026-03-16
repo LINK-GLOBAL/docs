@@ -108,7 +108,7 @@
         "groups": [
           {
             "group": "API Reference",
-            "openapi": "api-reference/link-transaction.json"
+            "openapi": "reference/link-transaction.json"
           }
         ]
       }
