@@ -120,5 +120,11 @@
   },
   "navbar": {
     "links": []
+  },
+  "redirects": [
+  {
+    "source": "/",
+    "destination": "/docs/getting-started"
   }
+]
 }
