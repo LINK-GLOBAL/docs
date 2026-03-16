@@ -8,50 +8,110 @@
     "dark": "#018ef5"
   },
   "favicon": "/favicon.ico",
+  "logo": "/images/97584af-brandmark-white.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "API Endpoints",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "GeT started",
+            "group": "Getting Started",
             "pages": [
-              "reference/api-overview"
+              "docs/getting-started",
+              "docs/platform-overview"
             ]
           },
           {
-            "group": "RATES",
+            "group": "Core Concepts",
             "pages": [
-              "reference/get-onramp-rates"
+              "docs/geographies",
+              "docs/stablecoins-and-blockchains",
+              "docs/fiat-payment-methods",
+              "docs/supported-currency-methods"
             ]
           },
           {
-            "group": "PAN-AFRICA RAMP",
+            "group": "On-Ramp",
             "pages": [
-              "reference/payment-method"
+              "docs/ramp-overview",
+              "docs/on-ramp",
+              "docs/onramp-rates",
+              "docs/business-onramp-create-payment"
             ]
           },
           {
-            "group": "BRL RAMP",
+            "group": "Off-Ramp",
             "pages": [
-              "reference/register-wallet"
-            ]
-          },
-          {
-            "group": "IDR RAMP",
-            "pages": [
-              "reference/idr-onboarding"
+              "docs/off-ramp",
+              "docs/offramp-rates",
+              "docs/business-offramp"
             ]
           },
           {
             "group": "Customers",
             "pages": [
-              "reference/create-customer"
+              "docs/customer",
+              "docs/customers",
+              "docs/customer-verification"
             ]
+          },
+          {
+            "group": "Transactions",
+            "pages": [
+              "docs/fetch-transactions",
+              "docs/receipts",
+              "docs/processing-windows",
+              "docs/transaction-fees"
+            ]
+          },
+          {
+            "group": "Infrastructure",
+            "pages": [
+              "docs/webhooks-1",
+              "docs/multichain-static",
+              "docs/multichain-static-accounts",
+              "docs/liquidation-address",
+              "docs/prefunding",
+              "docs/prefunded-account"
+            ]
+          },
+          {
+            "group": "Compliance & Fees",
+            "pages": [
+              "docs/b2b-compliance",
+              "docs/banking-object-requirements",
+              "docs/currency-limits",
+              "docs/developer-fees"
+            ]
+          },
+          {
+            "group": "OTC & Bridge",
+            "pages": [
+              "docs/otc-service",
+              "docs/cross-border-fx",
+              "docs/bridge-api",
+              "docs/bridge-rates"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "docs/faq",
+              "docs/support",
+              "docs/first-and-third-party-support"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Endpoints",
+        "groups": [
+          {
+            "group": "API Reference",
+            "openapi": "api-reference/link-transaction.json"
           }
         ]
       }
     ]
-  },
-  "logo": "/images/97584af-brandmark-white.svg"
+  }
 }
