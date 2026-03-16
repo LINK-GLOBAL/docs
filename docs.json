@@ -1,14 +1,15 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "aspen",
+  "theme": "mint",
   "name": "Build with LINK",
+  "home": "docs/getting-started",
   "colors": {
-    "primary": "#018ef5",
-    "light": "#018ef5",
+    "primary": "#0038FF",
+    "light": "#0038FF",
     "dark": "#018ef5"
   },
   "favicon": "/favicon.ico",
-  "logo": "/images/97584af-brandmark-white.svg",
+  "logo": "/images/link-white.png",
   "navigation": {
     "tabs": [
       {
@@ -113,5 +114,31 @@
         ]
       }
     ]
+  },
+  "fonts": {
+    "family": "Lato"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Get Started",
+        "href": "https://www.linkio.world/get-started"
+      },
+      {
+        "label": "Dashboard",
+        "href": "https://app.linkio.world/"
+      }
+    ]
+  },
+  "redirects": [
+  {
+    "source": "/",
+    "destination": "/docs/getting-started"
   }
+],
+"background": {
+  "color": {
+    "dark": "#171616"
+  }
+}
 }
