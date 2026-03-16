@@ -460,6 +460,84 @@
         "summary": "Payment Methods"
       }
     },
+    "/direct_ramp/onboarding": {
+      "post": {
+        "description": "",
+        "operationId": "post_direct_ramponboarding",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your customers email address.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "first_name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Customer first name."
+          },
+          {
+            "in": "query",
+            "name": "last_name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Customer last name."
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Nigeria",
+                "Ghana",
+                "Kenya",
+                "South Africa",
+                "Botswana",
+                "Cameroon",
+                "Malawi",
+                "Mozambique",
+                "Sierra Leone",
+                "Tanzania",
+                "Uganda",
+                "Zambia",
+                "Cote D'Ivoire",
+                "Rwanda"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pan-Africa Ramp"
+        ],
+        "summary": "Direct Ramp Onboard"
+      }
+    },
     "/direct_ramp/rate_quote": {
       "get": {
         "description": "",
@@ -878,112 +956,6 @@
           "Pan-Africa Ramp"
         ],
         "summary": "Customer Info"
-      }
-    },
-    "/direct_ramp/onboarding": {
-      "post": {
-        "description": "",
-        "operationId": "post_direct_ramponboarding",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "parameters": [
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Your customers email address.",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "first_name",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Customer first name."
-          },
-          {
-            "in": "query",
-            "name": "last_name",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Customer last name."
-          },
-          {
-            "in": "query",
-            "name": "country",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "Nigeria",
-                "Ghana",
-                "Kenya",
-                "South Africa",
-                "Botswana",
-                "Cameroon",
-                "Malawi",
-                "Mozambique",
-                "Sierra Leone",
-                "Tanzania",
-                "Uganda",
-                "Zambia",
-                "Cote D'Ivoire",
-                "Rwanda"
-              ]
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {}
-              }
-            }
-          }
-        },
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
-        "summary": "Direct Ramp Onboard",
-        "deprecated": true
-      }
-    },
-    "/direct_ramp/stable_paid": {
-      "post": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "parameters": [
-          {
-            "in": "query",
-            "name": "reference",
-            "schema": {
-              "type": "string",
-              "default": "ibx-717-222-uxa"
-            },
-            "required": true
-          }
-        ],
-        "operationId": "post_direct-ramp-stable-paid",
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
-        "summary": "Confirm Transfer",
-        "deprecated": true
       }
     },
     "/brl/ramp_quote": {
@@ -2288,51 +2260,6 @@
           "Static Details"
         ],
         "summary": "Get Business Payment Vendors"
-      }
-    },
-    "/reg_bank_account": {
-      "post": {
-        "description": "",
-        "operationId": "post_reg_bank_account",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "business_id ": {
-                    "type": "string",
-                    "description": "Your LINK business identifier"
-                  },
-                  "user_name": {
-                    "type": "string",
-                    "description": "Customer's user name"
-                  },
-                  "pix_key": {
-                    "type": "string",
-                    "description": "Customer's bank pix_key"
-                  }
-                },
-                "type": "object",
-                "required": [
-                  "business_id ",
-                  "user_name",
-                  "pix_key"
-                ]
-              }
-            }
-          }
-        },
-        "tags": [
-          "Static Details"
-        ],
-        "summary": "Register Bank Account",
-        "deprecated": true
       }
     },
     "/fetch_all_transactions": {
