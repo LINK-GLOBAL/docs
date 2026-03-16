@@ -116,15 +116,29 @@
     ]
   },
   "fonts": {
-    "family": "Roboto"
+    "family": "Lato"
   },
   "navbar": {
-    "links": []
+    "links": [
+      {
+        "label": "Get Started",
+        "href": "https://www.linkio.world/get-started"
+      },
+      {
+        "label": "Dashboard",
+        "href": "https://app.linkio.world/"
+      }
+    ]
   },
   "redirects": [
   {
     "source": "/",
     "destination": "/docs/getting-started"
   }
-]
+],
+"background": {
+  "color": {
+    "dark": "#171616"
+  }
+}
 }
