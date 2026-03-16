@@ -1,0 +1,159 @@
+---
+title: "Business Offramp"
+description: "POST /v2/business_offramp"
+---
+
+Initiate a stablecoin → fiat payout to a business’s bank or wallet rail. You’ll provide core fields (business, currency, amount, stable), plus a single nested payout block that matches the currency + method you want to receive with (e.g., cad\_eft, eur\_sepa, sgd\_fast\_vpa, brl\_pix, etc).
+
+⚠️ Only one nested block is required per request.
+
+#### Request Body
+
+| Field           | Type   | Description                                     |
+| --------------- | ------ | ----------------------------------------------- |
+| cutomer\_id     | string | Your Business customer\_id                      |
+| stables         | string | Stablecoin option used (e.g., USDC, USDT).      |
+| amount          | string | Stablecoin amount sent(string for precision).   |
+| currency        | string | Fiat currency to receive (e.g., USD, GBP, NGN). |
+| wallet\_address | string | Wallet address USDC/USDT is sent from.          |
+| payout details  | object | Banking details for fiat payout.                |
+
+#### Quick-choose table
+
+Pick the nested block that matches the currency and payment rail you used to send fiat.
+
+| Currency                                                                                                                                                                                                                                                              | Block (object)                                                | Description                                                                                                                                                                                                                                       | Core Fields                                                                                                                                                                                                                                                                                                                                                                                           |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| usd\_payout                                                                                                                                                                                                                                                           | USD                                                           | US payouts via ACH, Fedwire, or SWIFT. Include whichever The routing code applies (ACH, Fedwire, or SWIFT).                                                                                                                                       | account\_number, account\_name, optional ach\_routing\_number, fedwire\_routing\_number, swift\_code, intermediary\_swift.                                                                                                                                                                                                                                                                            |
+| gbp\_payout                                                                                                                                                                                                                                                           | GBP                                                           | UK payouts via FPS, CHAPS, or SWIFT. Provide sort code + account number or an IBAN. A swift\_code or intermediary\_swift triggers SWIFT; an IBAN without a sort code is CHAPS, sort code + account with no address is FPS, with address is CHAPS. | account\_name, conditional sort\_code, account\_number, optional iban, swift\_code, intermediary\_swift.                                                                                                                                                                                                                                                                                              |
+| eur\_payout                                                                                                                                                                                                                                                           | EUR                                                           | Euro payouts via SEPA (default) or SWIFT. Include a swift\_code or intermediary\_swift only when using SWIFT.                                                                                                                                     | iban, account\_name, optional swift\_code, intermediary\_swift.                                                                                                                                                                                                                                                                                                                                       |
+| cad\_payout                                                                                                                                                                                                                                                           | CAD                                                           | Canadian bank payouts—either EFT (domestic) or SWIFT. Provide the four domestic codes; include swift\_code or intermediary\_swift only for SWIFT.                                                                                                 | institution\_number, transit\_number, account\_number, account\_name, optional swift\_code, intermediary\_swift                                                                                                                                                                                                                                                                                       |
+| cad\_interac                                                                                                                                                                                                                                                          | CAD                                                           | Canadian Interac e‑Transfer via email or phone.                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| cad\_bill\_payment                                                                                                                                                                                                                                                    | CAD                                                           | Canadian Bill Payment.                                                                                                                                                                                                                            | biller, account\_number, optional account\_name.                                                                                                                                                                                                                                                                                                                                                      |
+| aud\_payout                                                                                                                                                                                                                                                           | AUD                                                           | Australian bank payouts—bank transfer (BSB + account), SWIFT. Supply the field that matches your rail; a swift\_code or intermediary\_swift triggers SWIFT.                                                                                       | account\_name; optional bsb + account\_number; optional swift\_code, intermediary\_swift;                                                                                                                                                                                                                                                                                                             |
+| aud\_bpay                                                                                                                                                                                                                                                             | AUD                                                           | Australian BPAY.                                                                                                                                                                                                                                  | biller\_code, customer\_reference\_number;                                                                                                                                                                                                                                                                                                                                                            |
+| sgd\_payout                                                                                                                                                                                                                                                           | SGD                                                           | Singapore payouts via FAST (PayNow), GIRO/RTGS, or SWIFT. Provide an account number with a swift\_code/intermediary\_swift for SWIFT.                                                                                                             | account\_name; optional account\_number; optional swift\_code, intermediary\_swift;                                                                                                                                                                                                                                                                                                                   |
+| hkd\_payout                                                                                                                                                                                                                                                           | HKD                                                           | Hong Kong payouts via ACH/FPS (account) or SWIFT/RTGS.                                                                                                                                                                                            | account\_name, optional bank\_code, account\_number for local transfer; optional swift\_code, intermediary\_swift;                                                                                                                                                                                                                                                                                    |
+| cny\_payout                                                                                                                                                                                                                                                           | CNY                                                           | Mainland China payouts via ACH/FPS (account) or SWIFT/RTGS.                                                                                                                                                                                       | account\_name, optional bank\_code, account\_number; swift\_code / intermediary\_swift;                                                                                                                                                                                                                                                                                                               |
+| mxn\_payout                                                                                                                                                                                                                                                           | MXN                                                           | Mexico payouts—local bank transfer (CLABE) or SWIFT.                                                                                                                                                                                              | clabe, account\_name; optional swift\_code, intermediary\_swift;                                                                                                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                       |                                                               |                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `cci`\_payout. i.eaed\_payout, ils\_payout, egp\_payout                                                                                                                                                                                                               | Options:AED, ILS, EGP                                         | Unified IBAN/SWIFT payouts for currenies AED, ILS, EGP. Provide an IBAN and account name. A swift\_code or intermediary\_swift triggers SWIFT; otherwise it’s a local bank transfer.                                                              | iban, account\_name, optional swift\_code, intermediary\_swift;                                                                                                                                                                                                                                                                                                                                       |
+|                                                                                                                                                                                                                                                                       |                                                               |                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ngn\_bank\_transfer                                                                                                                                                                                                                                                   | NGN                                                           | Nigerian local bank payout.                                                                                                                                                                                                                       | account\_number, account\_name, bank\_name.                                                                                                                                                                                                                                                                                                                                                           |
+|                                                                                                                                                                                                                                                                       |                                                               |                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| brl\_payout                                                                                                                                                                                                                                                           | BRL                                                           | Brazil payouts via PIX or standard bank transfer. Supply a pix\_key for PIX; otherwise provide bank details (bank\_name, account\_number, account\_name, account\_type, branch\_code).                                                            | Either a pix\_key, or the full set of bank fields.                                                                                                                                                                                                                                                                                                                                                    |
+|                                                                                                                                                                                                                                                                       |                                                               |                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| php\_payout                                                                                                                                                                                                                                                           | PHP                                                           | Philippines payouts—either a bank account or an e‑wallet. If you provide ewallet\_provider, the payout is sent to an e‑wallet; otherwise it’s a standard bank transfer.                                                                           | Either bank\_name, account\_number, account\_name for bank transfers, or ewallet\_provider, account\_number, account\_name for e‑wallet.                                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                       |                                                               |                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `ccy`\_bank\_transfer•inr\_bank\_transfer •idr\_bank\_transfer, •krw\_bank\_transfer, •bwp\_bank\_transfer, •myr\_bank\_transfer, •mwk\_bank\_transfer, •nad\_bank\_transfer, •xaf\_bank\_transfer, •xof\_bank\_transfer, •zar\_bank\_transfer, •zmw\_bank\_transfer, | Options:INR, IDR, KRW, BWP, MYR, MWK, NAD, XAF, XOF, ZAR, ZMW | Unified bank‑transfer corridors. Use the currency prefix as the object name (e.g., inr\_bank\_transfer). Each currency has its own local fields:                                                                                                  | •\*\* INR:\*\* ifsc\_code, account\_number, account\_name. •**KRW:** bank\_code, account\_number, account\_name. •\*\*BWP: \*\*swift\_code, branch\_code, account\_number, account\_name. •\*\*MYR: \*\*swift\_code, account\_number, account\_name. •**ZAR:** swift\_code, account\_number, account\_name, account\_type. •\*\*MWK/NAD/XAF/XOF/ZMW: \*\*swift\_code, account\_number, account\_name. |
+|                                                                                                                                                                                                                                                                       |                                                               |                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                       |
+
+#### JSON request examples
+
+<CodeGroup>
+  ```bash bash
+  {
+    "customer_id": "08********",
+    "currency": "USD",
+    "amount": "15000.00",
+    "stables": "USDC",
+    "vendor_id": "9146827350",
+    "wallet_address": "YourWalletAddressHere",
+    "network": "solana",
+    "usd_domestic": {
+      "account_number": "875104368977",
+      "routing_number": "125109019",
+      "ach_routing_number": "026073150",
+      "fedwire_routing_number": "026073008",
+      "bank_name": "Coastal Community Bank"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "GBP",
+    "amount": "25000.00",
+    "stables": "USDC",
+    "vendor_id": "6283947015",
+    "wallet_address": "0xYourSolmAddress",
+    "network": "solana",
+    "gbp_domestic": {
+      "account_number": "04555464",
+      "sort_code": "041907",
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "EUR",
+    "amount": "100000.00",
+    "stables": "USDT",
+    "vendor_id": "4758291630",
+    "wallet_address": "YourWallet",
+    "network": "solana",
+    "iban": {
+      "iban": "NL02AINH0232055238",
+      "swift_code": "ABNANL2A"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "SGD",
+    "amount": "120000.00",
+    "stables": "USDC",
+    "vendor_id": "5924816037",
+    "wallet_address": "YourSolanaWallet",
+    "network": "solana",
+    "bank_transfer": {
+      "account_number": "8853870376",
+      "bank_code": "7171",
+      "branch_code": "072",
+      "swift_code": "DBSSSGSG"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "CAD",
+    "amount": "2500.00",
+    "stables": "USDC",
+    "vendor_id": "4926381057",
+    "wallet_address": "YourSolanaWallet",
+    "network": "solana",
+    "cad_interac": {
+      "interac_email": "[email protected]"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "PHP",
+    "amount": "520000.00",
+    "stables": "USDT",
+    "vendor_id": "8205639174",
+    "wallet_address": "YourWallet",
+    "network": "solana",
+    "php_bank_transfer": {
+      "account_number": "447853760386",
+      "bank_name": "DCPay Philippines"
+    }
+  }
+  ```
+</CodeGroup>
+
+***
+
+[Business Onramp](/docs/business-onramp-create-payment)
+
+[Get Payment vendors](/docs/list-payment-vendors-1)

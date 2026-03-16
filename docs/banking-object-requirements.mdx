@@ -1,0 +1,59 @@
+---
+title: "Banking Object Requirements"
+---
+
+## Banking Object Requirements
+
+When creating a deposit request, use these banking details to make the transfer depending on the **currency** and **payment route** (domestic vs. international).
+
+Use the table below to find the exact fields required for each object. These fields must be provided as strings in your JSON payload.
+
+| Object Name            | Currency | Route / Region           | Required String Fields                                                                                          |
+| ---------------------- | -------- | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| usd\_domestic          | USD      | Domestic                 | account\_number, routing\_number, ach\_routing\_number, fedwire\_routing\_number, bank\_name, beneficiary\_name |
+| usd\_international\_us | USD      | International (US)       | account\_number, ach\_routing\_number, fedwire\_routing\_number, swift\_code, bank\_name, beneficiary\_name     |
+| usd\_international\_eu | USD      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| usd\_international\_sg | USD      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| usd\_international\_hk | USD      | International (HK)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| eur\_domestic          | EUR      | Domestic                 | iban, bank\_name, beneficiary\_name                                                                             |
+| eur\_international\_eu | EUR      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| eur\_international\_sg | EUR      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| gbp\_domestic          | GBP      | Domestic (UK)            | account\_number, sort\_code, iban, bank\_name, beneficiary\_name                                                |
+| gbp\_international\_uk | GBP      | International (UK)       | aaccount\_number, sort\_code, iban, swift\_code, bank\_name, beneficiary\_name                                  |
+| gbp\_international\_eu | GBP      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| gbp\_international\_sg | GBP      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| cad\_eft               | CAD      | Domestic EFT             | account\_number, transit\_number, institution\_number, bank\_name, beneficiary\_name                            |
+| cad\_interac           | CAD      | Domestic Interac         | email, beneficiary\_name                                                                                        |
+| cad\_international\_eu | CAD      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| cad\_international\_sg | CAD      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| aud\_domestic          | AUD      | Domestic                 | account\_number, bsb, bank\_name, beneficiary\_name                                                             |
+| aud\_international\_eu | AUD      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| aud\_international\_sg | AUD      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| sgd\_domestic          | SGD      | Domestic                 | account\_number, bank\_code, branch\_code, bank\_name, beneficiary\_name                                        |
+| sgd\_international\_eu | SGD      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| sgd\_international\_sg | SGD      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| cny\_domestic          | CNY      | Domestic (CN)            | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| cny\_international\_eu | CNY      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| cny\_international\_hk | CNY      | International (HK)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| cny\_international\_sg | CNY      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| mxn\_domestic          | MXN      | Domestic                 | clabe, bank\_name, beneficiary\_name                                                                            |
+| mxn\_international     | MXN      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| brl\_pix               | BRL      | Domestic / PIX           | pix\_key                                                                                                        |
+| ngn\_domestic          | NGN      | Domestic (NG)            | account\_number, bank\_name                                                                                     |
+| php\_bank\_transfer    | PHP      | Domestic / Bank Transfer | account\_number, bank\_name                                                                                     |
+| php\_ewallet           | PHP      | Domestic / E-wallet      | ewallet\_account\_number                                                                                        |
+| aed\_domestic          | AED      | Domestic                 | iban, bank\_name, beneficiary\_name                                                                             |
+| aed\_international     | AED      | International            | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| hkd\_domestic          | HKD      | Domestic                 | account\_number, bank\_code, branch\_code, bank\_name, beneficiary\_name                                        |
+| hkd\_international\_hk | HKD      | International (HK)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| hkd\_international\_eu | HKD      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| hkd\_international\_sg | HKD      | International (SG)       | account\_number, swift\_code, bank\_code, branch\_code, bank\_name, beneficiary\_name                           |
+| ils\_domestic          | ILS      | Domestic                 | account\_number, bank\_code, branch\_code, iban, bank\_name, beneficiary\_name                                  |
+| ils\_international     | ILS      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+| zar\_international     | ZAR      | International (EU)       | iban, swift\_code, bank\_name, beneficiary\_name                                                                |
+
+***
+
+[Processing Windows](/docs/processing-windows)
+
+[Developer Fees](/docs/developer-fees)

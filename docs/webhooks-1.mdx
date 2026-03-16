@@ -1,0 +1,80 @@
+---
+title: "Webhooks"
+description: "Webhooks let LINK send real-time notifications to your application whenever important events occur, so you can automatically trigger actions without constantly polling the API."
+---
+
+#### You can use webhooks to get notified when:
+
+* A payment is **initiated, completed,** or **fails**
+* Funds are **credited** or **debited** from your account
+* Other key account or transaction events occur
+
+***
+
+### 1. How It Works
+
+When an event occurs in **LINK Bridge,** we send an **HTTPS POST** request to your specified **webhook URL.** Your server processes the payload and responds with a **200 OK** to acknowledge receipt.
+
+***
+
+### 2. Setting Up a Webhook
+
+**Step 1: Create your endpoint URL**
+
+* This is where LINK will send event payloads
+* Must be a publicly accessible HTTPS endpoint
+
+**Step 2: Add your webhook URL**
+
+* Go to your **LINK Bridge Dashboard → Developers → Webhooks**
+* Enter your webhook URL and save changes
+
+**Step 3: Verify webhook signing (recommended)**
+
+***
+
+### 3. Receiving Events
+
+When your webhook is triggered, LINK sends a **JSON payload** with event details similar to the example below:
+
+<CodeGroup>
+  ```bash bash
+  // Sample webhook payload response
+  {
+      "event": "bridge.events.transaction_request.successful",
+      "payload": {
+          "transaction_id": "645c329afc3ac414bf70f9a1",
+          "business": {
+              "business_id": "0847363729"
+          },
+          "type": "Buy",
+          "reference": "0984938271",
+          "amount": 25639.55,
+          "link_account_name": "Okemdinachi Nwaejie",
+          "link_account_number": "8180789670",
+          "link_bank_name": "Wema Bank",
+          "account_number": "3338900202",
+          "bank_name": "Providus Bank",
+          "link_tag": "Link_eng",
+          "network": "Avalanche",
+          "wallet_address": "x.fie9383jEU8394jdnc",
+          "date_created": "May 11, 2023"
+      }
+  }
+  ```
+</CodeGroup>
+
+***
+
+### ⚠️ Error Handling
+
+If your webhook endpoint is invalid or fails to respond, LINK will retry the delivery **up to two additional times.**
+
+* If the webhook still does not succeed after the retries, the event is marked as **failed.**
+* Failed events are **not automatically retried** afterward, so it’s important to ensure your endpoint is reliable.
+
+***
+
+[Authentication](/docs/authentication-1)
+
+[Dashboards](/docs/dashboards)

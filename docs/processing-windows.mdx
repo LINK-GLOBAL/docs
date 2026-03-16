@@ -1,0 +1,80 @@
+---
+title: "Processing Windows"
+---
+
+## Fiat Rails
+
+LINK accesses fiat rails only on banking days and during banking hours. Refer to the table below for settlement speeds for payments with fiat rails:
+
+| Currency | Rail                           | Onramp Settlement Time | Offramp Settlement Time |
+| -------- | ------------------------------ | ---------------------- | ----------------------- |
+| USD      | Wire                           | 0-1 business day       | 0-1 business day        |
+| USD      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| USD      | RTGS                           | 0-1 business day       | N/A                     |
+| EUR      | SEPA Transfer                  | 0-2 business days      | 0-2 business days       |
+| EUR      | SEPA Instant Transfer          | 0-1 business day       | N/A                     |
+| EUR      | TARGET2 Transfer               | 0-1 business day       | N/A                     |
+| EUR      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| EUR      | Local UK Payout                | N/A                    | 0-2 business days       |
+| GBP      | Faster Payments                | 0-1 business day       | 0-1 business day        |
+| GBP      | CHAPS                          | 0-1 business day       | 0-1 business day        |
+| GBP      | BACS                           | 1-2 business days      | N/A                     |
+| GBP      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| NGN      | Bank Transfer                  | Instant                | Instant                 |
+| ZAR      | Bank Transfer                  | N/A                    | 0-2 business days       |
+| ZAR      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| BRL      | PIX                            | Instant                | Instant                 |
+| BRL      | Bank Transfer                  | N/A                    | 0-1 business day        |
+| MXN      | SPEI                           | 0-1 business day       | 0-1 business day        |
+| MXN      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| PHP      | InstaPay                       | Within 10 minutes      | Within 10 minutes       |
+| PHP      | PESONet                        | 0-1 business day       | 0-1 business day        |
+| PHP      | E-wallet                       | Instant                | Instant                 |
+| SGD      | FAST                           | 0-1 business day       | 0-1 business day        |
+| SGD      | GIRO                           | 1-2 business days      | 1-2 business days       |
+| SGD      | MEPS                           | 0-1 business day       | N/A                     |
+| SGD      | RTGS                           | 0-1 business day       | 0-1 business day        |
+| SGD      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| AED      | IPI                            | 0-1 business day       | 2-3 business days       |
+| AED      | RTGS                           | 0-1 business day       | N/A                     |
+| AED      | SWIFT                          | 0-3 business days      | 0-1 business day        |
+| IDR      | Bank Transfer                  | N/A                    | N/A                     |
+| CAD      | EFT                            | 0-1 business day       | 0-1 business day        |
+| CAD      | Interac                        | 0-1 business day       | 0-1 business day        |
+| CAD      | Bill Payment                   | N/A                    | 3-4 business days       |
+| CAD      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| AUD      | Bank Transfer                  | 0-1 business day       | 0-2 business days       |
+| AUD      | BPAY                           | N/A                    | 0-1 business day        |
+| AUD      | NPP                            | N/A                    | 0-1 business day        |
+| AUD      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| ILS      | Faster Payments, MASAV & ZAHAV | 0-1 business day       | 1-2 business days       |
+| ILS      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| CNY      | ACH                            | 1-2 business days      | 1-2 business days       |
+| CNY      | FPS                            | 0-1 business day       | 0-1 business day        |
+| CNY      | RTGS                           | 0-1 business day       | 0-1 business day        |
+| CNY      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| HKD      | ACH                            | 1-2 business days      | 1-2 business days       |
+| HKD      | FPS                            | 0-1 business day       | 0-1 business day        |
+| HKD      | RTGS                           | 0-1 business day       | 0-1 business day        |
+| HKD      | SWIFT                          | 0-3 business days      | 0-3 business days       |
+| EGP      | Bank Transfer                  | N/A                    | 1-2 business days       |
+| GHS      | SWIFT                          | N/A                    | 0-3 business days       |
+| MWK      | Bank Transfer                  | N/A                    | 2-3 business days       |
+| NAD      | Bank Transfer                  | N/A                    | 2-3 business days       |
+| XAF      | Bank Transfer                  | N/A                    | 2-3 business days       |
+| XOF      | Bank Transfer                  | N/A                    | 2-3 business days       |
+| ZMW      | Bank Transfer                  | N/A                    | 2-3 business days       |
+| INR      | Bank Transfer                  | N/A                    | 0-2 business days       |
+| KRW      | Bank Transfer                  | N/A                    | 0-1 business day        |
+| BWP      | Bank Transfer                  | N/A                    | 2-3 business days       |
+| MYR      | Bank Transfer                  | N/A                    | 0-2 business days       |
+
+### Onramps (fiat to stablecoins)
+
+LINK will typically send stablecoins within minutes of fiat landing in our bank account.
+
+***
+
+[Fees & Minimums for B2B APIs](/docs/currency-limits)
+
+[Banking Object Requirements](/docs/banking-object-requirements)

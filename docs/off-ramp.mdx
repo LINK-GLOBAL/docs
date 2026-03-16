@@ -1,0 +1,79 @@
+---
+title: "Retail Off-Ramp"
+description: "This endpoint can be used to intiate an Off-ramp transaction."
+---
+
+#### Initiate a Sell Transaction.
+
+Endpoint *POST /v2/offramp*
+
+Initiate a stablecoin → fiat offramp for a retail. Endpoint applies only to (NGN & USD).
+
+<CodeGroup>
+  ```bash bash
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'ngnc-sec-key': 'Bridge_Secret_Key',
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      "business_id": "string",  
+      "link_tag": "string", 
+      "type": "string", 
+      "currency": "string",
+      "amount": "string",  
+      "bank_name": "string", 
+      "account_number": "string",
+      "account_name": "string",  
+      "wallet_address": "string",
+      "network": "string",
+      "routing_number": "string",
+      "account_type": "string"
+    });
+  };
+
+  fetch('https://api.linkio.world/transactions/v1/offramp', options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+  ```
+
+  ```bash bash
+  import requests
+
+  url = "https://api.linkio.world/transactions/v1/offramp"
+
+  payload = {
+      "business_id": "string",  
+      "link_tag": "string", 
+      "type": "string", 
+      "amount": 0,  
+      "account_name": "string", 
+      "account_number": "string", 
+      "bank_name": "string", 
+      "network": "string",
+      "wallet_address": "string"
+  }
+  headers = {
+      "accept": "application/json",
+      "ngnc-sec-key": "Bridge_Secret_Key",
+      "content-type": "application/json"
+  }
+
+  response = requests.post(url, json=payload, headers=headers)
+
+  print(response.text)
+  ```
+</CodeGroup>
+
+### API Reference
+
+You can view the API reference for working with Sell Transactions
+
+***
+
+[Retail On-Ramp](/docs/on-ramp)
+
+[Business Onramp](/docs/business-onramp-create-payment)

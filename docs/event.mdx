@@ -1,0 +1,59 @@
+---
+title: "Event"
+---
+
+### Webhook Events
+
+| Event                                         | Description                                                                                                     |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| bridge.events.transaction\_request.successful | This event provides all information associated with every transaction request i.e On/Off Ramp                   |
+| bridge.events.transaction\_request.updated    | This event provides updates on the status of a transaction that is "**Payment received, Completed or Failed**". |
+| ramps.events.transaction\_request.updated     | This event provides updates on the status of a transaction that is "**Payment received, Completed or Failed**". |
+| ramps.events.transaction\_request.successful  | This event provides all information associated with every transaction request i.e On/Off Ramp                   |
+
+<Info>
+  ### Note: Transaction updates are provided only to live transactions, all test transactions carry an automatic status of completed.
+</Info>
+
+### Webhook Payload Structure
+
+Every webhook payloads request made by Bitpowr follow the below basic structure:
+
+event: describing the event payload: An object containing the data associated with the event.
+
+### Sample webhook format
+
+Below is a sample payload response of a webhook event that gets sent to your webhook URL.
+
+<CodeGroup>
+  ```bash bash
+  // Sample webhook payload response
+  {
+      "event": "bridge.events.transaction_request.successful",
+      "payload": {
+          "transaction_id": "645c329afc3ac414bf70f9a1",
+          "business": {
+              "business_id": "0847363729"
+          },
+          "type": "Buy",
+          "reference": "0984938271",
+          "amount": 25639.55,
+          "link_account_name": "Okemdinachi Nwaejie",
+          "link_account_number": "8180789670",
+          "link_bank_name": "Wema Bank",
+          "account_number": "3338900202",
+          "bank_name": "Providus Bank",
+          "link_tag": "Link_eng",
+          "network": "Avalanche",
+          "wallet_address": "x.fie9383jEU8394jdnc",
+          "date_created": "May 11, 2023"
+      }
+  }
+  ```
+</CodeGroup>
+
+***
+
+[Request](/docs/request)
+
+[FAQs](/docs/faq)

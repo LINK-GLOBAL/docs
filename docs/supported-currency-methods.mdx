@@ -1,0 +1,55 @@
+---
+title: "Supported Currency Methods"
+description: "Complete list of supported currencies, countries, identifier and required fields for PAN-African ramp transactions, including mobile money and traditional banking options."
+---
+
+### Getting Available Methods
+
+Use the /direct\_ramp/payment\_methods endpoint to dynamically fetch available payment methods for a specific currency.
+
+### GET /direct\_ramp/payment\_methods?currency=NGN
+
+This will return the current payment methods and their identifiers for the specified currency.
+
+#### Supported Currencies
+
+Currencies: **BWP, GHS, KES, MWK, MZN, NGN, RWF, SLE, TZS, UGX, XAF, XOF, ZAR, ZMW** Some are live presently, while others will been coming soon gradually.
+
+| Currency | Country | Identifier                                               | Fields(required)                        | Available.  |
+| -------- | ------- | -------------------------------------------------------- | --------------------------------------- | ----------- |
+| BWP      | BW      | orange\_money                                            | phone\_number, name                     | coming-soon |
+| BWP      | BW      | bank\_transfer                                           | bank\_account\_number, name, bank\_name | coming-soon |
+| GHS      | GH      | bank\_transfer\_gh                                       | bank\_account\_number, name, bank\_name | Live        |
+| GHS      | GH      | mtn\_momo\_gh, vodafone\_cash\_gh, airteltigo\_money\_gh | phone\_number, name                     | Live        |
+| KES      | KE      | airtel\_money, mpesa                                     | phone\_number, name                     | Live        |
+| KES      | KE      | bank\_transfer\_kenya                                    | bank\_account\_number, name, bank\_name | Live        |
+| MWK      | MW      | airtel\_money                                            | phone\_number, name                     | coming-soon |
+| MWK      | MW      | bank\_transfer                                           | bank\_account\_number, name, bank\_name | coming-soon |
+| MZN      | MZ      | mpesa                                                    | phone\_number, name                     | coming-soon |
+| NGN      | NG      | bank\_transfer\_ng                                       | bank\_account\_number, name, bank\_name | Live        |
+| RWF      | RW      | mtn\_momo                                                | phone\_number, name                     | coming-soon |
+| SLE      | SL      | orange\_money, afrimoney                                 | phone\_number, name                     | coming-soon |
+| SLE      | SL      | bank\_transfer                                           | bank\_account\_number, name, bank\_name | coming-soon |
+| TZS      | TZ      | tigopesa, airtel\_money, vodacom                         | phone\_number, name                     | Live        |
+| UGX      | UG      | airtel\_money, mtn\_momo                                 | phone\_number, name                     | coming-soon |
+| XAF      | CM      | mtn\_momo, orange\_money                                 | phone\_number, name                     | Live        |
+| XAF      | CM      | afriland                                                 | bank\_account\_number, name, bank\_name | Live        |
+| XOF      | CI      | orange\_money, mtn\_momo                                 | phone\_number, name                     | coming-soon |
+| XOF      | CI      | bank\_transfer                                           | bank\_account\_number, name, bank\_name | coming-soon |
+| ZAR      | ZA      | fnb                                                      | account\_number, name                   | Live        |
+| ZAR      | ZA      | bank\_transfer                                           | bank\_account\_number, name, bank\_name | coming-sson |
+| ZMW      | ZM      | airtel\_money, mtn\_momo                                 | phone\_number, name                     | coming-soon |
+| ZMW      | ZM      | bank\_transfer                                           | bank\_account\_number, name, bank\_name | coming-soon |
+
+### Notes
+
+* **On-ramp**: Converting local fiat currency to stablecoins (USDC/USDT)
+* **Off-ramp**: Converting stablecoins back to local fiat currency
+* Payment methods vary by region and may include mobile money services, traditional bank transfers, and specialized financial apps
+* Some countries offer multiple payment options to provide flexibility for users
+
+***
+
+[Fees & Minimums for Retail APIs](/docs/transaction-fees)
+
+[Business API](/docs/b2b-api)

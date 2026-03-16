@@ -1,0 +1,46 @@
+---
+title: "Liquidation Address"
+description: "A  is a permanent payment route that ties a blockchain address to either a designated destination (either a  or another )."
+---
+
+When a customer sends stablecoins (e.g., **USDC**) to their liquidation address, LINK will automatically transfers the funds to the configured destination.
+
+***
+
+### Choosing a Liquidation Address
+
+When setting up a Liquidation Address, businesses can choose where incoming funds are delivered.
+
+There are two options:
+
+* **External blockchain address:** Route funds directly to a blockchain wallet that you control
+* **LINK Business USD wallet:** Convert and settle funds into your **LINK Business USD wallet** for centralized treasury management.
+
+<Info>
+  ### **NOTE:** Once a Liquidation Address is linked to a destination, you'll need to contact \*\*
+
+  [our support team](support@linkio.africa)\*\* to reassign a new one.
+</Info>
+
+***
+
+### Tie a Liquidation Address to a blockchain address
+
+<CodeGroup>
+  ```bash bash
+  ```
+</CodeGroup>
+
+### Memo Based Blockchains
+
+<Warning>
+  ### **IMPORTANT:** Don’t forget the blockchain memo.
+</Warning>
+
+For memo-based blockchains (such as **Stellar**), a **blockchain\_memo** will be provided as part of the response. This **must be included** in your stablecoin deposit to ensure the transaction is correctly routed.
+
+***
+
+[Static Specific Details](/docs/static-specific-1)
+
+[Prefunded Account](/docs/prefunded-account)

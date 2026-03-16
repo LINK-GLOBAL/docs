@@ -1,0 +1,54 @@
+---
+title: "Get Payment Wallets"
+description: "This endpoint can be used to fetch the list of supported wallets"
+---
+
+<Info>
+  ### Use this endpoint to get all Banks.
+
+  **GET api.linkio.world/transactions/v1/payment\_wallets**
+</Info>
+
+<CodeGroup>
+  ```bash bash
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'ngnc-sec-key': 'Bridge_Secret_Key',
+      'content-type': 'application/json'
+    },
+  };
+
+  fetch('https://api.linkio.world/transactions/v1/live/payment_wallets', options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+  ```
+
+  ```bash bash
+  import requests
+
+  url = "https://api.linkio.world/transactions/v1/list_payment_wallets" 
+
+  headers = {
+      "accept": "application/json",
+      "ngnc-sec-key": "Bridge_Secret_Key",
+      "content-type": "application/json"
+  }
+
+  response = requests.post(url, headers=headers)
+
+  print(response.text)
+  ```
+</CodeGroup>
+
+### API Reference
+
+You can view the API reference for working with Payment wallet
+
+***
+
+[Get Payment Banks](/docs/get-payment-banks)
+
+[Get All Transactions](/docs/fetch-transactions)

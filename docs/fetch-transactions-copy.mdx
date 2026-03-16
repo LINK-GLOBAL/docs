@@ -1,0 +1,56 @@
+---
+title: "Get Transaction"
+description: "Fetch Single transactions done using the transaction refence."
+---
+
+<Info>
+  ### Use this Endpoint to get Specific Transaction
+
+  **Get api.linkio.world/transactions/v1/fetch\_transaction?business\_id=$\{bus\_id}\&transaction\_reference=$\{trans\_ref}**
+</Info>
+
+* Deposit: These are simply transactions received in to any address you generated
+* Withrawal: These are transactions signed and sent out via Off-ramp.
+
+### Get a single Business transactions.
+
+<CodeGroup>
+  ```bash bash
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'ngnc-sec-key': 'Bridge_Secret_Key',
+      'content-type': 'application/json'
+    },
+  };
+
+  let bus_id = "string"
+  fetch(`https://api.linkio.world/transactions/v1/fetch_transaction?transaction_reference=${trans_ref}, options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+  ```
+
+  ```bash bash
+  import requests
+  bus_id = "string" 
+  url = `https://api.linkio.world/transactions/v1/fetch_transaction?transaction_reference=${Trans_Ref}` 
+
+  headers = {
+      "accept": "application/json",
+      "ngnc-sec-key": "Bridge_Secret_Key",
+      "content-type": "application/json"
+  }
+
+  response = requests.post(url, headers=headers)
+
+  print(response.text)
+  ```
+</CodeGroup>
+
+***
+
+[Get All Transactions](/docs/fetch-transactions)
+
+[FX rates](/docs/bridge-rates)

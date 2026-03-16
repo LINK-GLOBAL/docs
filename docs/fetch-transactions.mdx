@@ -1,0 +1,56 @@
+---
+title: "Get All Transactions"
+description: "Fetch all transaction done."
+---
+
+<Info>
+  ### Use this Endpoint to get all Transaction
+
+  **Get api.linkio.world/transactions/v1/fetch\_all\_transactions?business\_id=$\{bus\_id}**
+</Info>
+
+* Deposit: These are simply transactions received in to any address you generated
+* Withrawal: These are transactions signed and sent out via Off-ramp.
+
+### Get all Business transactions.
+
+<CodeGroup>
+  ```bash bash
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'ngnc-sec-key': 'Bridge_Secret_Key',
+      'content-type': 'application/json'
+    },
+  };
+
+  let bus_id = "string"
+  fetch(`https://api.linkio.world/transactions/v1/fetch_all_transactions`, options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+  ```
+
+  ```bash bash
+  import requests
+  bus_id = "string" 
+  url = `https://api.linkio.world/transactions/v1/fetch_all_transactions` 
+
+  headers = {
+      "accept": "application/json",
+      "ngnc-sec-key": "Bridge_Secret_Key",
+      "content-type": "application/json"
+  }
+
+  response = requests.post(url, headers=headers)
+
+  print(response.text)
+  ```
+</CodeGroup>
+
+***
+
+[Get Payment Wallets](/docs/get-payment-banks-copy)
+
+[Get Transaction](/docs/fetch-transactions-copy)

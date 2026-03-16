@@ -1,0 +1,38 @@
+---
+title: "Request"
+description: "To receive a webhook event, you must create an unauthenticated POST endpoint on your application to receive the events."
+---
+
+For example, when an event occurs, we will send the event object as JSON in the request body of the POST request.
+
+Below is an example of webhook implementation code for Javascript or Node.Js:
+
+<CodeGroup>
+  ```bash bash
+  // Webhook Node.Js Implementaion
+  const secret = process.env.BRIDGE_WEBHOOK_SK;
+
+  function verifyWebhook(req, res, next) {
+    if (req.headers["bridge-webhook-secret"] !== secret) {
+      console.log("Unauthorized request.");
+      return res.status(401).json({
+        message: "Unauthorized request.",
+      });
+    }
+    next();
+  }
+
+  app.post("/webhook", verifyWebhook, (req, res) => {
+    const webhook = req.body;
+    console.log(webhook);
+
+    return res.sendStatus(200);
+  });
+  ```
+</CodeGroup>
+
+***
+
+[Setup](/docs/setup)
+
+[Event](/docs/event)

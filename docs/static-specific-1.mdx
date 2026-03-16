@@ -1,0 +1,37 @@
+---
+title: "Static Specific Details"
+description: "Static Specific accounts on the LINK B2B API provide reusable fiat deposit accounts with"
+---
+
+Fiat sent to these accounts are **automatically converted into USDC or USDT** and **transferred to a whitelisted blockchain address** on one of our supported blockchain networks.
+
+<Warning>
+  ### **IMPORTANT:** The reference codes are **compulsory for all transactions.** Payments without a reference code **will not be processed**.
+</Warning>
+
+<Warning>
+  ### **IMPORTANT:** Only whitelisted blockchain addresses can receive converted funds. Ensure all destination wallets are verified.
+</Warning>
+
+<Info>
+  ### **NOTE:** Static Specific Accounts are only available for on-ramps.
+</Info>
+
+***
+
+## Get static specific accounts
+
+To retrieve a Static Specific Account, call the **static\_specific** endpoint.
+
+You specify:
+
+* The fiat currency for the account
+* Configure the **wallet\_address** and **network** parameters to determine where the converted funds will be delivered.
+
+LINK handles the fiat-to-stablecoin conversion and automatically sends the funds on-chain to the designated wallet.
+
+***
+
+[Multichain Static Details](/docs/multichain-static-1)
+
+[Liquidation Address](/docs/liquidation-address)

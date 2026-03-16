@@ -1,0 +1,54 @@
+---
+title: "Get Payment Banks"
+description: "This endpoint can be used to fetch the list of supported banks for Offramp request."
+---
+
+<Info>
+  ### Use this endpoint to get all Banks.
+
+  **GET api.linkio.world/transactions/v1/payment\_banks**
+</Info>
+
+<CodeGroup>
+  ```bash bash
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'ngnc-sec-key': 'Bridge_Secret_Key',
+      'content-type': 'application/json'
+    },
+  };
+
+  fetch('https://api.linkio.world/transactions/v1/payment_banks', options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+  ```
+
+  ```bash bash
+  import requests
+
+  url = "https://api.linkio.world/transactions/v1/payment_banks" 
+
+  headers = {
+      "accept": "application/json",
+      "ngnc-sec-key": "Bridge_Secret_Key",
+      "content-type": "application/json"
+  }
+
+  response = requests.post(url, headers=headers)
+
+  print(response.text)
+  ```
+</CodeGroup>
+
+### API Reference
+
+You can view the API reference for working with Payment banks
+
+***
+
+[Get Payment vendors](/docs/list-payment-vendors-1)
+
+[Get Payment Wallets](/docs/get-payment-banks-copy)

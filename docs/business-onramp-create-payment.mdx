@@ -1,0 +1,155 @@
+---
+title: "Business Onramp"
+description: "Endpoint: POST /v2/business_onramp"
+---
+
+Initiate a fiat → stablecoin onramp for a business. You’ll provide core transaction details (business, currency, amount, stable, vendor, wallet, network) and the payer’s account details in a nested block matching the currency/rail you used to send funds.
+
+⚠️ Only one nested block is required per request.
+
+#### Request Body
+
+| Field              | Type   | Description                                                                                                                                                                                                                                                   |
+| ------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| customer\_id       | string | Your Business customer\_id                                                                                                                                                                                                                                    |
+| currency           | string | Fiat currency you paid in (e.g., USD, GBP, NGN). See Fiat Payment Methods.                                                                                                                                                                                    |
+| amount             | string | Fiat amount you paid (as string for precision).                                                                                                                                                                                                               |
+| stables            | string | Stablecoin you’d like to receive (e.g., USDC, USDT).                                                                                                                                                                                                          |
+| vendor\_id         | string | The payout vendor to use. Retrieve via Get Payment Vendors.                                                                                                                                                                                                   |
+| wallet\_address    | string | Destination wallet address to receive the stablecoin.                                                                                                                                                                                                         |
+| network            | string | Blockchain network for the stablecoin (e.g., Solana, Polygon)                                                                                                                                                                                                 |
+| proof\_of\_payment | string | A URL pointing to your payment proof. The uploaded file must display your company letterhead, no larger than 5MB. Accepted formats are PDF, JPEG, JPG, or PNG. Example: [https://res.cloudinary.com/r.........png](https://res.cloudinary.com/r.........png). |
+| payment details    | object | The account used to send fiat. Format depends on currency and payment rail (see table below).                                                                                                                                                                 |
+
+#### Quick-choose table
+
+Pick the nested block that matches the currency and payment rail you used to send fiat.
+
+| Currency                           | Payment Rail / Corridor        | Nested Block        | Required Fields                                                                                              |
+| ---------------------------------- | ------------------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------ |
+| USD                                | Domestic ACH / Wire            | usd\_domestic       | account\_number, routing\_number (+ ach\_routing\_number, fedwire\_routing\_number, bank\_name if available) |
+| USD                                | International (IBAN corridors) | iban                | iban, swift\_code (optional)                                                                                 |
+| GBP                                | Domestic Faster Payments       | gbp\_domestic       | account\_number, sort\_code, bank\_name                                                                      |
+| ILS, GBP, MXN, SGD                 | International (IBAN corridors) | iban                | iban, swift\_code                                                                                            |
+| EUR, AED, CNY, CAD, HKD, ZAR & AUD | International (IBAN corridors) | iban                | iban, swift\_code                                                                                            |
+| AED, SGD, HKD, CNY & ILS           | Local bank transfer            | bank\_transfer      | account\_number, bank\_code, branch\_code (swift\_code optional)                                             |
+| NGN                                | Domestic transfer              | ngn\_domestic       | account\_number, bank\_name                                                                                  |
+| AUD                                | Domestic transfer              | aud\_domestic       | account\_number, bsb                                                                                         |
+| EUR                                | Domestic transfer              | iban                | iban                                                                                                         |
+| CAD                                | EFT                            | cad\_eft            | account\_number, transit\_number, institution\_number                                                        |
+| CAD                                | Interac e-Transfer             | cad\_interac        | interac\_email                                                                                               |
+| BRL                                | PIX                            | brl\_pix            | pix\_key, (qr\_code optional)                                                                                |
+| MXN                                | Domestic transfer              | mxn\_clabe          | clabe                                                                                                        |
+| PHP                                | Bank Transfer                  | php\_bank\_transfer | account\_number, bank\_name                                                                                  |
+| PHP                                | E-wallet                       | php\_ewallet        | ewallet\_account\_number                                                                                     |
+
+JSON request examples
+
+<CodeGroup>
+  ```bash bash
+  {
+    "customer_id": "08********",
+    "currency": "USD",
+    "amount": "15000.00",
+    "stables": "USDC",
+    "vendor_id": "9146827350",
+    "wallet_address": "YourWalletAddressHere",
+    "network": "solana",
+    "usd_domestic": {
+      "account_number": "875104368977",
+      "routing_number": "125109019",
+      "ach_routing_number": "026073150",
+      "fedwire_routing_number": "026073008",
+      "bank_name": "Coastal Community Bank"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "GBP",
+    "amount": "25000.00",
+    "stables": "USDC",
+    "vendor_id": "6283947015",
+    "wallet_address": "0xYoursolAddress",
+    "network": "solanan",
+    "gbp_domestic": {
+      "account_number": "04555464",
+      "sort_code": "041907",
+      "bank_name": "Barclays"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "EUR",
+    "amount": "100000.00",
+    "stables": "USDT",
+    "vendor_id": "4758291630",
+    "wallet_address": "YourWallet",
+    "network": "solana",
+    "iban": {
+      "iban": "NL02AINH0232055238",
+      "swift_code": "ABNANL2A"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "SGD",
+    "amount": "120000.00",
+    "stables": "USDC",
+    "vendor_id": "5924816037",
+    "wallet_address": "YourSolanaWallet",
+    "network": "solana",
+    "bank_transfer": {
+      "account_number": "8853870376",
+      "bank_code": "7171",
+      "branch_code": "072",
+      "swift_code": "DBSSSGSG"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "CAD",
+    "amount": "2500.00",
+    "stables": "USDC",
+    "vendor_id": "4926381057",
+    "wallet_address": "YourSolanaWallet",
+    "network": "solana",
+    "cad_interac": {
+      "interac_email": "[email protected]"
+    }
+  }
+  ```
+
+  ```bash bash
+  {
+    "business_id": "084*******",
+    "currency": "PHP",
+    "amount": "520000.00",
+    "stables": "USDT",
+    "vendor_id": "8205639174",
+    "wallet_address": "YourWallet",
+    "network": "solana",
+    "php_bank_transfer": {
+      "account_number": "447853760386",
+      "bank_name": "DCPay Philippines"
+    }
+  }
+  ```
+</CodeGroup>
+
+***
+
+[Retail Off-Ramp](/docs/off-ramp)
+
+[Business Offramp](/docs/business-offramp)

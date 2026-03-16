@@ -1,0 +1,78 @@
+---
+title: "Customer API"
+---
+
+### What it does
+
+Create a business customer on LINK and receive a KYB link for them to complete verification. You can also query the customer later to check their KYB status.
+
+***
+
+### Authentication
+
+Include your server-side API key in the request headers for every call.
+
+***
+
+### Create Business Customer
+
+#### Endpoint:
+
+**POST** /v2/customers - Creates a new business customer and returns a hosted kyb\_link\_url.
+
+<CodeGroup>
+  ```bash bash
+  {
+    "business_name": "Acme Trading GmbH",
+    "business_email": "[email protected]",
+    "phone_number": "+49 30 1234567",
+    "registered_address": "Friedrichstr. 123, 10117 Berlin",
+    "registered_country": "GBR"
+  }
+  ```
+</CodeGroup>
+
+**Field notes**
+
+| Field                   | Description                              |
+| ----------------------- | ---------------------------------------- |
+| **business\_name**      | Legal registered name of the business.   |
+| **business\_email**     | Contact email for KYB communications.    |
+| **phone\_number**       | E.164 format recommended (e.g., +49…)    |
+| **registered\_address** | Full registered street address.          |
+| **registered\_country** | ISO-3166-1 alpha-3 (e.g., NGA, USA, GBR) |
+
+#### Response (201)
+
+<CodeGroup>
+  ```bash bash
+  {
+    "customer_id": "cus_8q2ZrwJ3b5",
+    "kyb_link_url": "https://kyb.linkio.world/link/cus_8q2ZrwJ3b5",
+    "status": "pending",
+    "created_at": "2025-09-12T10:23:54Z"
+  }
+  ```
+</CodeGroup>
+
+**Status values**
+
+| Status         | Meaning                                                        |
+| -------------- | -------------------------------------------------------------- |
+| **pending**    | KYB link created; customer has not yet completed verification. |
+| **in\_review** | Submitted; under review by the compliance provider or team.    |
+| **approved**   | KYB approved; customer can begin transacting.                  |
+| **rejected**   | KYB failed. Check the dashboard for the reason or next steps.  |
+| **more\_info** | Additional documents or clarifications are required.           |
+
+<Info>
+  ### **Where do I see requirements?**
+
+  The customer is guided through all required fields and document uploads in the hosted KYB form. For a complete list of possible information and documentation requirements, refer to the **Compliance** page.
+</Info>
+
+***
+
+[Customers](/docs/customer)
+
+[API Response](/docs/api-response)

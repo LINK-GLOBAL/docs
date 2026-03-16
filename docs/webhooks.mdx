@@ -1,0 +1,18 @@
+---
+title: "Webhooks"
+description: "Learn how to listen to events whenever certain actions occur on your account."
+---
+
+### Overview
+
+Webhooks are used to communicate updates on transaction initiated with our API or SDK. For every transaction initiated, a POST request is sent to the designated Webhook URL with information about the event transactions.
+
+### Security
+
+All Webhook requests are sent with a bridge-webhook-secret header for verification. It should match the secret you passed when creating the webhook.
+
+***
+
+[Off-ramp Rates](/docs/offramp-rates)
+
+[Setup](/docs/setup)

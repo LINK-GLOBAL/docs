@@ -1,0 +1,45 @@
+---
+title: "On-ramp Rates"
+description: "Use this endpoint to fetch our onramp rates"
+---
+
+<CodeGroup>
+  ```bash bash
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      'ngnc-sec-key': 'Bridge_Secret_Key',
+    },
+    
+  };
+
+  fetch('https://api.linkio.world/rates/v1/on-ramp/rates', options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+  ```
+
+  ```bash bash
+  import requests
+
+  url = "https://api.linkio.world/rates/v1/on-ramp/rates"
+
+  headers = {
+      "accept": "application/json",
+      "content-type": "application/json",
+      "ngnc-sec-key": "Bridge_Secret_Key"
+  }
+
+  response = requests.get(url, json=payload, headers=headers)
+
+  print(response.text)
+  ```
+</CodeGroup>
+
+***
+
+[FX rates](/docs/bridge-rates)
+
+[Off-ramp Rates](/docs/offramp-rates)
