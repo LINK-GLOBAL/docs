@@ -1,14 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "aspen",
+  "theme": "sequoia",
   "name": "Build with LINK",
   "colors": {
-    "primary": "#018ef5",
-    "light": "#018ef5",
+    "primary": "#0038FF",
+    "light": "#0038FF",
     "dark": "#018ef5"
   },
   "favicon": "/favicon.ico",
-  "logo": "/images/97584af-brandmark-white.svg",
+  "logo": "/images/link-white.png",
   "navigation": {
     "tabs": [
       {
@@ -113,5 +113,11 @@
         ]
       }
     ]
+  },
+  "fonts": {
+    "family": "Roboto"
+  },
+  "navbar": {
+    "links": []
   }
 }
