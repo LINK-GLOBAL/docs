@@ -9,7 +9,10 @@
     "dark": "#018ef5"
   },
   "favicon": "/favicon.ico",
-  "logo": "/images/link-white.png",
+  "logo": {
+    "light": "/logo/link-dark.png",
+    "dark": "/logo/link-white.png"
+  },
   "navigation": {
     "tabs": [
       {
