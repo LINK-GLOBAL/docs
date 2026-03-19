@@ -444,9 +444,7 @@
                 "GHS",
                 "KES",
                 "NGN",
-                "ZAR",
-                "XAF",
-                "TZS"
+                "ZAR"
               ],
               "default": "NGN"
             },
