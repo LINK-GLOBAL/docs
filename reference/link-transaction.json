@@ -425,6 +425,35 @@
         ]
       }
     },
+    "/retail_rate": {
+      "get": {
+        "description": "",
+        "operationId": "get_retail_rate",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "trx_type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "onramp",
+                "offramp"
+              ]
+            },
+            "required": true,
+            "description": "Transaction type"
+          }
+        ],
+        "tags": [
+          "Retail FX"
+        ]
+      }
+    },
     "/direct_ramp/payment_methods": {
       "get": {
         "description": "",
