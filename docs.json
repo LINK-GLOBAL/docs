@@ -31,13 +31,13 @@
               "docs/geographies",
               "docs/stablecoins-and-blockchains",
               "docs/fiat-payment-methods",
-              "docs/supported-currency-methods"
+              "docs/supported-currency-methods",
+              "docs/ramp-overview"
             ]
           },
           {
             "group": "On-Ramp",
             "pages": [
-              "docs/ramp-overview",
               "docs/on-ramp",
               "docs/onramp-rates",
               "docs/business-onramp-create-payment"
@@ -52,20 +52,18 @@
             ]
           },
           {
+            "group": "Transactions",
+            "pages": [
+              "docs/fetch-transactions",
+              "docs/processing-windows"
+            ]
+          },
+          {
             "group": "Customers",
             "pages": [
               "docs/customer",
               "docs/customers",
               "docs/customer-verification"
-            ]
-          },
-          {
-            "group": "Transactions",
-            "pages": [
-              "docs/fetch-transactions",
-              "docs/receipts",
-              "docs/processing-windows",
-              "docs/transaction-fees"
             ]
           },
           {
@@ -76,7 +74,8 @@
               "docs/multichain-static-accounts",
               "docs/liquidation-address",
               "docs/prefunding",
-              "docs/prefunded-account"
+              "docs/prefunded-account",
+              "docs/receipts"
             ]
           },
           {
@@ -84,6 +83,7 @@
             "pages": [
               "docs/b2b-compliance",
               "docs/banking-object-requirements",
+              "docs/transaction-fees",
               "docs/currency-limits",
               "docs/developer-fees"
             ]
@@ -92,9 +92,7 @@
             "group": "OTC & Bridge",
             "pages": [
               "docs/otc-service",
-              "docs/cross-border-fx",
-              "docs/bridge-api",
-              "docs/bridge-rates"
+              "docs/cross-border-fx"
             ]
           },
           {

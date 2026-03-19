@@ -1,5 +1,5 @@
 ---
-title: "Overview"
+title: "Onboarding Customers"
 ---
 
 ### Overview
@@ -12,27 +12,25 @@ The Customers feature lets you onboard your business end-users to LINK, enabling
   Only businesses that serve **business customers (KYB)** need to integrate this flow. If you only serve individual end-users (KYC), you don’t need to use the Customers API.
 </Info>
 
-***
+---
 
 ## What LINK handles for you
 
-* KYC/KYB: LINK manages identity and business verification through our compliance provider.
+- KYC/KYB: LINK manages identity and business verification through our compliance provider.
+- Compliance gating: Transactions are only allowed after a customer is approved.
+- Status & audit trail: KYB progress and outcomes are visible on the Bridge Dashboard for your compliance team.
 
-* Compliance gating: Transactions are only allowed after a customer is approved.
-
-* Status & audit trail: KYB progress and outcomes are visible on the Bridge Dashboard for your compliance team.
-
-***
+---
 
 ## Key concepts
 
-| Term          | Description                                                                                             |
-| ------------- | ------------------------------------------------------------------------------------------------------- |
-| **Customers** | Your business end-users (entities) transacting through LINK.                                            |
-| **KYC/KYB**   | “Know Your Customer / Know Your Business” checks performed by LINK’s compliance provider.               |
-| **KYB Link**  | A secure URL returned by the API that your business customer uses to complete KYB and upload documents. |
+| Term | Description |
+| --- | --- |
+| **Customers** | Your business end-users (entities) transacting through LINK. |
+| **KYC/KYB** | “Know Your Customer / Know Your Business” checks performed by LINK’s compliance provider. |
+| **KYB Link** | A secure URL returned by the API that your business customer uses to complete KYB and upload documents. |
 
-***
+---
 
 ## Typical flow
 
@@ -46,17 +44,17 @@ The Customers feature lets you onboard your business end-users to LINK, enabling
   ### **NOTE:** To view the document types and examples your end-users must submit, refer to the [Compliance page ](https://docs.linkio.world/v2.1/docs/b2b-compliance#).
 </Info>
 
-***
+---
 
 ## Implementation notes
 
-* **KYB link delivery:** You can email the kyb\_link\_url directly to your customer or display it in your dashboard with a **“Complete Verification”** button.
-* **Link expiration:** Some links may expire after a set period. Always fetch the latest kyb\_link\_url using **Get Customer** if a user reports an expired or invalid link.
-* **Polling or webhooks:** Poll **Get Customer** until the status is approved.
-* **Idempotency (recommended):** Use an **idempotency key** when creating a customer to prevent duplicates if a request is retried.
-* **Dashboard visibility:** All KYB details and outcomes are visible in your Bridge Dashboard for full auditability.
+- **KYB link delivery:** You can email the kyb\_link\_url directly to your customer or display it in your dashboard with a **“Complete Verification”** button.
+- **Link expiration:** Some links may expire after a set period. Always fetch the latest kyb\_link\_url using **Get Customer** if a user reports an expired or invalid link.
+- **Polling or webhooks:** Poll **Get Customer** until the status is approved.
+- **Idempotency (recommended):** Use an **idempotency key** when creating a customer to prevent duplicates if a request is retried.
+- **Dashboard visibility:** All KYB details and outcomes are visible in your Bridge Dashboard for full auditability.
 
-***
+---
 
 [Pricing](/docs/receipts-copy)
 
