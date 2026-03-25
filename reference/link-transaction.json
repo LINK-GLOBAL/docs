@@ -758,6 +758,19 @@
             "required": true
           },
           {
+             "in": "query",
+            "name": "destination",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "first_party",
+                "third_party"
+              ],
+              "default": "first_party"
+            },
+            "required": false
+          },
+          {
             "in": "query",
             "name": "name",
             "schema": {
