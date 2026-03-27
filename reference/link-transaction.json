@@ -691,7 +691,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "base"
+                "base",
+                "matic"
               ]
             },
             "required": true,
