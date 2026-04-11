@@ -35,20 +35,13 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "currency",
-                  "amount",
-                  "stables"
-                ],
+                "required": ["currency", "amount", "stables"],
                 "properties": {
                   "currency": {
                     "type": "string",
                     "description": "Currency in which user wants to pay for onramp asset. (NGN, USD)",
                     "default": "NGN",
-                    "enum": [
-                      "NGN",
-                      "USD"
-                    ]
+                    "enum": ["NGN", "USD"]
                   },
                   "amount": {
                     "type": "string",
@@ -57,10 +50,7 @@
                   "stables": {
                     "type": "string",
                     "description": "Stable coin in which user wants to be settle in.(USDC, USDT)",
-                    "enum": [
-                      "USDC",
-                      "USDT"
-                    ]
+                    "enum": ["USDC", "USDT"]
                   },
                   "vendor_bank": {
                     "type": "string",
@@ -231,9 +221,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Retail FX"
-        ]
+        "tags": ["Retail FX"]
       }
     },
     "/offramp": {
@@ -246,19 +234,12 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "stables",
-                  "amount",
-                  "currency"
-                ],
+                "required": ["stables", "amount", "currency"],
                 "properties": {
                   "stables": {
                     "type": "string",
                     "description": "Stable coin in which user wants to off-ramp in. (USDC, USDT)",
-                    "enum": [
-                      "USDC",
-                      "USDT"
-                    ]
+                    "enum": ["USDC", "USDT"]
                   },
                   "amount": {
                     "type": "string",
@@ -269,10 +250,7 @@
                     "type": "string",
                     "description": "Currency in which user wants to receive funds. (NGN,USD)",
                     "default": "NGN",
-                    "enum": [
-                      "NGN",
-                      "USD"
-                    ]
+                    "enum": ["NGN", "USD"]
                   },
                   "bank_name": {
                     "type": "string",
@@ -420,9 +398,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Retail FX"
-        ]
+        "tags": ["Retail FX"]
       }
     },
     "/retail_rate": {
@@ -440,18 +416,13 @@
             "name": "trx_type",
             "schema": {
               "type": "string",
-              "enum": [
-                "onramp",
-                "offramp"
-              ]
+              "enum": ["onramp", "offramp"]
             },
             "required": true,
             "description": "Transaction type"
           }
         ],
-        "tags": [
-          "Retail FX"
-        ]
+        "tags": ["Retail FX"]
       }
     },
     "/direct_ramp/payment_methods": {
@@ -469,21 +440,14 @@
             "name": "currency",
             "schema": {
               "type": "string",
-              "enum": [
-                "GHS",
-                "KES",
-                "NGN",
-                "ZAR"
-              ],
+              "enum": ["GHS", "KES", "NGN", "ZAR"],
               "default": "NGN"
             },
             "required": true,
             "description": "Available currenies"
           }
         ],
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Payment Methods"
       }
     },
@@ -559,9 +523,7 @@
             }
           }
         },
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Customer Onboard"
       }
     },
@@ -588,14 +550,7 @@
             "name": "asset",
             "schema": {
               "type": "string",
-              "enum": [
-                "NGN",
-                "GHS",
-                "KES",
-                "ZAR",
-                "USDT",
-                "USDC"
-              ]
+              "enum": ["NGN", "GHS", "KES", "ZAR", "USDT", "USDC"]
             },
             "required": true,
             "description": "Available currencies. NOTE: USDT/USDC are for offramp only"
@@ -614,10 +569,7 @@
             "name": "trx_type",
             "schema": {
               "type": "string",
-              "enum": [
-                "onramp",
-                "offramp"
-              ]
+              "enum": ["onramp", "offramp"]
             },
             "description": "Transaction type: \"onramp\" for \"Fiat\"\u2192Stables, \"offramp\" for Stables\u2192\"Fiat\". ",
             "required": true
@@ -632,9 +584,7 @@
             "description": "Differs for each currency. Call the Get payment Method endpoint."
           }
         ],
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Rate Quote"
       }
     },
@@ -662,12 +612,7 @@
             "name": "currency",
             "schema": {
               "type": "string",
-              "enum": [
-                "NGN",
-                "GHS",
-                "KES",
-                "ZAR"
-              ],
+              "enum": ["NGN", "GHS", "KES", "ZAR"],
               "default": "NGN"
             },
             "required": true
@@ -677,10 +622,7 @@
             "name": "stables",
             "schema": {
               "type": "string",
-              "enum": [
-                "USDC",
-                "USDT"
-              ],
+              "enum": ["USDC", "USDT"],
               "default": "USDC"
             },
             "required": true,
@@ -691,10 +633,7 @@
             "name": "network",
             "schema": {
               "type": "string",
-              "enum": [
-                "base",
-                "matic"
-              ]
+              "enum": ["base", "matic"]
             },
             "required": true,
             "description": "The address network to disburse payment."
@@ -725,9 +664,7 @@
             "description": "Currency payment method is bank transfer. Input account number sending funds."
           }
         ],
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Direct Onramp"
       }
     },
@@ -760,14 +697,11 @@
             "required": true
           },
           {
-             "in": "query",
+            "in": "query",
             "name": "destination",
             "schema": {
               "type": "string",
-              "enum": [
-                "first_party",
-                "third_party"
-              ],
+              "enum": ["first_party", "third_party"],
               "default": "first_party"
             },
             "required": false
@@ -806,9 +740,7 @@
             "description": "Customer Bank name"
           }
         ],
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Payout Account"
       }
     },
@@ -845,10 +777,7 @@
             "name": "stables",
             "schema": {
               "type": "string",
-              "enum": [
-                "USDT",
-                "USDC"
-              ]
+              "enum": ["USDT", "USDC"]
             },
             "required": true,
             "description": "stable coin used for offramp"
@@ -867,14 +796,7 @@
             "name": "payout_currency",
             "schema": {
               "type": "string",
-              "enum": [
-                "NGN",
-                "GHS",
-                "KES",
-                "ZAR",
-                "XAF",
-                "TZS"
-              ],
+              "enum": ["NGN", "GHS", "KES", "ZAR", "XAF", "TZS"],
               "default": "NGN"
             },
             "required": true,
@@ -894,17 +816,12 @@
             "name": "network",
             "schema": {
               "type": "string",
-              "enum": [
-                "Bsc",
-                "matic"
-              ]
+              "enum": ["Bsc", "matic"]
             },
             "required": true
           }
         ],
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Direct Offramp"
       }
     },
@@ -923,10 +840,7 @@
             "name": "trx_type",
             "schema": {
               "type": "string",
-              "enum": [
-                "onramp",
-                "offramp"
-              ]
+              "enum": ["onramp", "offramp"]
             },
             "required": true
           },
@@ -939,9 +853,7 @@
             "required": true
           }
         ],
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Confirm Transfer"
       }
     },
@@ -965,9 +877,7 @@
           }
         ],
         "operationId": "get_direct-ramp-payout-status",
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Transaction Status"
       }
     },
@@ -991,9 +901,7 @@
           }
         ],
         "operationId": "get_direct-ramp-customer",
-        "tags": [
-          "Pan-Africa Ramp"
-        ],
+        "tags": ["Pan-Africa Ramp"],
         "summary": "Customer Info"
       }
     },
@@ -1046,16 +954,11 @@
             "schema": {
               "type": "string",
               "default": "",
-              "enum": [
-                "onramp",
-                "offramp"
-              ]
+              "enum": ["onramp", "offramp"]
             }
           }
         ],
-        "tags": [
-          "BRL Ramp"
-        ],
+        "tags": ["BRL Ramp"],
         "summary": "Rate Quote"
       }
     },
@@ -1099,18 +1002,12 @@
                   }
                 },
                 "type": "object",
-                "required": [
-                  "user_wallet_address",
-                  "user_name",
-                  "network"
-                ]
+                "required": ["user_wallet_address", "user_name", "network"]
               }
             }
           }
         },
-        "tags": [
-          "BRL Ramp"
-        ],
+        "tags": ["BRL Ramp"],
         "summary": "Register Wallet Address"
       }
     },
@@ -1161,18 +1058,12 @@
                   }
                 },
                 "type": "object",
-                "required": [
-                  "wallet_id",
-                  "amount",
-                  "stables"
-                ]
+                "required": ["wallet_id", "amount", "stables"]
               }
             }
           }
         },
-        "tags": [
-          "BRL Ramp"
-        ],
+        "tags": ["BRL Ramp"],
         "summary": "BRL Auto Onramp"
       }
     },
@@ -1220,19 +1111,12 @@
                   }
                 },
                 "type": "object",
-                "required": [
-                  "pix_key",
-                  "amount",
-                  "wallet_address",
-                  "stables"
-                ]
+                "required": ["pix_key", "amount", "wallet_address", "stables"]
               }
             }
           }
         },
-        "tags": [
-          "BRL Ramp"
-        ],
+        "tags": ["BRL Ramp"],
         "summary": "BRL Auto Offramp"
       }
     },
@@ -1261,9 +1145,7 @@
             }
           }
         },
-        "tags": [
-          "IDR Ramp"
-        ],
+        "tags": ["IDR Ramp"],
         "summary": "Onboarding"
       }
     },
@@ -1298,9 +1180,7 @@
             }
           }
         ],
-        "tags": [
-          "IDR Ramp"
-        ],
+        "tags": ["IDR Ramp"],
         "summary": "IDR Rate Quote"
       }
     },
@@ -1330,24 +1210,16 @@
                   "stables": {
                     "type": "string",
                     "description": "Stablecoin to receive in USDT.",
-                    "enum": [
-                      "USDT"
-                    ]
+                    "enum": ["USDT"]
                   }
                 },
                 "type": "object",
-                "required": [
-                  "amount",
-                  "wallet_address",
-                  "stables"
-                ]
+                "required": ["amount", "wallet_address", "stables"]
               }
             }
           }
         },
-        "tags": [
-          "IDR Ramp"
-        ],
+        "tags": ["IDR Ramp"],
         "summary": "IDR Auto Onramp"
       }
     },
@@ -1376,17 +1248,12 @@
                   }
                 },
                 "type": "object",
-                "required": [
-                  "bankName",
-                  "bankCode"
-                ]
+                "required": ["bankName", "bankCode"]
               }
             }
           }
         },
-        "tags": [
-          "IDR Ramp"
-        ],
+        "tags": ["IDR Ramp"],
         "summary": "IDR Auto Offramp"
       }
     },
@@ -1414,10 +1281,7 @@
             "name": "trx_type",
             "schema": {
               "type": "string",
-              "enum": [
-                "onramp",
-                "offramp"
-              ]
+              "enum": ["onramp", "offramp"]
             },
             "description": "Transaction type: \"onramp\" for \"Fiat\"\u2192USDC, \"offramp\" for USDC\u2192\"Fiat\".",
             "required": true
@@ -1432,9 +1296,7 @@
             "description": "Amount Business wants to Onramp(Fiat) OR offramp(Stables)."
           }
         ],
-        "tags": [
-          "Business FX"
-        ],
+        "tags": ["Business FX"],
         "summary": "Get Rate Quote"
       }
     },
@@ -1487,10 +1349,7 @@
                   },
                   "stables": {
                     "type": "string",
-                    "enum": [
-                      "USDC",
-                      "USDT"
-                    ],
+                    "enum": ["USDC", "USDT"],
                     "description": "Stablecoin you\u2019d like to receive (e.g., USDC, USDT)."
                   },
                   "vendor_id": {
@@ -1681,9 +1540,7 @@
             }
           }
         },
-        "tags": [
-          "Business FX"
-        ],
+        "tags": ["Business FX"],
         "summary": "Business Onramp"
       }
     },
@@ -1708,10 +1565,7 @@
                   },
                   "stables": {
                     "type": "string",
-                    "enum": [
-                      "USDC",
-                      "USDT"
-                    ],
+                    "enum": ["USDC", "USDT"],
                     "description": "Stablecoin you will send (e.g., USDC, USDT)."
                   },
                   "amount": {
@@ -2079,9 +1933,7 @@
             }
           }
         },
-        "tags": [
-          "Business FX"
-        ],
+        "tags": ["Business FX"],
         "summary": "Business Offramp"
       }
     },
@@ -2098,10 +1950,7 @@
             "schema": {
               "type": "string",
               "default": "NGN",
-              "enum": [
-                "NGN",
-                "USD"
-              ]
+              "enum": ["NGN", "USD"]
             },
             "required": true
           }
@@ -2137,9 +1986,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Static Details"
-        ]
+        "tags": ["Static Details"]
       }
     },
     "/payment_banks": {
@@ -2155,11 +2002,7 @@
             "schema": {
               "type": "string",
               "default": "NGN",
-              "enum": [
-                "NGN",
-                "USD",
-                "BRL"
-              ]
+              "enum": ["NGN", "USD", "BRL"]
             },
             "required": true
           }
@@ -2195,9 +2038,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Static Details"
-        ]
+        "tags": ["Static Details"]
       }
     },
     "/payment_wallets": {
@@ -2236,9 +2077,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Static Details"
-        ]
+        "tags": ["Static Details"]
       }
     },
     "/business_payment_vendors": {
@@ -2279,9 +2118,7 @@
             "required": true
           }
         ],
-        "tags": [
-          "Static Details"
-        ],
+        "tags": ["Static Details"],
         "summary": "Get Business Payment Vendors"
       }
     },
@@ -2326,9 +2163,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Transactions"
-        ]
+        "tags": ["Transactions"]
       }
     },
     "/fetch_transaction": {
@@ -2382,9 +2217,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Transactions"
-        ]
+        "tags": ["Transactions"]
       }
     },
     "/wallet_balance": {
@@ -2428,9 +2261,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Accounts"
-        ]
+        "tags": ["Accounts"]
       }
     },
     "/verify_account_number": {
@@ -2489,9 +2320,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Accounts"
-        ]
+        "tags": ["Accounts"]
       }
     },
     "/verify_customer_kyc": {
@@ -2504,19 +2333,12 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "idType",
-                  "idNumber"
-                ],
+                "required": ["idType", "idNumber"],
                 "properties": {
                   "idType": {
                     "type": "string",
                     "description": "Verification ID types: NIN, BVN, Voters Card",
-                    "enum": [
-                      "NIN",
-                      "BVN",
-                      "Voters Card"
-                    ]
+                    "enum": ["NIN", "BVN", "Voters Card"]
                   },
                   "idNumber": {
                     "type": "string",
@@ -2562,9 +2384,7 @@
           }
         },
         "deprecated": false,
-        "tags": [
-          "Accounts"
-        ]
+        "tags": ["Accounts"]
       }
     },
     "/esp_onramp": {
@@ -2622,9 +2442,7 @@
           }
         },
         "operationId": "post_esp-onramp",
-        "tags": [
-          "ESPESS"
-        ],
+        "tags": ["ESPESS"],
         "summary": "Initiate ESP Onramp"
       }
     },
@@ -2669,20 +2487,64 @@
                     "type": "string"
                   }
                 },
+                "required": ["currency", "amount", "bankName", "accountNumber"]
+              }
+            }
+          }
+        },
+        "tags": ["ESPESS"],
+        "summary": "Initiate ESP Offramp"
+      }
+    },
+    "/checkout/generate_session": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [],
+        "operationId": "post_generate-checkout-session",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "business_id": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "currency": {
+                    "type": "string"
+                  },
+                  "reference_id": {
+                    "type": "string"
+                  },
+                  "success_url": {
+                    "type": "string"
+                  },
+                  "cancel_url": {
+                    "type": "string"
+                  }
+                },
                 "required": [
                   "currency",
                   "amount",
-                  "bankName",
-                  "accountNumber"
+                  "business_id",
+                  "reference_id",
+                  "cancel_url",
+                  "success_url"
                 ]
               }
             }
           }
         },
-        "tags": [
-          "ESPESS"
-        ],
-        "summary": "Initiate ESP Offramp"
+        "tags": ["Checkout"],
+        "summary": "Generate a checkout session"
       }
     },
     "/initiate_idr_onramp": {},
