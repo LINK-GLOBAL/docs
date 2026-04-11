@@ -562,7 +562,7 @@
         "tags": [
           "Pan-Africa Ramp"
         ],
-        "summary": "Direct Ramp Onboard"
+        "summary": "Customer Onboard"
       }
     },
     "/direct_ramp/rate_quote": {
@@ -2083,22 +2083,6 @@
           "Business FX"
         ],
         "summary": "Business Offramp"
-      }
-    },
-    "/business_customers": {
-      "get": {
-        "description": "",
-        "operationId": "get_business_customers",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "parameters": [],
-        "tags": [
-          "Customers"
-        ],
-        "summary": "Get Business Customers"
       }
     },
     "/payment_vendors": {
