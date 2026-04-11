@@ -2544,7 +2544,7 @@
           }
         },
         "tags": ["Checkout"],
-        "summary": "Generate a checkout session"
+        "summary": "Generate session"
       }
     },
     "/initiate_idr_onramp": {},
