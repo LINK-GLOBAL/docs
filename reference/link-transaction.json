@@ -788,7 +788,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Stables (USDT) amount based of generated quote.",
+            "description": "Stables amount based of generated quote.",
             "required": true
           },
           {
@@ -816,7 +816,7 @@
             "name": "network",
             "schema": {
               "type": "string",
-              "enum": ["Bsc", "matic"]
+              "enum": ["Bsc", "matic", "base"]
             },
             "required": true
           }
