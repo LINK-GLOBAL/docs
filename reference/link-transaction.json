@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://api.linkio.world/transactions/v2"
+      "url": "https://api.linkio.world"
     }
   ],
   "components": {
@@ -25,7 +25,7 @@
     }
   ],
   "paths": {
-    "/onramp": {
+    "/transactions/v2/onramp": {
       "post": {
         "summary": "Initiate Onramp",
         "description": "",
@@ -224,7 +224,7 @@
         "tags": ["Retail FX"]
       }
     },
-    "/offramp": {
+    "/transactions/v2/offramp": {
       "post": {
         "summary": "Initiate Offramp",
         "description": "",
@@ -401,7 +401,7 @@
         "tags": ["Retail FX"]
       }
     },
-    "/retail_rate": {
+    "/transactions/v2/retail_rate": {
       "get": {
         "description": "",
         "operationId": "get_retail_rate",
@@ -425,7 +425,7 @@
         "tags": ["Retail FX"]
       }
     },
-    "/direct_ramp/payment_methods": {
+    "/transactions/v2/direct_ramp/payment_methods": {
       "get": {
         "description": "",
         "operationId": "get_direct_ramppayment_methods",
@@ -451,7 +451,7 @@
         "summary": "Payment Methods"
       }
     },
-    "/direct_ramp/onboarding": {
+    "/transactions/v2/direct_ramp/onboarding": {
       "post": {
         "description": "",
         "operationId": "post_direct_ramponboarding",
@@ -527,7 +527,7 @@
         "summary": "Customer Onboard"
       }
     },
-    "/direct_ramp/rate_quote": {
+    "/transactions/v2/direct_ramp/rate_quote": {
       "get": {
         "description": "",
         "operationId": "get_ramp_quote",
@@ -588,7 +588,7 @@
         "summary": "Rate Quote"
       }
     },
-    "/direct_ramp/deposit": {
+    "/transactions/v2/direct_ramp/deposit": {
       "post": {
         "description": "",
         "operationId": "get_new-endpoint-1",
@@ -668,7 +668,7 @@
         "summary": "Direct Onramp"
       }
     },
-    "/direct_ramp/payout_account": {
+    "/transactions/v2/direct_ramp/payout_account": {
       "post": {
         "description": "",
         "operationId": "post_direct_ramppayout_account",
@@ -744,7 +744,7 @@
         "summary": "Payout Account"
       }
     },
-    "/direct_ramp/withdraw": {
+    "/transactions/v2/direct_ramp/withdraw": {
       "post": {
         "description": "",
         "operationId": "get_direct_rampwithdraw",
@@ -825,7 +825,7 @@
         "summary": "Direct Offramp"
       }
     },
-    "/direct_ramp/transfer_sent": {
+    "/transactions/v2/direct_ramp/transfer_sent": {
       "post": {
         "description": "",
         "operationId": "post_direct_rampdepositpayment_made",
@@ -857,7 +857,7 @@
         "summary": "Confirm Transfer"
       }
     },
-    "/direct_ramp/payout/status": {
+    "/transactions/v2/direct_ramp/payout/status": {
       "get": {
         "description": "",
         "responses": {
@@ -881,7 +881,7 @@
         "summary": "Transaction Status"
       }
     },
-    "/direct_ramp/customer": {
+    "/transactions/v2/direct_ramp/customer": {
       "get": {
         "description": "",
         "responses": {
@@ -905,7 +905,7 @@
         "summary": "Customer Info"
       }
     },
-    "/brl/ramp_quote": {
+    "/transactions/v2/brl/ramp_quote": {
       "get": {
         "description": "",
         "operationId": "get_fetch_quote_rate",
@@ -962,7 +962,7 @@
         "summary": "Rate Quote"
       }
     },
-    "/reg_wallet_address": {
+    "/transactions/v2/reg_wallet_address": {
       "post": {
         "description": "",
         "operationId": "post_register_wallet",
@@ -1011,7 +1011,7 @@
         "summary": "Register Wallet Address"
       }
     },
-    "/brl/initiate_onramp": {
+    "/transactions/v2/brl/initiate_onramp": {
       "post": {
         "description": "",
         "operationId": "post_create_ticket",
@@ -1067,7 +1067,7 @@
         "summary": "BRL Auto Onramp"
       }
     },
-    "/brl/initiate_offramp": {
+    "/transactions/v2/brl/initiate_offramp": {
       "post": {
         "description": "",
         "operationId": "post_initiate_brl_offramp",
@@ -1120,7 +1120,7 @@
         "summary": "BRL Auto Offramp"
       }
     },
-    "/idr/onboarding": {
+    "/transactions/v2/idr/onboarding": {
       "post": {
         "description": "",
         "operationId": "post_idronboarding",
@@ -1149,7 +1149,7 @@
         "summary": "Onboarding"
       }
     },
-    "/idr/rate": {
+    "/transactions/v2/idr/rate": {
       "get": {
         "description": "",
         "operationId": "get_new-endpoint-idr-rate",
@@ -1184,7 +1184,7 @@
         "summary": "IDR Rate Quote"
       }
     },
-    "/idr/initiate_onramp": {
+    "/transactions/v2/idr/initiate_onramp": {
       "post": {
         "description": "",
         "operationId": "post_initiate_idr_onram",
@@ -1223,7 +1223,7 @@
         "summary": "IDR Auto Onramp"
       }
     },
-    "/idr/direct_withdraw": {
+    "/transactions/v2/idr/direct_withdraw": {
       "post": {
         "description": "",
         "operationId": "post_idrdirect_withdraw",
@@ -1257,7 +1257,7 @@
         "summary": "IDR Auto Offramp"
       }
     },
-    "/rate_quote": {
+    "/transactions/v2/rate_quote": {
       "get": {
         "description": "",
         "operationId": "get_business-rate-quote",
@@ -1300,7 +1300,7 @@
         "summary": "Get Rate Quote"
       }
     },
-    "/business_onramp": {
+    "/transactions/v2/business_onramp": {
       "post": {
         "description": "",
         "operationId": "get_busonrampaed",
@@ -1544,7 +1544,7 @@
         "summary": "Business Onramp"
       }
     },
-    "/business_offramp": {
+    "/transactions/v2/business_offramp": {
       "post": {
         "description": "",
         "operationId": "post_businessofframp",
