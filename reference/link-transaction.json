@@ -403,6 +403,7 @@
     },
     "/transactions/v2/retail_rate": {
       "get": {
+         "summary": "Get Retail Rate",
         "description": "",
         "operationId": "get_retail_rate",
         "responses": {
