@@ -1937,7 +1937,7 @@
         "summary": "Business Offramp"
       }
     },
-    "/payment_vendors": {
+    "/transactions/v2/payment_vendors": {
       "get": {
         "summary": "Get Payment Vendors",
         "description": "Query list of supported vendor account details for onramp transaction",
@@ -1989,7 +1989,7 @@
         "tags": ["Static Details"]
       }
     },
-    "/payment_banks": {
+    "/transactions/v2/payment_banks": {
       "get": {
         "summary": "Get Payment Banks",
         "description": "Query all available banks for a specified currency",
@@ -2041,7 +2041,7 @@
         "tags": ["Static Details"]
       }
     },
-    "/payment_wallets": {
+    "/transactions/v2/payment_wallets": {
       "get": {
         "summary": "Get Payment Wallets",
         "description": ".Query available wallet addresses for offramp transaction.",
@@ -2080,7 +2080,7 @@
         "tags": ["Static Details"]
       }
     },
-    "/business_payment_vendors": {
+    "/transactions/v2/business_payment_vendors": {
       "get": {
         "description": "",
         "operationId": "get_business_payment_vendors",
@@ -2122,7 +2122,7 @@
         "summary": "Get Business Payment Vendors"
       }
     },
-    "/fetch_all_transactions": {
+    "/transactions/v2/fetch_all_transactions": {
       "get": {
         "summary": "Get All Transactions",
         "description": "",
@@ -2166,7 +2166,7 @@
         "tags": ["Transactions"]
       }
     },
-    "/fetch_transaction": {
+    "/transactions/v2/fetch_transaction": {
       "get": {
         "summary": "Get a Transaction",
         "description": "",
@@ -2220,7 +2220,7 @@
         "tags": ["Transactions"]
       }
     },
-    "/wallet_balance": {
+    "/transactions/v2/wallet_balance": {
       "get": {
         "summary": "Get Available Balance",
         "description": "For customer's who hold funds in house with LINK.",
@@ -2264,7 +2264,7 @@
         "tags": ["Accounts"]
       }
     },
-    "/verify_account_number": {
+    "/transactions/v2/verify_account_number": {
       "get": {
         "summary": "Verify Account Number",
         "description": "This endpoint can be used to verify a Nigeria bank account number",
@@ -2323,7 +2323,7 @@
         "tags": ["Accounts"]
       }
     },
-    "/verify_customer_kyc": {
+    "/transactions/v2/verify_customer_kyc": {
       "post": {
         "summary": "ID Verification",
         "description": "verify users identification. This endpoint is currently only available for Nigeria customers.",
@@ -2387,7 +2387,7 @@
         "tags": ["Accounts"]
       }
     },
-    "/esp_onramp": {
+    "/transactions/v2/esp_onramp": {
       "post": {
         "description": "",
         "responses": {
@@ -2446,7 +2446,7 @@
         "summary": "Initiate ESP Onramp"
       }
     },
-    "/esp_offramp": {
+    "/transactions/v2/esp_offramp": {
       "post": {
         "description": "",
         "responses": {
