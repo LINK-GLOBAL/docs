@@ -2497,7 +2497,7 @@
         "summary": "Initiate ESP Offramp"
       }
     },
-    "/checkout/generate_session": {
+    "/checkout/sessions/generate": {
       "post": {
         "description": "",
         "responses": {
