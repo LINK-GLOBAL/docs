@@ -1938,191 +1938,6 @@
         "summary": "Business Offramp"
       }
     },
-    "/transactions/v2/payment_vendors": {
-      "get": {
-        "summary": "Get Payment Vendors",
-        "description": "Query list of supported vendor account details for onramp transaction",
-        "operationId": "payment_vendors",
-        "parameters": [
-          {
-            "name": "currency",
-            "in": "query",
-            "description": "Pass selected currency NGN, USD to get vendor bank details",
-            "schema": {
-              "type": "string",
-              "default": "NGN",
-              "enum": ["NGN", "USD"]
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false,
-        "tags": ["Static Details"]
-      }
-    },
-    "/transactions/v2/payment_banks": {
-      "get": {
-        "summary": "Get Payment Banks",
-        "description": "Query all available banks for a specified currency",
-        "operationId": "payment_banks",
-        "parameters": [
-          {
-            "name": "currency",
-            "in": "query",
-            "description": "Pass selected currency NGN, USD, BRL to get Bank list.",
-            "schema": {
-              "type": "string",
-              "default": "NGN",
-              "enum": ["NGN", "USD", "BRL"]
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false,
-        "tags": ["Static Details"]
-      }
-    },
-    "/transactions/v2/payment_wallets": {
-      "get": {
-        "summary": "Get Payment Wallets",
-        "description": ".Query available wallet addresses for offramp transaction.",
-        "operationId": "payment_wallets",
-        "responses": {
-          "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false,
-        "tags": ["Static Details"]
-      }
-    },
-    "/transactions/v2/business_payment_vendors": {
-      "get": {
-        "description": "",
-        "operationId": "get_business_payment_vendors",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "parameters": [
-          {
-            "in": "query",
-            "name": "currency",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "AED",
-                "AUD",
-                "BRL",
-                "CAD",
-                "CNY",
-                "DKK",
-                "EUR",
-                "GBP",
-                "HKD",
-                "ILS",
-                "MXN",
-                "NGN",
-                "PHP",
-                "SGD",
-                "USD",
-                "ZAR"
-              ]
-            },
-            "description": "Pass selected currency to get vendor bank details.",
-            "required": true
-          }
-        ],
-        "tags": ["Static Details"],
-        "summary": "Get Business Payment Vendors"
-      }
-    },
     "/transactions/v2/fetch_all_transactions": {
       "get": {
         "summary": "Get All Transactions",
@@ -2221,7 +2036,192 @@
         "tags": ["Transactions"]
       }
     },
-    "/transactions/v2/wallet_balance": {
+    "/static/v2/payment_vendors": {
+      "get": {
+        "summary": "Get Payment Vendors",
+        "description": "Query list of supported vendor account details for onramp transaction",
+        "operationId": "payment_vendors",
+        "parameters": [
+          {
+            "name": "currency",
+            "in": "query",
+            "description": "Pass selected currency NGN, USD to get vendor bank details",
+            "schema": {
+              "type": "string",
+              "default": "NGN",
+              "enum": ["NGN", "USD"]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": ["Static Details"]
+      }
+    },
+    "/static/v2/payment_banks": {
+      "get": {
+        "summary": "Get Payment Banks",
+        "description": "Query all available banks for a specified currency",
+        "operationId": "payment_banks",
+        "parameters": [
+          {
+            "name": "currency",
+            "in": "query",
+            "description": "Pass selected currency NGN, USD, BRL to get Bank list.",
+            "schema": {
+              "type": "string",
+              "default": "NGN",
+              "enum": ["NGN", "USD", "BRL"]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": ["Static Details"]
+      }
+    },
+    "/static/v2/payment_wallets": {
+      "get": {
+        "summary": "Get Payment Wallets",
+        "description": ".Query available wallet addresses for offramp transaction.",
+        "operationId": "payment_wallets",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  status: 'success',\n        message: 'Test Vendor accounts',\n        VendorList: [\n          {\n            vendorName: 'John Bucknor',\n            vendorNumber: '9483048732',\n            vendorBank: 'Wema Bank',\n          },\n          {\n            vendorName: 'Vanessa Williams',\n            vendorNumber: '7483048732',\n            vendorBank: 'GT Bank',\n          },\n          ..........\n       ],\n    });\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": ["Static Details"]
+      }
+    },
+    "/static/v2/business_payment_vendors": {
+      "get": {
+        "description": "",
+        "operationId": "get_business_payment_vendors",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "currency",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AED",
+                "AUD",
+                "BRL",
+                "CAD",
+                "CNY",
+                "DKK",
+                "EUR",
+                "GBP",
+                "HKD",
+                "ILS",
+                "MXN",
+                "NGN",
+                "PHP",
+                "SGD",
+                "USD",
+                "ZAR"
+              ]
+            },
+            "description": "Pass selected currency to get vendor bank details.",
+            "required": true
+          }
+        ],
+        "tags": ["Static Details"],
+        "summary": "Get Business Payment Vendors"
+      }
+    },
+    "/accounts/v2/wallet_balance": {
       "get": {
         "summary": "Get Available Balance",
         "description": "For customer's who hold funds in house with LINK.",
@@ -2265,7 +2265,7 @@
         "tags": ["Accounts"]
       }
     },
-    "/transactions/v2/verify_account_number": {
+    "/accounts/v2/verify_account_number": {
       "get": {
         "summary": "Verify Account Number",
         "description": "This endpoint can be used to verify a Nigeria bank account number",
@@ -2324,7 +2324,7 @@
         "tags": ["Accounts"]
       }
     },
-    "/transactions/v2/verify_customer_kyc": {
+    "/accounts/v2/verify_customer_kyc": {
       "post": {
         "summary": "ID Verification",
         "description": "verify users identification. This endpoint is currently only available for Nigeria customers.",
