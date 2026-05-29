@@ -1303,7 +1303,7 @@
     },
     "/otc/onramp": {
       "post": {
-        "description": "Initiate a fiat \u2192 stablecoin onramp via LINK\u2019s OTC desk. Provide core transaction details plus your banking details (the account you are paying FROM). LINK notifies liquidity partners; once a partner accepts, their settlement account details are delivered via a banking_details_received webhook.",
+        "description": "Initiate a fiat \u2192 stablecoin onramp via LINK\u2019s OTC desk. Provide core transaction details plus your banking details (the account you are paying FROM). Once a transaction (onramp) has been initiated, settlement account details are delivered to you through a `banking_details_received` webhook.",
         "operationId": "post_otc_onramp",
         "responses": {
           "201": {
@@ -1459,7 +1459,7 @@
     },
     "/otc/offramp": {
       "post": {
-        "description": "Initiate a stablecoin \u2192 fiat payout via LINK\u2019s OTC desk. Provide core transaction details plus your settlement banking details (the account you want to receive fiat INTO). LINK notifies liquidity partners who confirm and execute the payout.",
+        "description": "Initiate a stablecoin \u2192 fiat payout via LINK\u2019s OTC desk. Provide core transaction details plus your settlement banking details (the account you want to receive fiat INTO).",
         "operationId": "post_otc_offramp",
         "responses": {
           "201": {
