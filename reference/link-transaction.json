@@ -1258,7 +1258,7 @@
         "summary": "IDR Auto Offramp"
       }
     },
-    "/transactions/v2/rate_quote": {
+    "/otc/rate_quote": {
       "get": {
         "description": "",
         "operationId": "get_business-rate-quote",
@@ -1297,645 +1297,339 @@
             "description": "Amount Business wants to Onramp(Fiat) OR offramp(Stables)."
           }
         ],
-        "tags": ["Business FX"],
-        "summary": "Get Rate Quote"
+        "tags": ["OTC"],
+        "summary": "OTC Rate Quote"
       }
     },
-    "/transactions/v2/business_onramp": {
+    "/otc/onramp": {
       "post": {
-        "description": "",
-        "operationId": "get_busonrampaed",
+        "description": "Initiate a fiat \u2192 stablecoin onramp via LINK\u2019s OTC desk. Provide core transaction details plus your banking details (the account you are paying FROM). LINK notifies liquidity partners; once a partner accepts, their settlement account details are delivered via a banking_details_received webhook.",
+        "operationId": "post_otc_onramp",
         "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "customer_id": {
-                    "type": "string",
-                    "default": "",
-                    "description": "ID of your customer making the API request on your platform."
-                  },
-                  "currency": {
-                    "type": "string",
-                    "description": "   Fiat you paid.",
-                    "enum": [
-                      "AED",
-                      "AUD",
-                      "BRL",
-                      "CAD",
-                      "CNY",
-                      "DKK",
-                      "EUR",
-                      "GBP",
-                      "HKD",
-                      "ILS",
-                      "MXN",
-                      "NGN",
-                      "PHP",
-                      "SGD",
-                      "USD",
-                      "ZAR"
-                    ]
-                  },
-                  "amount": {
-                    "type": "string",
-                    "description": "Fiat amount you paid. For Limits see, Fees & Minimums under B2B API's."
-                  },
-                  "stables": {
-                    "type": "string",
-                    "enum": ["USDC", "USDT"],
-                    "description": "Stablecoin you\u2019d like to receive (e.g., USDC, USDT)."
-                  },
-                  "vendor_id": {
-                    "type": "string",
-                    "description": "Payout banking rail to use. Retrieve via Get Business Vendors."
-                  },
-                  "wallet_address": {
-                    "type": "string",
-                    "description": "Destination wallet address to receive the stablecoin."
-                  },
-                  "network": {
-                    "type": "string",
-                    "description": "Destination blockchain network (e.g., Solana, Polygon)."
-                  },
-                  "bank _transfer": {
-                    "type": "object",
-                    "properties": {
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bank_code": {
-                        "type": "string"
-                      },
-                      "branch_code": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Supported currencies: USD, SGD, HKD, CNY & ILS"
-                  },
-                  "iban": {
-                    "type": "object",
-                    "properties": {
-                      "iban": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for domestic and  international IBAN transfers. Supported currencies: AED, EUR, GBP (international), USD (EU route), CAD (EU route), CNY, HKD, SGD, ZAR, MXN."
-                  },
-                  "usd_domestic": {
-                    "type": "object",
-                    "properties": {
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "routing_number": {
-                        "type": "string",
-                        "description": "Use if you have a single routing number"
-                      },
-                      "ach_routing_number": {
-                        "type": "string",
-                        "description": "Provide if your bank lists them separately."
-                      },
-                      "fedwire_routing_number": {
-                        "type": "string",
-                        "description": "Provide if your bank lists them separately."
-                      },
-                      "bank_name": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for US domestic ACH / Fedwire transfers. Supported currency: USD"
-                  },
-                  "gbp_domestic": {
-                    "type": "object",
-                    "properties": {
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "sort_code": {
-                        "type": "string"
-                      },
-                      "bank_name": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for UK domestic transfers (Faster Payments, CHAPS & BACS). Supported currency: GBP"
-                  },
-                  "ngn_domestic": {
-                    "type": "object",
-                    "properties": {
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bank_name": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for Nigerian domestic transfers. Supported currency: NGN"
-                  },
-                  "aud_domestic": {
-                    "type": "object",
-                    "properties": {
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bsb": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for Australian domestic bank transfers. Supported currency: AUD"
-                  },
-                  "cad_eft": {
-                    "type": "object",
-                    "properties": {
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "transit_number": {
-                        "type": "string"
-                      },
-                      "institution_number": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for Canadian domestic EFT bank transfers. Supported currency: CAD"
-                  },
-                  "cad_interac": {
-                    "type": "object",
-                    "properties": {
-                      "interac_email": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for Canadian Interac e-Transfers. Supported currency: CAD"
-                  },
-                  "brl_pix": {
-                    "type": "object",
-                    "properties": {
-                      "pix_key": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for PIX transfers. Supported currency: BRL"
-                  },
-                  "mxn_clabe": {
-                    "type": "object",
-                    "properties": {
-                      "clabe": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for Mexican domestic SPEI transfers. Supported currency: MXN"
-                  },
-                  "php_bank_transfer": {
-                    "type": "object",
-                    "properties": {
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bank_name": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for Philippine domestic bank transfers. Supported currency: PHP"
-                  },
-                  "php_ewallet": {
-                    "type": "object",
-                    "properties": {
-                      "ewallet_account_number": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Use for Philippine e-wallet transfers. Supported currency: PHP"
-                  },
-                  "proof_of_payment": {
-                    "type": "string",
-                    "description": "A URL pointing to your payment proof. The uploaded file  must display your company letterhead, no larger than 5MB.  Accepted formats are PDF, JPEG, JPG, or PNG."
-                  }
-                },
-                "type": "object",
-                "required": [
-                  "customer_id",
-                  "currency",
-                  "amount",
-                  "stables",
-                  "vendor_id",
-                  "wallet_address",
-                  "network",
-                  "proof_of_payment"
-                ]
-              }
-            }
-          }
-        },
-        "tags": ["Business FX"],
-        "summary": "Business Onramp"
-      }
-    },
-    "/transactions/v2/business_offramp": {
-      "post": {
-        "description": "",
-        "operationId": "post_businessofframp",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "customer_id": {
-                    "type": "string",
-                    "description": "ID of your customer making the API request on your platform."
-                  },
-                  "stables": {
-                    "type": "string",
-                    "enum": ["USDC", "USDT"],
-                    "description": "Stablecoin you will send (e.g., USDC, USDT)."
-                  },
-                  "amount": {
-                    "type": "string",
-                    "description": "Stablecoin amount sent(string for precision)."
-                  },
-                  "currency": {
-                    "type": "string",
-                    "description": "Fiat currency to receive (e.g., USD, GBP, NGN).",
-                    "enum": [
-                      "AED",
-                      "AUD",
-                      "BRL",
-                      "CAD",
-                      "CNY",
-                      "DKK",
-                      "EGP",
-                      "EUR",
-                      "GBP",
-                      "HKD",
-                      "IDR",
-                      "ILS",
-                      "INR",
-                      "KRW",
-                      "MXN",
-                      "MYR",
-                      "NGN",
-                      "PHP",
-                      "SGD",
-                      "USD",
-                      "ZAR"
-                    ]
-                  },
-                  "wallet_address": {
-                    "type": "string",
-                    "description": "Walllet address USDC/USDT is sent from"
-                  },
-                  "network": {
-                    "type": "string",
-                    "description": "Wallet address network (e.g., Solana, Polygon)."
-                  },
-                  "usd_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "ach_routing_number": {
-                        "type": "string"
-                      },
-                      "fedwire_routing_number": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      },
-                      "intermediary_swift": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "US payouts via ACH, Fedwire, or SWIFT. Include whichever routing code applies (ACH, Fedwire, or SWIFT)."
-                  },
-                  "gbp_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "sort_code": {
-                        "type": "string"
-                      },
-                      "iban": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "UK payouts via FPS, CHAPS, or SWIFT. "
-                  },
-                  "eur_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "intermediary_swift ": {
-                        "type": "string"
-                      },
-                      "iban": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Euro payouts via SEPA (default) or SWIFT. "
-                  },
-                  "cad_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "institution_number": {
-                        "type": "string"
-                      },
-                      "transit_number": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      },
-                      "intermediary_swift": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Euro payouts via SEPA (default) or SWIFT. "
-                  },
-                  "cad_interac": {
-                    "type": "object",
-                    "properties": {
-                      "interac_email": {
-                        "type": "string"
-                      },
-                      "account_name": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Canadian Interac e\u2011Transfer via email."
-                  },
-                  "cad_bill_payment": {
-                    "type": "object",
-                    "properties": {
-                      "biller": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Canadian Bill Payment."
-                  },
-                  "sgd_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      },
-                      "intermediary_swift": {
-                        "type": "string"
-                      },
-                      "phone_number": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Singapore payouts via FAST (PayNow), GIRO/RTGS, or SWIFT."
-                  },
-                  "aud_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bsb": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Australian bank payouts\u2014bank transfer (BSB + account), or SWIFT."
-                  },
-                  "aud_bpay": {
-                    "type": "object",
-                    "properties": {
-                      "biller_code": {
-                        "type": "string"
-                      },
-                      "customer_reference_number": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Australian BPAY."
-                  },
-                  "hkd_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bank_code": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      },
-                      "intermediary_swift": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Hong Kong payouts via ACH/FPS (account) or SWIFT/RTGS."
-                  },
-                  "cny_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bank_code": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      },
-                      "intermediary_swift": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Mainland China payouts via ACH/FPS (account) or SWIFT/RTGS."
-                  },
-                  "mxn_payout": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "clabe": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      },
-                      "intermediary_swift": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Mexico payouts\u2014local bank transfer (CLABE) or SWIFT."
-                  },
-                  "<cci>_payout": {
-                    "type": "object",
-                    "description": "Applies to AED, ILS, EGP currencies. Unified IBAN/SWIFT payouts. Provide an IBAN and account name. Use the currency prefix as the object name (e.g., aed_payout).",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "iban": {
-                        "type": "string"
-                      },
-                      "intermediary_swift": {
-                        "type": "string"
+          "201": {
+            "description": "Transaction created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string", "example": "TXN_SUCCESSFUL" },
+                    "status": { "type": "string", "example": "Success" },
+                    "message": { "type": "string" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction_id": { "type": "string" },
+                        "reference": { "type": "string", "example": "link-otc-12345678" },
+                        "type": { "type": "string", "example": "onramp" },
+                        "currency": { "type": "string" },
+                        "amount": { "type": "string" },
+                        "stables": { "type": "string" },
+                        "payout_amount": { "type": "string" },
+                        "rate": { "type": "number" },
+                        "transaction_status": { "type": "string", "example": "pending" },
+                        "payment_method": { "type": "string" },
+                        "date_created": { "type": "string" }
                       }
                     }
-                  },
-                  "<ccy>_bank_transfer": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "account_type": {
-                        "type": "string"
-                      },
-                      "bank_code": {
-                        "type": "string"
-                      },
-                      "branch_code": {
-                        "type": "string"
-                      },
-                      "swift_code": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Applies to INR, IDR, KRW, MYR, ZAR, . Unified bank\u2011transfer corridors. Use the currency prefix as the object name (e.g., inr_bank_transfer)."
-                  },
-                  "ngn_bank_transfer": {
-                    "type": "object",
-                    "properties": {
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "bank_name": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Nigerian local bank payout."
-                  },
-                  "brl_payout": {
-                    "type": "object",
-                    "properties": {
-                      "bank_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "account_type": {
-                        "type": "string"
-                      },
-                      "branch_code": {
-                        "type": "string"
-                      },
-                      "pix_key": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Brazil payouts via PIX or standard bank transfer. "
-                  },
-                  "php_payout": {
-                    "type": "object",
-                    "properties": {
-                      "bank_name": {
-                        "type": "string"
-                      },
-                      "account_number": {
-                        "type": "string"
-                      },
-                      "account_name": {
-                        "type": "string"
-                      },
-                      "ewallet_provider": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "Philippines payouts\u2014either a bank account or an e\u2011wallet."
                   }
-                },
+                }
+              }
+            }
+          },
+          "400": { "description": "Validation error \u2014 missing or invalid fields" },
+          "503": { "description": "OTC bot unavailable \u2014 retry" }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
                 "type": "object",
-                "required": [
-                  "customer_id",
-                  "stables",
-                  "amount",
-                  "currency",
-                  "wallet_address",
-                  "network"
-                ]
+                "required": ["customer_id", "currency", "amount", "stables", "wallet_address", "network", "paymentDetails"],
+                "properties": {
+                  "customer_id": {
+                    "type": "string",
+                    "description": "Your platform\u2019s customer ID for this transaction."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Fiat currency being sent.",
+                    "enum": ["AED", "AOA", "BRL", "CAD", "CDF", "CNY", "DZD", "EGP", "EUR", "GBP", "GHS", "HKD", "IDR", "LYD", "MAD", "MWK", "MZN", "NGN", "PHP", "SGD", "SLE", "SSP", "TRY", "TZS", "UGX", "USD", "XAF", "XOF"]
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Fiat amount being sent."
+                  },
+                  "stables": {
+                    "type": "string",
+                    "enum": ["USDC", "USDT"],
+                    "description": "Stablecoin to receive."
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "Destination wallet address for the stablecoin."
+                  },
+                  "network": {
+                    "type": "string",
+                    "description": "Blockchain network (e.g., solana, polygon)."
+                  },
+                  "paymentDetails": {
+                    "type": "object",
+                    "description": "Your banking details \u2014 the account you are paying FROM. Required fields depend on your currency\u2019s payment method. Call GET /otc/rate_quote first to get the paymentMethod for your currency.",
+                    "oneOf": [
+                      {
+                        "title": "NIP \u2014 Bank Transfer (NGN, GHS)",
+                        "required": ["accountNumber", "accountName", "bankName"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "ACH (USD, CNY)",
+                        "required": ["accountNumber", "routingNumber", "accountName"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "routingNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "SEPA (EUR)",
+                        "required": ["iban", "beneficiaryName", "bankName"],
+                        "properties": {
+                          "iban": { "type": "string" },
+                          "beneficiaryName": { "type": "string" },
+                          "bankName": { "type": "string" },
+                          "swiftCode": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "PIX (BRL)",
+                        "required": ["pixKey", "accountHolder"],
+                        "properties": {
+                          "pixKey": { "type": "string" },
+                          "accountHolder": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "PESONet (PHP)",
+                        "required": ["accountNumber", "accountName", "bankName"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "Mobile Money (SLE, SSP, TZS, UGX, XAF, XOF)",
+                        "required": ["provider", "phoneNumber", "accountName"],
+                        "properties": {
+                          "provider": { "type": "string", "description": "Mobile money provider (e.g., M-Pesa, Orange Money, MTN Mobile Money)." },
+                          "phoneNumber": { "type": "string" },
+                          "accountName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "SWIFT (AED, AOA, CAD, CDF, DZD, EGP, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY)",
+                        "required": ["accountName", "bankName", "accountNumber", "swiftCode"],
+                        "properties": {
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" },
+                          "accountNumber": { "type": "string" },
+                          "swiftCode": { "type": "string" },
+                          "iban": { "type": "string" },
+                          "branchCode": { "type": "string" }
+                        }
+                      }
+                    ]
+                  }
+                }
               }
             }
           }
         },
-        "tags": ["Business FX"],
-        "summary": "Business Offramp"
+        "tags": ["OTC"],
+        "summary": "OTC Onramp"
+      }
+    },
+    "/otc/offramp": {
+      "post": {
+        "description": "Initiate a stablecoin \u2192 fiat payout via LINK\u2019s OTC desk. Provide core transaction details plus your settlement banking details (the account you want to receive fiat INTO). LINK notifies liquidity partners who confirm and execute the payout.",
+        "operationId": "post_otc_offramp",
+        "responses": {
+          "201": {
+            "description": "Transaction created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string", "example": "TXN_SUCCESSFUL" },
+                    "status": { "type": "string", "example": "Success" },
+                    "message": { "type": "string" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction_id": { "type": "string" },
+                        "reference": { "type": "string", "example": "link-otc-87654321" },
+                        "type": { "type": "string", "example": "offramp" },
+                        "stables": { "type": "string" },
+                        "amount": { "type": "string" },
+                        "currency": { "type": "string" },
+                        "payout_amount": { "type": "string" },
+                        "rate": { "type": "number" },
+                        "transaction_status": { "type": "string", "example": "pending" },
+                        "payment_method": { "type": "string" },
+                        "date_created": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Validation error \u2014 missing or invalid fields" },
+          "503": { "description": "OTC bot unavailable \u2014 retry" }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["customer_id", "currency", "amount", "stables", "wallet_address", "network", "paymentDetails"],
+                "properties": {
+                  "customer_id": {
+                    "type": "string",
+                    "description": "Your platform\u2019s customer ID for this transaction."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Fiat currency to receive.",
+                    "enum": ["AED", "AOA", "BRL", "CAD", "CDF", "CNY", "DZD", "EGP", "EUR", "GBP", "GHS", "HKD", "IDR", "LYD", "MAD", "MWK", "MZN", "NGN", "PHP", "SGD", "SLE", "SSP", "TRY", "TZS", "UGX", "USD", "XAF", "XOF"]
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Stablecoin amount being sent."
+                  },
+                  "stables": {
+                    "type": "string",
+                    "enum": ["USDC", "USDT"],
+                    "description": "Stablecoin being sent."
+                  },
+                  "wallet_address": {
+                    "type": "string",
+                    "description": "Wallet address sending the stablecoin."
+                  },
+                  "network": {
+                    "type": "string",
+                    "description": "Blockchain network (e.g., solana, polygon)."
+                  },
+                  "paymentDetails": {
+                    "type": "object",
+                    "description": "Your settlement banking details \u2014 the account you want to receive fiat INTO. Required fields depend on your currency\u2019s payment method. Call GET /otc/rate_quote first to get the paymentMethod for your currency.",
+                    "oneOf": [
+                      {
+                        "title": "NIP \u2014 Bank Transfer (NGN)",
+                        "required": ["accountNumber", "accountName", "bankName"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "GIP \u2014 Ghana Instant Pay (GHS)",
+                        "required": ["accountNumber", "accountName", "bankName"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "ACH (USD)",
+                        "required": ["accountNumber", "routingNumber", "accountName"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "routingNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "SEPA (EUR)",
+                        "required": ["iban", "beneficiaryName", "bankName"],
+                        "properties": {
+                          "iban": { "type": "string" },
+                          "beneficiaryName": { "type": "string" },
+                          "bankName": { "type": "string" },
+                          "swiftCode": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "PIX (BRL)",
+                        "required": ["pixKey", "accountHolder"],
+                        "properties": {
+                          "pixKey": { "type": "string" },
+                          "accountHolder": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "CNAPS (CNY)",
+                        "required": ["accountNumber", "accountName", "bankName", "cnapsCode"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" },
+                          "cnapsCode": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "PESONet (PHP)",
+                        "required": ["accountNumber", "accountName", "bankName"],
+                        "properties": {
+                          "accountNumber": { "type": "string" },
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "Mobile Money (EGP, SLE, SSP, TZS, UGX, XAF, XOF)",
+                        "required": ["provider", "phoneNumber", "accountName"],
+                        "properties": {
+                          "provider": { "type": "string", "description": "Mobile money provider (e.g., M-Pesa, Orange Money, MTN Mobile Money, Vodafone Cash)." },
+                          "phoneNumber": { "type": "string" },
+                          "accountName": { "type": "string" }
+                        }
+                      },
+                      {
+                        "title": "SWIFT (AED, AOA, CAD, CDF, DZD, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY)",
+                        "required": ["accountName", "bankName", "accountNumber", "swiftCode"],
+                        "properties": {
+                          "accountName": { "type": "string" },
+                          "bankName": { "type": "string" },
+                          "accountNumber": { "type": "string" },
+                          "swiftCode": { "type": "string" },
+                          "iban": { "type": "string" },
+                          "branchCode": { "type": "string" }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["OTC"],
+        "summary": "OTC Offramp"
       }
     },
     "/transactions/v2/fetch_all_transactions": {
@@ -2547,21 +2241,7 @@
         "tags": ["Checkout"],
         "summary": "Generate session"
       }
-    },
-    "/initiate_idr_onramp": {},
-    "/bus/onramp/aud": {},
-    "/bus/onramp/brl": {},
-    "/bus/onramp/cad": {},
-    "/bus/onramp/cny": {},
-    "/bus/onramp/eur": {},
-    "/bus/onramp/gbp": {},
-    "/bus/onramp/ngn": {},
-    "/bus/onramp/hkd": {},
-    "/by-ramp": {},
-    "/idr/ramp_quote": {},
-    "/onramp-1": {},
-    "/offramp-1": {},
-    "/rate_quote-1": {}
+    }
   },
   "x-readme": {
     "headers": [],
@@ -2583,7 +2263,7 @@
       "name": "IDR Ramp"
     },
     {
-      "name": "Business FX"
+      "name": "OTC"
     },
     {
       "name": "Customers"
