@@ -1635,7 +1635,7 @@
     "/otc/pop": {
       "post": {
         "summary": "Upload Proof of Payment",
-        "description": "Upload proof of payment for an existing OTC onramp transaction. Submit after transferring fiat to the partner's account so the partner can confirm receipt. Accepts JPEG, PNG, GIF, or PDF files up to 3 MB.",
+        "description": "Upload proof of payment for an existing OTC onramp transaction. Submit after transferring fiat to the settlement account so the partner can confirm receipt. Accepts JPEG, PNG, GIF, or PDF files up to 2 MB.",
         "operationId": "post_otc_pop",
         "tags": ["OTC"],
         "parameters": [],
