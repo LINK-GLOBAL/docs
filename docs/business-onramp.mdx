@@ -3,7 +3,7 @@ title: "OTC Onramp"
 description: "POST /otc/onramp — Fiat → Stablecoin"
 ---
 
-Initiate a fiat → stablecoin conversion via LINK's OTC desk. You provide the core transaction details plus your own banking details (the account you are paying **from**). LINK notifies liquidity partners via Telegram; once a partner accepts, their settlement account details are delivered to you through a `banking_details_received` webhook.
+Initiate a fiat → stablecoin conversion via LINK's OTC desk. You provide the core transaction details plus your own banking details (the account you are paying **from**). Once a transaction (onramp) has been initiated, settlement account details are delivered to you through a `banking_details_received` webhook.
 
 ---
 
@@ -20,7 +20,7 @@ POST /otc/onramp
 | Field            | Type   | Required | Description                                                                                                    |
 | ---------------- | ------ | -------- | -------------------------------------------------------------------------------------------------------------- |
 | `customer_id`    | string | ✓        | Your platform's customer ID for this transaction.                                                              |
-| `currency`       | string | ✓        | Fiat currency being sent (e.g., `NGN`, `USD`, `GBP`). See [Supported Currencies](/docs/supported-currency-methods). |
+| `currency`       | string | ✓        | Fiat currency being sent (e.g., `NGN`, `USD`, `GBP`). See [Supported Currencies](/docs/otc-service).           |
 | `amount`         | string | ✓        | Fiat amount being sent.                                                                                        |
 | `stables`        | string | ✓        | Stablecoin to receive: `USDC` or `USDT`.                                                                       |
 | `wallet_address` | string | ✓        | Destination wallet address for the stablecoin.                                                                 |
@@ -31,7 +31,7 @@ POST /otc/onramp
 
 #### Payment Method & `paymentDetails` Fields
 
-Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` first — the response includes a `paymentMethod` field that tells you which method applies to your currency.
+Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` first. The response includes a `paymentMethod` field that tells you which method applies to your currency.
 
 | Payment Method   | Currencies                                              | Required fields in `paymentDetails`                                   |
 | ---------------- | ------------------------------------------------------- | --------------------------------------------------------------------- |
@@ -40,7 +40,7 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
 | **SEPA**         | EUR                                                     | `iban`, `beneficiaryName`, `bankName`                                 |
 | **PIX**          | BRL                                                     | `pixKey`, `accountHolder`                                             |
 | **PESONet**      | PHP                                                     | `accountNumber`, `accountName`, `bankName`                            |
-| **Mobile Money** | SLE, SSP, TZS, UGX, XAF, XOF                           | `provider`, `phoneNumber`, `accountName`                              |
+| **Mobile Money** | SLE, SSP, TZS, UGX, XAF, XOF                            | `provider`, `phoneNumber`, `accountName`                              |
 | **SWIFT**        | AED, AOA, CAD, CDF, DZD, EGP, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY | `accountName`, `bankName`, `accountNumber`, `swiftCode` |
 
 ---
@@ -49,7 +49,7 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
 
 <CodeGroup>
 
-```json NGN — NIP
+```json NGN — NIP Bank Transfer
 {
   "customer_id": "cut93498342",
   "currency": "NGN",
@@ -155,7 +155,7 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
 {
   "code": "TXN_SUCCESSFUL",
   "status": "Success",
-  "message": "Transaction request submitted. Partners have been notified.",
+  "message": "Transaction request submitted. Banking details will be shared shortly.",
   "data": {
     "transaction_id": "6839f2a1c4e3b1000d5a9012",
     "reference": "link-otc-12345678",
@@ -176,8 +176,7 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
 
 #### What Happens Next
 
-1. **Partner notification** — Liquidity partners are alerted on Telegram with your transaction details.
-2. **Banking details received** — A partner accepts and sends their settlement account. LINK fires a `banking_details_received` webhook to your registered URL:
+1. **Banking details received** — LINK shares the settlement account details with you. LINK fires a `banking_details_received` webhook to your registered URL:
 
 ```json
 {
@@ -198,8 +197,8 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
 }
 ```
 
-3. **Send funds** — Transfer fiat to the partner's account provided in the webhook.
-4. **Completion** — Once the partner confirms receipt, LINK fires a `transaction_status_updated` webhook with `partner_status: "completed"`.
+3. **Send funds** — Transfer fiat to the account provided in the webhook.
+4. **Completion** — Once we confirm receipt, LINK fires a `transaction_status_updated` webhook with `transaction_status: "completed"`.
 
 ---
 

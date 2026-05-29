@@ -3,7 +3,7 @@ title: "OTC Offramp"
 description: "POST /otc/offramp — Stablecoin → Fiat"
 ---
 
-Initiate a stablecoin → fiat payout via LINK's OTC desk. You provide the core transaction details plus your settlement banking details (the account you want to receive fiat **into**). LINK notifies liquidity partners who confirm and execute the payout.
+Initiate a stablecoin → fiat payout via LINK's OTC desk. You provide the core transaction details plus your settlement banking details (the account you want to receive fiat **into**).
 
 ---
 
@@ -35,15 +35,15 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=offramp` 
 
 | Payment Method   | Currencies                                              | Required fields in `paymentDetails`                                   |
 | ---------------- | ------------------------------------------------------- | --------------------------------------------------------------------- |
-| **NIP**          | NGN                                                     | `accountNumber`, `accountName`, `bankName`                            |
+| **NIP **          | NGN                                                     | `accountNumber`, `accountName`, `bankName`                           |
 | **GIP**          | GHS                                                     | `accountNumber`, `accountName`, `bankName`                            |
 | **ACH**          | USD                                                     | `accountNumber`, `routingNumber`, `accountName`                       |
 | **SEPA**         | EUR                                                     | `iban`, `beneficiaryName`, `bankName`                                 |
 | **PIX**          | BRL                                                     | `pixKey`, `accountHolder`                                             |
 | **CNAPS**        | CNY                                                     | `accountNumber`, `accountName`, `bankName`, `cnapsCode`               |
 | **PESONet**      | PHP                                                     | `accountNumber`, `accountName`, `bankName`                            |
-| **Mobile Money** | EGP, SLE, SSP, TZS, UGX, XAF, XOF                      | `provider`, `phoneNumber`, `accountName`                              |
-| **SWIFT**        | AED, AOA, CAD, CDF, DZD, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY | `accountName`, `bankName`, `accountNumber`, `swiftCode` |
+| **Mobile Money** | EGP, SLE, SSP, TZS, UGX, XAF, XOF                      | `provider`, `phoneNumber`, `accountName`                               |
+| **SWIFT**        | AED, AOA, CAD, CDF, DZD, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY | `accountName`, `bankName`, `accountNumber`, `swiftCode`  |
 
 ---
 
@@ -179,7 +179,7 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=offramp` 
 #### What Happens Next
 
 1. **Send stablecoin** — Transfer the stablecoin from `wallet_address` to the LINK-provided address.
-2. **Status updates** — LINK fires a `transaction_status_updated` webhook as the partner processes the payout:
+2. **Status updates** — LINK fires a `transaction_status_updated` webhook as we process the payout:
 
 ```json
 {

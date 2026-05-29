@@ -1632,6 +1632,83 @@
         "summary": "OTC Offramp"
       }
     },
+    "/otc/pop": {
+      "post": {
+        "summary": "Upload Proof of Payment",
+        "description": "Upload proof of payment for an existing OTC onramp transaction. Submit after transferring fiat to the partner's account so the partner can confirm receipt. Accepts JPEG, PNG, GIF, or PDF files up to 3 MB.",
+        "operationId": "post_otc_pop",
+        "tags": ["OTC"],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["reference", "file"],
+                "properties": {
+                  "reference": {
+                    "type": "string",
+                    "description": "The transaction reference returned when the onramp was created (e.g. link-otc-12345678).",
+                    "example": "link-otc-12345678"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Proof of payment file. Accepted types: JPEG, PNG, GIF, PDF. Maximum size: 3 MB."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Proof of payment uploaded and forwarded to the OTC partner.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string", "example": "POP_UPLOADED" },
+                    "status": { "type": "string", "example": "Success" },
+                    "message": { "type": "string", "example": "Proof of payment uploaded successfully." },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "reference": { "type": "string", "example": "link-otc-12345678" },
+                        "filename": { "type": "string", "example": "receipt.pdf" },
+                        "submitted_at": { "type": "string", "format": "date-time" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error — missing fields, unsupported file type, or file exceeds 3 MB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string", "example": "POP_INVALID_FILE" },
+                    "message": { "type": "string", "example": "File too large. Please reduce the file size to under 3 MB." }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found for the given reference."
+          },
+          "503": {
+            "description": "OTC bot unavailable — proof of payment could not be forwarded. Retry later."
+          }
+        }
+      }
+    },
     "/transactions/v2/fetch_all_transactions": {
       "get": {
         "summary": "Get All Transactions",

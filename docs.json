@@ -39,16 +39,14 @@
             "group": "On-Ramp",
             "pages": [
               "docs/on-ramp",
-              "docs/onramp-rates",
-              "docs/business-onramp"
+              "docs/onramp-rates"
             ]
           },
           {
             "group": "Off-Ramp",
             "pages": [
               "docs/off-ramp",
-              "docs/offramp-rates",
-              "docs/business-offramp"
+              "docs/offramp-rates"
             ]
           },
           {
@@ -56,6 +54,16 @@
             "pages": [
               "docs/fetch-transactions",
               "docs/processing-windows"
+            ]
+          },
+          {
+            "group": "OTC & Bridge",
+            "pages": [
+              "docs/otc-service",
+              "docs/business-onramp",
+              "docs/business-offramp",
+              "reference/post-otc_pop",
+              "docs/cross-border-fx"
             ]
           },
           {
@@ -86,13 +94,6 @@
               "docs/transaction-fees",
               "docs/currency-limits",
               "docs/developer-fees"
-            ]
-          },
-          {
-            "group": "OTC & Bridge",
-            "pages": [
-              "docs/otc-service",
-              "docs/cross-border-fx"
             ]
           },
           {
