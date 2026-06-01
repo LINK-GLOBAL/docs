@@ -1400,23 +1400,13 @@
                         }
                       },
                       {
-                        "title": "SEPA (EUR)",
-                        "required": ["iban", "beneficiaryName", "bankName"],
+                        "title": "International Bank Transfer (AED, AOA, BIF, CDF, DZD, EGP, ETB, EUR, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
+                        "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
-                          "iban": { "type": "string" },
-                          "beneficiaryName": { "type": "string" },
-                          "bankName": { "type": "string" },
-                          "swiftCode": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "SWIFT (AED, AOA, BIF, CDF, DZD, EGP, ETB, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
-                        "required": ["accountName", "bankName", "accountNumber", "swiftCode"],
-                        "properties": {
+                          "accountNumber": { "type": "string" },
                           "accountName": { "type": "string" },
                           "bankName": { "type": "string" },
-                          "accountNumber": { "type": "string" },
-                          "swiftCode": { "type": "string" },
+                          "swiftCode": { "type": "string", "description": "Optional \u2014 include if known." },
                           "iban": { "type": "string" },
                           "branchCode": { "type": "string" }
                         }
@@ -1511,16 +1501,7 @@
                     "description": "Your settlement banking details \u2014 the account you want to receive fiat INTO. Required fields depend on your currency\u2019s payment method. Call GET /otc/rate_quote first to get the paymentMethod for your currency.",
                     "oneOf": [
                       {
-                        "title": "NIP \u2014 Bank Transfer (NGN)",
-                        "required": ["accountNumber", "accountName", "bankName"],
-                        "properties": {
-                          "accountNumber": { "type": "string" },
-                          "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "GIP \u2014 Ghana Instant Pay (GHS)",
+                        "title": "NIP \u2014 Bank Transfer (NGN, GHS)",
                         "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1539,23 +1520,13 @@
                         }
                       },
                       {
-                        "title": "SEPA (EUR)",
-                        "required": ["iban", "beneficiaryName", "bankName"],
+                        "title": "International Bank Transfer (AED, AOA, BIF, CDF, DZD, EGP, ETB, EUR, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
+                        "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
-                          "iban": { "type": "string" },
-                          "beneficiaryName": { "type": "string" },
-                          "bankName": { "type": "string" },
-                          "swiftCode": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "SWIFT (AED, AOA, BIF, CDF, DZD, EGP, ETB, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
-                        "required": ["accountName", "bankName", "accountNumber", "swiftCode"],
-                        "properties": {
+                          "accountNumber": { "type": "string" },
                           "accountName": { "type": "string" },
                           "bankName": { "type": "string" },
-                          "accountNumber": { "type": "string" },
-                          "swiftCode": { "type": "string" },
+                          "swiftCode": { "type": "string", "description": "Optional \u2014 include if known." },
                           "iban": { "type": "string" },
                           "branchCode": { "type": "string" }
                         }
