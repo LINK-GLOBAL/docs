@@ -1272,7 +1272,8 @@
             "in": "query",
             "name": "currency",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": ["AED", "AOA", "BIF", "CDF", "DZD", "EGP", "ETB", "EUR", "GBP", "GHS", "LYD", "MAD", "MUR", "MWK", "MZN", "NGN", "SGD", "SLE", "SSP", "TRY", "TZS", "UGX", "USD", "XAF", "XOF"]
             },
             "required": true,
             "description": "Fiat currency used to onramp or receive offramp."
@@ -1356,7 +1357,7 @@
                   "currency": {
                     "type": "string",
                     "description": "Fiat currency being sent.",
-                    "enum": ["AED", "AOA", "BRL", "CAD", "CDF", "CNY", "DZD", "EGP", "EUR", "GBP", "GHS", "HKD", "IDR", "LYD", "MAD", "MWK", "MZN", "NGN", "PHP", "SGD", "SLE", "SSP", "TRY", "TZS", "UGX", "USD", "XAF", "XOF"]
+                    "enum": ["AED", "AOA", "BIF", "CDF", "DZD", "EGP", "ETB", "EUR", "GBP", "GHS", "LYD", "MAD", "MUR", "MWK", "MZN", "NGN", "SGD", "SLE", "SSP", "TRY", "TZS", "UGX", "USD", "XAF", "XOF"]
                   },
                   "amount": {
                     "type": "string",
@@ -1389,7 +1390,7 @@
                         }
                       },
                       {
-                        "title": "ACH (USD, CNY)",
+                        "title": "ACH (USD)",
                         "required": ["accountNumber", "routingNumber", "accountName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1409,33 +1410,7 @@
                         }
                       },
                       {
-                        "title": "PIX (BRL)",
-                        "required": ["pixKey", "accountHolder"],
-                        "properties": {
-                          "pixKey": { "type": "string" },
-                          "accountHolder": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "PESONet (PHP)",
-                        "required": ["accountNumber", "accountName", "bankName"],
-                        "properties": {
-                          "accountNumber": { "type": "string" },
-                          "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "Mobile Money (SLE, SSP, TZS, UGX, XAF, XOF)",
-                        "required": ["provider", "phoneNumber", "accountName"],
-                        "properties": {
-                          "provider": { "type": "string", "description": "Mobile money provider (e.g., M-Pesa, Orange Money, MTN Mobile Money)." },
-                          "phoneNumber": { "type": "string" },
-                          "accountName": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "SWIFT (AED, AOA, CAD, CDF, DZD, EGP, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY)",
+                        "title": "SWIFT (AED, AOA, BIF, CDF, DZD, EGP, ETB, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
                         "required": ["accountName", "bankName", "accountNumber", "swiftCode"],
                         "properties": {
                           "accountName": { "type": "string" },
@@ -1512,7 +1487,7 @@
                   "currency": {
                     "type": "string",
                     "description": "Fiat currency to receive.",
-                    "enum": ["AED", "AOA", "BRL", "CAD", "CDF", "CNY", "DZD", "EGP", "EUR", "GBP", "GHS", "HKD", "IDR", "LYD", "MAD", "MWK", "MZN", "NGN", "PHP", "SGD", "SLE", "SSP", "TRY", "TZS", "UGX", "USD", "XAF", "XOF"]
+                    "enum": ["AED", "AOA", "BIF", "CDF", "DZD", "EGP", "ETB", "EUR", "GBP", "GHS", "LYD", "MAD", "MUR", "MWK", "MZN", "NGN", "SGD", "SLE", "SSP", "TRY", "TZS", "UGX", "USD", "XAF", "XOF"]
                   },
                   "amount": {
                     "type": "string",
@@ -1574,43 +1549,7 @@
                         }
                       },
                       {
-                        "title": "PIX (BRL)",
-                        "required": ["pixKey", "accountHolder"],
-                        "properties": {
-                          "pixKey": { "type": "string" },
-                          "accountHolder": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "CNAPS (CNY)",
-                        "required": ["accountNumber", "accountName", "bankName", "cnapsCode"],
-                        "properties": {
-                          "accountNumber": { "type": "string" },
-                          "accountName": { "type": "string" },
-                          "bankName": { "type": "string" },
-                          "cnapsCode": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "PESONet (PHP)",
-                        "required": ["accountNumber", "accountName", "bankName"],
-                        "properties": {
-                          "accountNumber": { "type": "string" },
-                          "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "Mobile Money (EGP, SLE, SSP, TZS, UGX, XAF, XOF)",
-                        "required": ["provider", "phoneNumber", "accountName"],
-                        "properties": {
-                          "provider": { "type": "string", "description": "Mobile money provider (e.g., M-Pesa, Orange Money, MTN Mobile Money, Vodafone Cash)." },
-                          "phoneNumber": { "type": "string" },
-                          "accountName": { "type": "string" }
-                        }
-                      },
-                      {
-                        "title": "SWIFT (AED, AOA, CAD, CDF, DZD, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY)",
+                        "title": "SWIFT (AED, AOA, BIF, CDF, DZD, EGP, ETB, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
                         "required": ["accountName", "bankName", "accountNumber", "swiftCode"],
                         "properties": {
                           "accountName": { "type": "string" },
