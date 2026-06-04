@@ -1258,6 +1258,169 @@
         "summary": "IDR Auto Offramp"
       }
     },
+    "/otc/business_customer": {
+      "post": {
+        "summary": "Create Customer",
+        "description": "Register a new business customer. Returns a unique `CustomerID` and a KYB link for compliance verification. Requires an `idempotency-key` header to prevent duplicate submissions. Not available in test mode.",
+        "operationId": "post_otc_business_customer",
+        "tags": ["OTC"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "idempotency-key",
+            "schema": { "type": "string" },
+            "required": true,
+            "description": "A unique key (e.g. UUID) to prevent duplicate customer creation on retries."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["business_name", "business_email", "phone_number", "registered_address", "registered_country"],
+                "properties": {
+                  "business_name": {
+                    "type": "string",
+                    "description": "Legal name of the customer's business."
+                  },
+                  "business_email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Business contact email address."
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "description": "Business phone number including country code."
+                  },
+                  "registered_address": {
+                    "type": "string",
+                    "description": "Registered business address."
+                  },
+                  "registered_country": {
+                    "type": "string",
+                    "description": "ISO 3166-1 alpha-3 country code (e.g. NGA, USA, GBR).",
+                    "pattern": "^[A-Z]{3}$",
+                    "example": "NGA"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Customer created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code":       { "type": "string", "example": "CRT_SUCCESSFUL" },
+                    "CustomerID": { "type": "string", "example": "acm123456", "description": "Unique customer ID to pass in onramp/offramp requests." },
+                    "KYB_Link":   { "type": "string", "format": "uri", "description": "KYB form link for compliance verification." },
+                    "message":    { "type": "string", "example": "Customer created." }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Missing/invalid fields or duplicate idempotency key." },
+          "403": { "description": "Endpoint not available in test mode." },
+          "500": { "description": "Internal server error." }
+        }
+      },
+      "get": {
+        "summary": "Get Customer",
+        "description": "Retrieve a single customer by `customer_id`. Not available in test mode.",
+        "operationId": "get_otc_business_customer",
+        "tags": ["OTC"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "customer_id",
+            "schema": { "type": "string" },
+            "required": true,
+            "description": "The customer ID returned when the customer was created."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code":    { "type": "string", "example": "GET_SUCCESSFUL" },
+                    "message": { "type": "string", "example": "Customer retrieved." },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "customer_id":      { "type": "string" },
+                        "customer_name":    { "type": "string" },
+                        "customer_email":   { "type": "string" },
+                        "customer_phone":   { "type": "string" },
+                        "customer_address": { "type": "string" },
+                        "customer_country": { "type": "string" },
+                        "status":           { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Endpoint not available in test mode." },
+          "404": { "description": "Customer not found." },
+          "500": { "description": "Internal server error." }
+        }
+      }
+    },
+    "/otc/business_customers": {
+      "get": {
+        "summary": "Get All Customers",
+        "description": "Retrieve all customers registered under your business account. Not available in test mode.",
+        "operationId": "get_otc_business_customers",
+        "tags": ["OTC"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Customers retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code":    { "type": "string", "example": "GET_SUCCESSFUL" },
+                    "message": { "type": "string", "example": "Customers retrieved." },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "customer_id":      { "type": "string" },
+                          "customer_name":    { "type": "string" },
+                          "customer_email":   { "type": "string" },
+                          "customer_phone":   { "type": "string" },
+                          "customer_address": { "type": "string" },
+                          "customer_country": { "type": "string" },
+                          "status":           { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Endpoint not available in test mode." },
+          "404": { "description": "No customers found." },
+          "500": { "description": "Internal server error." }
+        }
+      }
+    },
     "/otc/rate_quote": {
       "get": {
         "description": "",
