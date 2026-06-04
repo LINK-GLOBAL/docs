@@ -1563,7 +1563,7 @@
                         }
                       },
                       {
-                        "title": "International Bank Transfer (AED, AOA, BIF, CDF, DZD, EGP, ETB, EUR, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
+                        "title": "Local Bank Transfer (AED, AOA, BIF, CDF, DZD, EGP, ETB, EUR, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
                         "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1571,7 +1571,8 @@
                           "bankName": { "type": "string" },
                           "swiftCode": { "type": "string", "description": "Optional \u2014 include if known." },
                           "iban": { "type": "string" },
-                          "branchCode": { "type": "string" }
+                          "branchCode": { "type": "string" },
+                          "sortCode": { "type": "string" }
                         }
                       }
                     ]
@@ -1683,7 +1684,7 @@
                         }
                       },
                       {
-                        "title": "International Bank Transfer (AED, AOA, BIF, CDF, DZD, EGP, ETB, EUR, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
+                        "title": "Local Bank Transfer (AED, AOA, BIF, CDF, DZD, EGP, ETB, EUR, GBP, LYD, MAD, MUR, MWK, MZN, SGD, SLE, SSP, TRY, TZS, UGX, XAF, XOF)",
                         "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1691,7 +1692,8 @@
                           "bankName": { "type": "string" },
                           "swiftCode": { "type": "string", "description": "Optional \u2014 include if known." },
                           "iban": { "type": "string" },
-                          "branchCode": { "type": "string" }
+                          "branchCode": { "type": "string" },
+                          "sortCode": { "type": "string" }
                         }
                       }
                     ]
