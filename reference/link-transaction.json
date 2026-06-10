@@ -1740,7 +1740,7 @@
     "/otc/pop": {
       "post": {
         "summary": "Upload Proof of Payment",
-        "description": "Upload proof of payment for an existing OTC onramp transaction. Submit after transferring fiat to the settlement account so the partner can confirm receipt. Accepts JPEG, PNG, GIF, or PDF files up to 2 MB.",
+        "description": "Submit proof of payment for an OTC transaction.\n\n**Onramp:** Upload a payment receipt file (JPEG/PNG/GIF/PDF, max 3 MB). The file is forwarded to the OTC partner to confirm fiat receipt.\n\n**Offramp:** Provide the blockchain transaction hash or block explorer URL confirming that stablecoins have been sent. The transaction status is updated from `pending` to `processing` and the admin is notified.",
         "operationId": "post_otc_pop",
         "tags": ["OTC"],
         "parameters": [],
@@ -1750,17 +1750,27 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["reference", "file"],
+                "required": ["reference", "transaction_type"],
                 "properties": {
                   "reference": {
                     "type": "string",
-                    "description": "The transaction reference returned when the onramp was created (e.g. link-otc-12345678).",
+                    "description": "The transaction reference returned when the transaction was created (e.g. link-otc-12345678).",
                     "example": "link-otc-12345678"
+                  },
+                  "transaction_type": {
+                    "type": "string",
+                    "enum": ["onramp", "offramp"],
+                    "description": "The type of transaction. Determines which proof is expected — file for onramp, transaction_hash for offramp."
                   },
                   "file": {
                     "type": "string",
                     "format": "binary",
-                    "description": "Proof of payment file. Accepted types: JPEG, PNG, GIF, PDF. Maximum size: 3 MB."
+                    "description": "**Required for onramp only.** Proof of payment file. Accepted types: JPEG, PNG, GIF, PDF. Maximum size: 3 MB."
+                  },
+                  "transaction_hash": {
+                    "type": "string",
+                    "description": "**Required for offramp only.** The blockchain transaction hash or block explorer URL confirming stablecoin transfer (e.g. a Polygonscan or Tronscan link).",
+                    "example": "0xabc123..."
                   }
                 }
               }
@@ -1769,21 +1779,21 @@
         },
         "responses": {
           "200": {
-            "description": "Proof of payment uploaded and forwarded to the OTC partner.",
+            "description": "Proof of payment submitted successfully.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": { "type": "string", "example": "POP_UPLOADED" },
-                    "status": { "type": "string", "example": "Success" },
-                    "message": { "type": "string", "example": "Proof of payment uploaded successfully." },
+                    "message": { "type": "string" },
                     "data": {
                       "type": "object",
                       "properties": {
                         "reference": { "type": "string", "example": "link-otc-12345678" },
-                        "filename": { "type": "string", "example": "receipt.pdf" },
-                        "submitted_at": { "type": "string", "format": "date-time" }
+                        "transaction_type": { "type": "string", "enum": ["onramp", "offramp"] },
+                        "filename": { "type": "string", "description": "Onramp only — uploaded filename.", "example": "receipt.pdf" },
+                        "transaction_hash": { "type": "string", "description": "Offramp only — submitted hash or URL." },
+                        "status": { "type": "string", "description": "Offramp only — updated status.", "example": "processing" }
                       }
                     }
                   }
@@ -1792,24 +1802,13 @@
             }
           },
           "400": {
-            "description": "Validation error — missing fields, unsupported file type, or file exceeds 3 MB.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string", "example": "POP_INVALID_FILE" },
-                    "message": { "type": "string", "example": "File too large. Please reduce the file size to under 3 MB." }
-                  }
-                }
-              }
-            }
+            "description": "Validation error — missing fields, invalid transaction_type, unsupported file type, or file exceeds 3 MB."
           },
           "404": {
             "description": "Transaction not found for the given reference."
           },
           "503": {
-            "description": "OTC bot unavailable — proof of payment could not be forwarded. Retry later."
+            "description": "OTC bot unavailable — onramp proof could not be forwarded. Retry later."
           }
         }
       }
