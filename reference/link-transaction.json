@@ -1564,7 +1564,6 @@
                       },
                       {
                         "title": "Local Bank Transfer (BIF, CDF, DZD, ETB, GBP, GHS, LYD, MUR, MWK, MZN, SGD, SLE, SSP, TZS, UGX)",
-                        "description": "accountName and bankName are always required.",
                         "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1574,7 +1573,6 @@
                       },
                       {
                         "title": "IBAN (AED, AOA, EGP, EUR, GBP, TRY)",
-                        "description": "accountName and bankName are always required.",
                         "required": ["iban", "accountName", "bankName"],
                         "properties": {
                           "iban": { "type": "string" },
@@ -1584,7 +1582,6 @@
                       },
                       {
                         "title": "RIB (MAD, XAF, XOF)",
-                        "description": "accountName and bankName are always required. branchCode is optional.",
                         "required": ["rib", "accountName", "bankName"],
                         "properties": {
                           "rib": { "type": "string" },
@@ -1703,7 +1700,6 @@
                       },
                       {
                         "title": "Local Bank Transfer (BIF, CDF, DZD, ETB, GBP, GHS, LYD, MUR, MWK, MZN, SGD, SLE, SSP, TZS, UGX)",
-                        "description": "accountName and bankName are always required.",
                         "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1713,7 +1709,6 @@
                       },
                       {
                         "title": "IBAN (AED, AOA, EGP, EUR, GBP, TRY)",
-                        "description": "accountName and bankName are always required.",
                         "required": ["iban", "accountName", "bankName"],
                         "properties": {
                           "iban": { "type": "string" },
@@ -1723,7 +1718,6 @@
                       },
                       {
                         "title": "RIB (MAD, XAF, XOF)",
-                        "description": "accountName and bankName are always required. branchCode is optional.",
                         "required": ["rib", "accountName", "bankName"],
                         "properties": {
                           "rib": { "type": "string" },
