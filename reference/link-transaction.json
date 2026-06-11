@@ -1537,21 +1537,13 @@
                   },
                   "network": {
                     "type": "string",
-                    "description": "Blockchain network (e.g., solana, polygon)."
+                    "description": "Blockchain network for the stablecoin. Must match the stablecoin: USDT \u2192 TRON only; USDC \u2192 ETHEREUM or BSC.",
+                    "enum": ["TRON", "ETHEREUM", "BSC"]
                   },
                   "paymentDetails": {
                     "type": "object",
                     "description": "Your banking details \u2014 the account you are paying FROM. Required fields depend on your currency\u2019s payment method. Call GET /otc/rate_quote first to get the paymentMethod for your currency.",
                     "oneOf": [
-                      {
-                        "title": "NIP \u2014 Bank Transfer (NGN)",
-                        "required": ["accountNumber", "accountName", "bankName"],
-                        "properties": {
-                          "accountNumber": { "type": "string" },
-                          "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
-                        }
-                      },
                       {
                         "title": "ACH (USD)",
                         "required": ["accountNumber", "routingNumber", "accountName"],
@@ -1563,7 +1555,7 @@
                         }
                       },
                       {
-                        "title": "Local Bank Transfer (BIF, CDF, DZD, ETB, GBP, GHS, LYD, MUR, MWK, MZN, SGD, SLE, SSP, TZS, UGX)",
+                        "title": "Local Bank Transfer (NGN, BIF, CDF, DZD, ETB, GBP, GHS, LYD, MUR, MWK, MZN, SGD, SLE, SSP, TZS, UGX)",
                         "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1673,21 +1665,13 @@
                   },
                   "network": {
                     "type": "string",
-                    "description": "Blockchain network (e.g., solana, polygon)."
+                    "description": "Blockchain network for the stablecoin. Must match the stablecoin: USDT \u2192 TRON only; USDC \u2192 ETHEREUM or BSC.",
+                    "enum": ["TRON", "ETHEREUM", "BSC"]
                   },
                   "paymentDetails": {
                     "type": "object",
                     "description": "Your settlement banking details \u2014 the account you want to receive fiat INTO. Required fields depend on your currency\u2019s payment method. Call GET /otc/rate_quote first to get the paymentMethod for your currency.",
                     "oneOf": [
-                      {
-                        "title": "NIP \u2014 Bank Transfer (NGN)",
-                        "required": ["accountNumber", "accountName", "bankName"],
-                        "properties": {
-                          "accountNumber": { "type": "string" },
-                          "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
-                        }
-                      },
                       {
                         "title": "ACH (USD)",
                         "required": ["accountNumber", "routingNumber", "accountName"],
@@ -1699,7 +1683,7 @@
                         }
                       },
                       {
-                        "title": "Local Bank Transfer (BIF, CDF, DZD, ETB, GBP, GHS, LYD, MUR, MWK, MZN, SGD, SLE, SSP, TZS, UGX)",
+                        "title": "Local Bank Transfer (NGN, BIF, CDF, DZD, ETB, GBP, GHS, LYD, MUR, MWK, MZN, SGD, SLE, SSP, TZS, UGX)",
                         "required": ["accountNumber", "accountName", "bankName"],
                         "properties": {
                           "accountNumber": { "type": "string" },
@@ -1769,7 +1753,7 @@
                   },
                   "transaction_hash": {
                     "type": "string",
-                    "description": "**Required for offramp only.** The blockchain transaction hash or block explorer URL confirming stablecoin transfer (e.g. a Polygonscan or Tronscan link).",
+                    "description": "**Required for offramp only.** The blockchain transaction hash or block explorer URL confirming stablecoin transfer (e.g. a Tronscan or Etherscan link).",
                     "example": "0xabc123..."
                   }
                 }

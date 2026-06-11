@@ -24,8 +24,17 @@ POST /otc/onramp
 | `amount`         | string | ✓        | Fiat amount being sent.                                                                                        |
 | `stables`        | string | ✓        | Stablecoin to receive: `USDC` or `USDT`.                                                                       |
 | `wallet_address` | string | ✓        | Destination wallet address for the stablecoin.                                                                 |
-| `network`        | string | ✓        | Blockchain network (e.g., `solana`, `polygon`).                                                                |
+| `network`        | string | ✓        | Blockchain network. Select from: `TRON` (USDT only), `ETHEREUM` (USDC only), `BSC` (USDC only).               |
 | `paymentDetails` | object | ✓        | Your banking details — the account you are paying **from**. Required fields depend on your currency's payment method (see table below). |
+
+---
+
+#### Stablecoin & Network Compatibility
+
+| Stablecoin | Supported Networks   |
+| ---------- | -------------------- |
+| USDT       | TRON                 |
+| USDC       | ETHEREUM, BSC        |
 
 ---
 
@@ -33,15 +42,14 @@ POST /otc/onramp
 
 Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` first. The response includes a `paymentMethod` field that tells you which method applies to your currency.
 
-| Payment Method   | Currencies                                              | Required fields in `paymentDetails`                                   |
-| ---------------- | ------------------------------------------------------- | --------------------------------------------------------------------- |
-| **NIP**          | NGN, GHS                                                | `accountNumber`, `accountName`, `bankName`                            |
-| **ACH**          | USD, CNY                                                | `accountNumber`, `routingNumber`, `accountName`                       |
-| **SEPA**         | EUR                                                     | `iban`, `beneficiaryName`, `bankName`                                 |
-| **PIX**          | BRL                                                     | `pixKey`, `accountHolder`                                             |
-| **PESONet**      | PHP                                                     | `accountNumber`, `accountName`, `bankName`                            |
-| **Mobile Money** | SLE, SSP, TZS, UGX, XAF, XOF                            | `provider`, `phoneNumber`, `accountName`                              |
-| **SWIFT**        | AED, AOA, CAD, CDF, DZD, EGP, GBP, HKD, IDR, LYD, MAD, MWK, MZN, SGD, TRY | `accountName`, `bankName`, `accountNumber`, `swiftCode` |
+| Payment Method        | Currencies                                                                          | Required fields in `paymentDetails`                   |
+| --------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| **ACH**               | USD                                                                                 | `accountNumber`, `routingNumber`, `accountName`       |
+| **Local Bank Transfer** | NGN, BIF, CDF, DZD, ETB, GBP, GHS, LYD, MUR, MWK, MZN, SGD, SLE, SSP, TZS, UGX | `accountNumber`, `accountName`, `bankName`            |
+| **IBAN**              | AED, AOA, EGP, EUR, TRY                                                             | `iban`, `accountName`, `bankName`                     |
+| **RIB**               | MAD, XAF, XOF                                                                       | `rib`, `accountName`, `bankName`                      |
+
+> **GBP** also accepts IBAN format — use Local Bank Transfer (`accountNumber`) or IBAN (`iban`) depending on your bank.
 
 ---
 
@@ -49,14 +57,14 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
 
 <CodeGroup>
 
-```json NGN — NIP Bank Transfer
+```json NGN — Local Bank Transfer
 {
   "customer_id": "cut93498342",
   "currency": "NGN",
   "amount": "50000000",
   "stables": "USDC",
-  "wallet_address": "YourSolanaWallet",
-  "network": "solana",
+  "wallet_address": "0xYourEthWallet",
+  "network": "ETHEREUM",
   "paymentDetails": {
     "accountNumber": "0123456789",
     "accountName": "Acme Corp",
@@ -71,8 +79,8 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
   "currency": "USD",
   "amount": "25000",
   "stables": "USDT",
-  "wallet_address": "YourSolanaWallet",
-  "network": "solana",
+  "wallet_address": "TYourTronWallet",
+  "network": "TRON",
   "paymentDetails": {
     "accountNumber": "875104368977",
     "routingNumber": "026073150",
@@ -81,66 +89,34 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
 }
 ```
 
-```json EUR — SEPA
+```json EUR — IBAN
 {
   "customer_id": "cut93498342",
   "currency": "EUR",
   "amount": "20000",
   "stables": "USDC",
-  "wallet_address": "YourWallet",
-  "network": "polygon",
+  "wallet_address": "0xYourBscWallet",
+  "network": "BSC",
   "paymentDetails": {
     "iban": "DE89370400440532013000",
-    "beneficiaryName": "Acme Corp",
+    "accountName": "Acme Corp",
     "bankName": "Deutsche Bank"
   }
 }
 ```
 
-```json BRL — PIX
-{
-  "customer_id": "cut93498342",
-  "currency": "BRL",
-  "amount": "140000",
-  "stables": "USDC",
-  "wallet_address": "YourWallet",
-  "network": "solana",
-  "paymentDetails": {
-    "pixKey": "[email protected]",
-    "accountHolder": "Acme Corp"
-  }
-}
-```
-
-```json XOF — Mobile Money
+```json XOF — RIB
 {
   "customer_id": "cut93498342",
   "currency": "XOF",
   "amount": "16000000",
-  "stables": "USDT",
-  "wallet_address": "YourWallet",
-  "network": "solana",
-  "paymentDetails": {
-    "provider": "Orange Money",
-    "phoneNumber": "+221701234567",
-    "accountName": "Acme Corp"
-  }
-}
-```
-
-```json GBP — SWIFT
-{
-  "customer_id": "cut93498342",
-  "currency": "GBP",
-  "amount": "20000",
   "stables": "USDC",
-  "wallet_address": "YourWallet",
-  "network": "polygon",
+  "wallet_address": "0xYourEthWallet",
+  "network": "ETHEREUM",
   "paymentDetails": {
+    "rib": "CI1234567890123456789012",
     "accountName": "Acme Corp",
-    "bankName": "Barclays",
-    "accountNumber": "04555464",
-    "swiftCode": "BARCGB22"
+    "bankName": "Ecobank"
   }
 }
 ```
@@ -166,7 +142,7 @@ Call `GET /otc/rate_quote?currency={currency}&amount={amount}&trx_type=onramp` f
     "payout_amount": "25000 USDC",
     "rate": 2000,
     "transaction_status": "pending",
-    "payment_method": "NIP",
+    "payment_method": "LOCAL_BANK_TRANSFER",
     "date_created": "28/05/2026: 14:30"
   }
 }
