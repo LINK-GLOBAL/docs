@@ -221,7 +221,7 @@
           }
         },
         "deprecated": false,
-        "tags": ["Retail FX"]
+        "tags": ["Direct FX"]
       }
     },
     "/transactions/v2/offramp": {
@@ -398,7 +398,7 @@
           }
         },
         "deprecated": false,
-        "tags": ["Retail FX"]
+        "tags": ["Direct FX"]
       }
     },
     "/transactions/v2/retail_rate": {
@@ -423,7 +423,7 @@
             "description": "Transaction type"
           }
         ],
-        "tags": ["Retail FX"]
+        "tags": ["Direct FX"]
       }
     },
     "/transactions/v2/direct_ramp/payment_methods": {
@@ -2497,7 +2497,7 @@
   "x-readme-fauxas": true,
   "tags": [
     {
-      "name": "Retail FX"
+      "name": "Direct FX"
     },
     {
       "name": "Pan-Africa Ramp"

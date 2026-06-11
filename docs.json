@@ -22,7 +22,8 @@
             "group": "Getting Started",
             "pages": [
               "docs/getting-started",
-              "docs/platform-overview"
+              "docs/platform-overview",
+              "docs/ramp-overview"
             ]
           },
           {
