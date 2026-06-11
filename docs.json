@@ -26,17 +26,12 @@
             ]
           },
           {
-            "group": "Link APIs",
-            "openapi": "reference/link-transaction.json"
-          },
-          {
             "group": "Core Concepts",
             "pages": [
               "docs/geographies",
               "docs/stablecoins-and-blockchains",
               "docs/fiat-payment-methods",
-              "docs/supported-currency-methods",
-              "docs/ramp-overview"
+              "docs/supported-currency-methods"
             ]
           },
           {
@@ -49,14 +44,7 @@
             ]
           },
           {
-            "group": "Transactions",
-            "pages": [
-              "docs/fetch-transactions",
-              "docs/processing-windows"
-            ]
-          },
-          {
-            "group": "OTC & Bridge",
+            "group": "Business API",
             "pages": [
               "docs/otc-service",
               "docs/business-onramp",
@@ -70,6 +58,13 @@
               "docs/customer",
               "docs/customers",
               "docs/customer-verification"
+            ]
+          },
+          {
+            "group": "Transactions",
+            "pages": [
+              "docs/fetch-transactions",
+              "docs/processing-windows"
             ]
           },
           {
@@ -101,6 +96,15 @@
               "docs/support",
               "docs/first-and-third-party-support"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Link APIs",
+            "openapi": "reference/link-transaction.json"
           }
         ]
       }
