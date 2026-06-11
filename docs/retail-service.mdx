@@ -1,0 +1,84 @@
+---
+title: "Retail Coverage"
+description: "LINK's Retail API enables fiat ↔ stablecoin conversions for end users across multiple corridors and currencies via a single API integration."
+---
+
+The Retail API powers on-ramp (fiat → stablecoin) and off-ramp (stablecoin → fiat) transactions for individual end users. Your platform calls LINK's API on behalf of your users — LINK handles FX, compliance, and settlement.
+
+---
+
+### How It Works
+
+1. Your user initiates a transaction on your platform.
+2. You call the Retail API with the user's details, currency, amount, and wallet address.
+3. LINK converts the funds and settles stablecoins to the user's wallet (on-ramp) or fiat to their bank account (off-ramp).
+
+---
+
+### Retail API Sub-Products
+
+LINK's Retail API is made up of four distinct corridors. Each covers different currencies and uses a different settlement flow.
+
+---
+
+#### 1. Direct FX
+
+> **Currencies:** NGN only
+>
+> **Flow:** Manual — you initiate the transaction, LINK provides payment details, and settlement completes after the user sends funds and LINK confirms receipt.
+
+Direct FX is LINK's original retail exchange product for Nigerian Naira. It uses a manual bank-transfer settlement model — once you initiate the transaction, LINK returns the deposit account details and confirms settlement on payment receipt.
+
+- **On-ramp:** `POST /transactions/v2/onramp`
+- **Off-ramp:** `POST /transactions/v2/offramp`
+- **Rate:** `GET /transactions/v2/rate_quote`
+
+---
+
+#### 2. Pan-African Ramp
+
+> **Currencies:** NGN, GHS, ZAR, KES
+>
+> **Flow:** Automated — LINK handles the full corridor routing through regional banking networks.
+
+The Pan-African Ramp provides automated on-ramp and off-ramp access across four key African markets. Each corridor uses local payment rails (NIP for NGN, bank transfer for GHS/ZAR/KES) with automated settlement.
+
+- **On-ramp:** `POST /direct_ramp/deposit`
+- **Off-ramp:** `POST /direct_ramp/withdraw`
+- **Rate:** `GET /direct_ramp/rate_quote`
+
+---
+
+#### 3. BRL (Brazilian Real)
+
+> **Currencies:** BRL
+>
+> **Flow:** Automated via Pix — near-instant settlement using Brazil's national instant payment system.
+
+On-ramp and off-ramp for Brazilian Real using the Pix payment network. Transactions settle within seconds once the Pix key is confirmed.
+
+- **On-ramp:** `POST /brl/initiate_onramp`
+- **Off-ramp:** `POST /brl/initiate_offramp`
+- **Rate:** `GET /brl/ramp_quote`
+
+---
+
+#### 4. IDR (Indonesian Rupiah)
+
+> **Currencies:** IDR
+>
+> **Flow:** Automated via local Indonesian banking rails (SKN / BI-FAST / iACH).
+
+On-ramp and off-ramp for Indonesian Rupiah using domestic banking infrastructure.
+
+- **On-ramp:** `POST /idr/initiate_onramp`
+- **Off-ramp:** `POST /idr/direct_withdraw`
+- **Rate:** `GET /idr/rate`
+
+---
+
+### Next Steps
+
+- [Retail On-Ramp](/docs/on-ramp) — Initiate a fiat → stablecoin transaction
+- [Retail Off-Ramp](/docs/off-ramp) — Initiate a stablecoin → fiat transaction
+- [Retail Rates](/docs/retail-rates) — Fetch current exchange rates

@@ -26,6 +26,10 @@
             ]
           },
           {
+            "group": "Link APIs",
+            "openapi": "reference/link-transaction.json"
+          },
+          {
             "group": "Core Concepts",
             "pages": [
               "docs/geographies",
@@ -36,17 +40,12 @@
             ]
           },
           {
-            "group": "On-Ramp",
+            "group": "Retail API",
             "pages": [
+              "docs/retail-service",
               "docs/on-ramp",
-              "docs/onramp-rates"
-            ]
-          },
-          {
-            "group": "Off-Ramp",
-            "pages": [
               "docs/off-ramp",
-              "docs/offramp-rates"
+              "docs/retail-rates"
             ]
           },
           {
@@ -102,15 +101,6 @@
               "docs/support",
               "docs/first-and-third-party-support"
             ]
-          }
-        ]
-      },
-      {
-        "tab": "API Endpoints",
-        "groups": [
-          {
-            "group": "API Reference",
-            "openapi": "reference/link-transaction.json"
           }
         ]
       }

@@ -1,11 +1,33 @@
 ---
 title: "Receipts"
-description: "LINK is required to send receipts for transactions processed through our system. These receipts include transaction amount, fees and LINK’s legal disclosures."
+description: "LINK is required to send receipts for transactions processed through our system. These receipts include transaction amount, fees and LINK's legal disclosures."
 ---
 
+## Transaction Receipts
 
+LINK generates a receipt for every completed transaction processed through our system. Each receipt includes:
 
-***
+- Transaction amount and currency
+- Applied fees and exchange rate
+- LINK's legal disclosures and compliance references
+- Transaction reference and timestamp
+
+Receipts are available via the LINK Business Dashboard and can be retrieved programmatically using the [Fetch Transaction](/docs/fetch-transactions) endpoint.
+
+---
+
+## Proof of Payment — Accepted Formats
+
+When submitting proof of payment for an OTC onramp transaction (via `POST /otc/pop`), LINK accepts the following file types:
+
+| Property     | Value                |
+| ------------ | -------------------- |
+| File types   | JPEG, PNG, GIF, PDF  |
+| Maximum size | 3 MB per file        |
+
+Files are submitted as `multipart/form-data` with the field name `file`. See [Upload Proof of Payment](/docs/business-onramp) for full details.
+
+---
 
 [Compliance](/docs/b2b-compliance)
 

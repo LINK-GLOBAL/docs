@@ -1,0 +1,88 @@
+---
+title: "Retail Rates"
+description: "Fetch the current exchange rate for any supported retail currency pair before initiating a transaction."
+---
+
+LINK provides a unified rate endpoint for all retail on-ramp and off-ramp directions. Call this before initiating a transaction to show users the live rate and expected payout amount.
+
+---
+
+#### Endpoint
+
+```
+GET /transactions/v2/rate_quote
+```
+
+#### Query Parameters
+
+| Parameter  | Type   | Required | Description                                       |
+| ---------- | ------ | -------- | ------------------------------------------------- |
+| `currency` | string | ✓        | Fiat currency (e.g. `NGN`, `USD`)                 |
+| `amount`   | string | ✓        | Amount in the fiat currency                       |
+| `trx_type` | string | ✓        | Direction: `onramp` or `offramp`                  |
+
+---
+
+#### Code Examples
+
+<CodeGroup>
+
+```bash Node.js
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    'ngnc-sec-key': 'YOUR_SECRET_KEY',
+    'content-type': 'application/json'
+  }
+};
+
+fetch('https://api.linkio.world/transactions/v2/rate_quote?currency=NGN&amount=500000&trx_type=onramp', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+```
+
+```python Python
+import requests
+
+url = "https://api.linkio.world/transactions/v2/rate_quote"
+
+params = {
+    "currency": "NGN",
+    "amount": "500000",
+    "trx_type": "onramp"
+}
+
+headers = {
+    "accept": "application/json",
+    "ngnc-sec-key": "YOUR_SECRET_KEY",
+    "content-type": "application/json"
+}
+
+response = requests.get(url, params=params, headers=headers)
+print(response.text)
+```
+
+</CodeGroup>
+
+---
+
+#### Response
+
+```json
+{
+  "message": "Rate retrieved",
+  "data": {
+    "rate": 1580,
+    "payout_amount": 316.46,
+    "paymentMethod": "LOCAL_BANK_TRANSFER"
+  }
+}
+```
+
+---
+
+[Retail On-Ramp](/docs/on-ramp)
+
+[Retail Off-Ramp](/docs/off-ramp)
