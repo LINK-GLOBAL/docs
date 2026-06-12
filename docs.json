@@ -104,7 +104,7 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Link APIs",
+            "group": "LINK APIs",
             "openapi": "reference/link-transaction.json"
           }
         ]
