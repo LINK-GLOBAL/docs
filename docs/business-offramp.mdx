@@ -24,17 +24,17 @@ POST /otc/offramp
 | `amount`         | string | ✓        | Stablecoin amount being sent.                                                                                    |
 | `stables`        | string | ✓        | Stablecoin being sent: `USDC` or `USDT`.                                                                         |
 | `wallet_address` | string | ✓        | Wallet address sending the stablecoin.                                                                           |
-| `network`        | string | ✓        | Blockchain network. Select from: `TRON` (USDT only), `ETHEREUM` (USDC only), `BSC` (USDC only).                |
+| `network`        | string | ✓        | Blockchain network. USDT: `TRON`, `POLYGON`, `SOLANA`. USDC: `ETHEREUM`, `BSC`, `POLYGON`, `BASE`, `SOLANA`, `STELLAR`. |
 | `paymentDetails` | object | ✓        | Your settlement banking details — the account you want to receive fiat **into**. Required fields depend on your currency's payment method (see table below). |
 
 ---
 
 #### Stablecoin & Network Compatibility
 
-| Stablecoin | Supported Networks   |
-| ---------- | -------------------- |
-| USDT       | TRON                 |
-| USDC       | ETHEREUM, BSC        |
+| Stablecoin | Supported Networks                            |
+| ---------- | --------------------------------------------- |
+| USDT       | TRON, POLYGON, SOLANA                         |
+| USDC       | ETHEREUM, BSC, POLYGON, BASE, SOLANA, STELLAR |
 
 ---
 
