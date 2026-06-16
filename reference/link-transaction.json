@@ -1589,8 +1589,8 @@
             }
           }
         },
-        "tags": ["OTC"],
-        "summary": "OTC Onramp"
+        "tags": ["B2B"],
+        "summary": "B2B Onramp"
       }
     },
     "/otc/offramp": {
@@ -1717,16 +1717,16 @@
             }
           }
         },
-        "tags": ["OTC"],
-        "summary": "OTC Offramp"
+        "tags": ["B2B"],
+        "summary": "B2B Offramp"
       }
     },
     "/otc/pop": {
       "post": {
         "summary": "Upload Proof of Payment",
-        "description": "Submit proof of payment for an OTC transaction.\n\n**Onramp:** Upload a payment receipt file (JPEG/PNG/GIF/PDF, max 3 MB). The file is forwarded to the OTC partner to confirm fiat receipt.\n\n**Offramp:** Provide the blockchain transaction hash or block explorer URL confirming that stablecoins have been sent. The transaction status is updated from `pending` to `processing` and the admin is notified.",
+        "description": "Submit proof of payment for an B2B transaction.\n\n**Onramp:** Upload a payment receipt file (JPEG/PNG/GIF/PDF, max 3 MB). The file is forwarded to the OTC partner to confirm fiat receipt.\n\n**Offramp:** Provide the blockchain transaction hash or block explorer URL confirming that stablecoins have been sent. The transaction status is updated from `pending` to `processing` and the admin is notified.",
         "operationId": "post_otc_pop",
-        "tags": ["OTC"],
+        "tags": ["B2B"],
         "parameters": [],
         "requestBody": {
           "required": true,
