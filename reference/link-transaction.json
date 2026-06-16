@@ -1263,7 +1263,7 @@
         "summary": "Create Customer",
         "description": "Register a new business customer. Returns a unique `CustomerID` and a KYB link for compliance verification. Requires an `idempotency-key` header to prevent duplicate submissions. Not available in test mode.",
         "operationId": "post_otc_business_customer",
-        "tags": ["OTC"],
+        "tags": ["B2B"],
         "parameters": [
           {
             "in": "header",
@@ -1335,7 +1335,7 @@
         "summary": "Get Customer",
         "description": "Retrieve a single customer by `customer_id`. Not available in test mode.",
         "operationId": "get_otc_business_customer",
-        "tags": ["OTC"],
+        "tags": ["B2B"],
         "parameters": [
           {
             "in": "query",
@@ -1383,7 +1383,7 @@
         "summary": "Get All Customers",
         "description": "Retrieve all customers registered under your business account. Not available in test mode.",
         "operationId": "get_otc_business_customers",
-        "tags": ["OTC"],
+        "tags": ["B2B"],
         "parameters": [],
         "responses": {
           "200": {
@@ -1461,13 +1461,13 @@
             "description": "Amount Business wants to Onramp(Fiat) OR offramp(Stables)."
           }
         ],
-        "tags": ["OTC"],
-        "summary": "OTC Rate Quote"
+        "tags": ["B2B"],
+        "summary": "B2B Rate Quote"
       }
     },
     "/otc/onramp": {
       "post": {
-        "description": "Initiate a fiat \u2192 stablecoin onramp via LINK\u2019s OTC desk. Provide core transaction details plus your banking details (the account you are paying FROM). Once a transaction (onramp) has been initiated, settlement account details are delivered to you through a `banking_details_received` webhook.",
+        "description": "Initiate a fiat \u2192 stablecoin onramp via LINK\u2019s B2B API. Provide core transaction details plus your banking details (the account you are paying FROM). Once a transaction (onramp) has been initiated, settlement account details are delivered to you through a `banking_details_received` webhook.",
         "operationId": "post_otc_onramp",
         "responses": {
           "201": {
@@ -1502,7 +1502,7 @@
             }
           },
           "400": { "description": "Validation error \u2014 missing or invalid fields" },
-          "503": { "description": "OTC bot unavailable \u2014 retry" }
+          "503": { "description": "B2B quote unavailable \u2014 retry" }
         },
         "parameters": [],
         "requestBody": {
@@ -2509,7 +2509,7 @@
       "name": "IDR Ramp"
     },
     {
-      "name": "OTC"
+      "name": "B2B"
     },
     {
       "name": "Customers"
