@@ -1800,7 +1800,7 @@
     "/transactions/v2/fetch_all_transactions": {
       "get": {
         "summary": "Get All Transactions",
-        "description": "Retrieve paginated onramp and/or offramp transactions for your business. Supports filtering by transaction type and date range. Results are sorted newest first.",
+        "description": "Retrieve paginated onramp and/or offramp transactions for your business. Supports filtering by transaction type, status (Completed, Failed, Cancelled), and date range. Results are sorted newest first.",
         "operationId": "fetch_transactions",
         "tags": ["Transactions"],
         "parameters": [
@@ -1838,6 +1838,16 @@
             }
           },
           {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "Filter by transaction status. Omit to return transactions of all statuses.",
+            "schema": {
+              "type": "string",
+              "enum": ["Completed", "Failed", "Cancelled"]
+            }
+          },
+          {
             "name": "from",
             "in": "query",
             "required": false,
@@ -1870,6 +1880,14 @@
                   "properties": {
                     "status":  { "type": "string", "example": "Success" },
                     "message": { "type": "string", "example": "Transactions retrieved." },
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "total_transactions": { "type": "integer", "example": 150, "description": "Total transactions matching the date and status filters (both directions)." },
+                        "total_deposits":     { "type": "integer", "example": 90,  "description": "Onramp transactions within the applied filters." },
+                        "total_withdrawals":  { "type": "integer", "example": 60,  "description": "Offramp transactions within the applied filters." }
+                      }
+                    },
                     "transactions": {
                       "type": "array",
                       "items": {
