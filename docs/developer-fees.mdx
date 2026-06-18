@@ -4,21 +4,48 @@ title: "Developer Fees"
 
 ## Overview
 
-LINK enables developers to define and collect **custom per-transaction fees** from their users. These fees are automatically deducted from the customer’s transaction amount and reserved for you.
+LINK lets you add a custom markup on top of the base exchange rate for your users. The markup is a percentage deducted from the customer's payout — it never inflates the headline rate shown to LINK.
 
-**At the end of each business day**, all accumulated fees are **settled and disbursed in USDC** to the wallet address you've configured.
+Markups are configured from your **LINK Dashboard** under **Settings → API Markups**.
 
-***
+---
 
-### Configuring Payout Address
+### Markup Types
 
-Developers can choose where fee settlements are delivered:
+There are two independent markup fields, each covering a different product:
 
-* **Default Option:** Sent directly to the wallet associated with your LINK Business Account, using your **business ID**
-* **Custom Option:** Sent to a blockchain wallet address that you specify
+| Type | Applies To | Max |
+|------|-----------|-----|
+| **Retail Markup** | Retail on-ramp and off-ramp transactions | 2% |
+| **B2B Markup** | OTC / Business API transactions | 2% |
 
-***
+Both fields default to `0`. You can set them independently — enabling a B2B markup does not affect retail transactions and vice versa.
 
-[Banking Object Requirements](/docs/banking-object-requirements)
+---
 
-[Business Verification](/docs/customer-verification)
+### How It Works
+
+When a markup is set, LINK applies it on top of its own exchange rate before the customer sees the final payout:
+
+1. LINK computes the base rate for the transaction.
+2. Your markup percentage is applied on top — reducing the customer's payout by that proportion.
+3. The final rate and payout are returned to your system and shown to the customer.
+
+The fee is tracked at the transaction level (`linkFee` for LINK's share, `customerFee` for your markup share).
+
+---
+
+### Configuring Your Markup
+
+1. Log in to your **LINK Dashboard**.
+2. Navigate to **Settings → API Markups**.
+3. Enter a Retail and/or B2B markup value between `0` and `2` (percent).
+4. Click **Save Changes**.
+
+Changes take effect on the next transaction — no redeployment or API key rotation required.
+
+---
+
+[Currency Limits](/docs/currency-limits)
+
+[FAQ](/docs/faq)

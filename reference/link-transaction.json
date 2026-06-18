@@ -88,11 +88,7 @@
                     "type": "string",
                     "description": "Optional for transactions that provide bank transaction address"
                   },
-                  "developer_fee": {
-                    "type": "boolean",
-                    "description": "Businesses that wish to charge a certain percentage on your their users for each transaction made.",
-                    "default": false
-                  }
+
                 }
               }
             }
