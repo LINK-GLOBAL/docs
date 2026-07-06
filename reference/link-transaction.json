@@ -87,8 +87,7 @@
                   "bank_address": {
                     "type": "string",
                     "description": "Optional for transactions that provide bank transaction address"
-                  },
-
+                  }
                 }
               }
             }
@@ -1556,7 +1555,10 @@
                         "properties": {
                           "accountNumber": { "type": "string" },
                           "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
+                          "bankName": { "type": "string" },
+                          "sortCode": { "type": "string", "description": "Optional." },
+                          "branchCode": { "type": "string", "description": "Optional." },
+                          "branchName": { "type": "string", "description": "Optional." }
                         }
                       },
                       {
@@ -1565,7 +1567,8 @@
                         "properties": {
                           "iban": { "type": "string" },
                           "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
+                          "bankName": { "type": "string" },
+                          "swiftCode": { "type": "string", "description": "Optional." }
                         }
                       },
                       {
@@ -1684,7 +1687,10 @@
                         "properties": {
                           "accountNumber": { "type": "string" },
                           "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
+                          "bankName": { "type": "string" },
+                          "sortCode": { "type": "string", "description": "Optional." },
+                          "branchCode": { "type": "string", "description": "Optional." },
+                          "branchName": { "type": "string", "description": "Optional." }
                         }
                       },
                       {
@@ -1693,7 +1699,8 @@
                         "properties": {
                           "iban": { "type": "string" },
                           "accountName": { "type": "string" },
-                          "bankName": { "type": "string" }
+                          "bankName": { "type": "string" },
+                          "swiftCode": { "type": "string", "description": "Optional." }
                         }
                       },
                       {
