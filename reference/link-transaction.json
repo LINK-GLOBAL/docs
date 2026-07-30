@@ -831,7 +831,7 @@
     },
     "/transactions/v2/direct_ramp/transfer_sent": {
       "post": {
-        "description": "",
+        "description": "Confirm Deposit(onramp) transaction request using referece id",
         "operationId": "post_direct_rampdepositpayment_made",
         "responses": {
           "200": {
