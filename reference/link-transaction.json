@@ -426,9 +426,22 @@
         "description": "",
         "operationId": "get_direct_ramppayment_methods",
         "responses": {
-          "200": {
-            "description": ""
-          }
+           "status": "Success",
+            "message": "Payment methods retrieved",
+            "data": {
+                "currency": "ZMW",
+                "country": "Zambia",
+                "payment_methods": [
+                    {
+                        "method": "MTN Mobile Money",
+                        "identifier": "mtn_momo"
+                    },
+                    {
+                        "method": "Bank Transfer",
+                        "identifier": "bank_transfer"
+                    }
+                ]
+            }
         },
         "parameters": [
           {
@@ -436,7 +449,7 @@
             "name": "currency",
             "schema": {
               "type": "string",
-              "enum": ["GHS", "KES", "NGN", "ZAR"],
+              "enum": ["NGN", "GHS", "KES", "SLE", "ZAR", "UGX", "XAF", "ZAR", "ZMW"],
               "default": "NGN"
             },
             "required": true,
@@ -494,16 +507,11 @@
                 "Ghana",
                 "Kenya",
                 "South Africa",
-                "Botswana",
                 "Cameroon",
-                "Malawi",
-                "Mozambique",
                 "Sierra Leone",
                 "Tanzania",
                 "Uganda",
-                "Zambia",
-                "Cote D'Ivoire",
-                "Rwanda"
+                "Zambia"
               ]
             },
             "required": true
@@ -529,7 +537,17 @@
         "operationId": "get_ramp_quote",
         "responses": {
           "200": {
-            "description": ""
+            "status": "Success",
+            "message": "Rate retrieved",
+            "data": {
+                "quoteId": "VHlwZXM6OkNhc2hyYW1wOjpBUEk6OlJhbXBRdW90ZS1jMmExMD......=",
+                "trx_type": "onramp",
+                "amount": "2000",
+                "rate": "132.990",
+                "payoutAmount": "15.04",
+                "validity": "120 seconds",
+                "date": "2026-07-30 13:23"
+            }
           }
         },
         "parameters": [
@@ -546,10 +564,22 @@
             "name": "asset",
             "schema": {
               "type": "string",
-              "enum": ["NGN", "GHS", "KES", "ZAR", "USDT", "USDC"]
+              "enum": ["NGN", "GHS", "KES", "SLE", "ZAR", "UGX", "XAF", "ZAR", "ZMW"],
+              "default": "NGN"
             },
             "required": true,
-            "description": "Available currencies. NOTE: USDT/USDC are for offramp only"
+            "description": "Available currencies for onramp deposits"
+          },
+           {
+            "in": "query",
+            "name": "stables",
+            "schema": {
+              "type": "string",
+              "enum": ["USDC", "USDT"],
+              "default": "USDC"
+            },
+            "required": true,
+            "description": "Available StableCoin options (USDC, USDT)."
           },
           {
             "in": "query",
@@ -558,7 +588,7 @@
               "type": "string"
             },
             "required": true,
-            "description": "amount to on ramp or offramp based of currency."
+            "description": "Amount user wants to on-ramp or off-ramp."
           },
           {
             "in": "query",
@@ -587,10 +617,24 @@
     "/transactions/v2/direct_ramp/deposit": {
       "post": {
         "description": "",
-        "operationId": "get_new-endpoint-1",
+        "operationId": "get_direct_rampdeposit",
         "responses": {
           "200": {
-            "description": ""
+            "status": "Pending",
+            "message": "Request created. Send NGN to details provided and confirm transaction with reference.",
+            "data": {
+                "ticketId": "VHlwZXM6OkNhc2hyYW1wOjpBUEk..................",
+                "reference": "zqo-432-140-zco",
+                "sourceAsset": "NGN",
+                "amount": 95000,
+                "rate": 1162.62,
+                "payoutAsset": "USDC",
+                "payoutAmount": 81.71,
+                "vendorDetails": "1123456734\nJohn doe\nZenith Bank",
+                "status": "pending",
+                "expiresAt": "2026-07-30T16:35:40Z",
+                "date": "2026-07-30 16:20"
+            }
           }
         },
         "parameters": [
@@ -602,27 +646,6 @@
             },
             "required": true,
             "description": "Id from get Rate Quote endpoint."
-          },
-          {
-            "in": "query",
-            "name": "currency",
-            "schema": {
-              "type": "string",
-              "enum": ["NGN", "GHS", "KES", "ZAR"],
-              "default": "NGN"
-            },
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "stables",
-            "schema": {
-              "type": "string",
-              "enum": ["USDC", "USDT"],
-              "default": "USDC"
-            },
-            "required": true,
-            "description": "Stable coin in which user wants to be settled in (USDC, USDT)."
           },
           {
             "in": "query",
@@ -709,7 +732,7 @@
               "type": "string"
             },
             "required": true,
-            "description": "customer banking name related to payment method."
+            "description": "Customer banking name related to payment method."
           },
           {
             "in": "query",
@@ -746,16 +769,31 @@
         "operationId": "get_direct_rampwithdraw",
         "responses": {
           "200": {
-            "description": ""
+            "status": "Pending",
+            "message": "Request created. Complete Pending task.",
+            "data": {
+                "Task": "Send USDC to the deposit wallet address below",
+                "reference": "uof-093-290-lhf",
+                "sourceAsset": "USDC",
+                "amount": 95,
+                "rate": 1359.15,
+                "payoutAsset": "NGN",
+                "payoutAmount": 129119.25,
+                "wallet_address": "0xef5f3a837...........",
+                "network": "base",
+                "status": "pending",
+                "expiresIn": "5 minutes",
+                "date": "2026-07-30 16:13"
+            }
           }
         },
         "parameters": [
           {
             "in": "query",
             "name": "quoteId",
-            "schema": {
-              "type": "string"
-            },
+              "schema": {
+                "type": "string"
+              },
             "description": "Gotten from get Rate Quote endpoint.",
             "required": true
           },
@@ -767,36 +805,6 @@
             },
             "description": "Customer Payout method ID gotten from Add Payout method endpoint.",
             "required": true
-          },
-          {
-            "in": "query",
-            "name": "stables",
-            "schema": {
-              "type": "string",
-              "enum": ["USDT", "USDC"]
-            },
-            "required": true,
-            "description": "stable coin used for offramp"
-          },
-          {
-            "in": "query",
-            "name": "offramp_amount",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Stables amount based of generated quote.",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "payout_currency",
-            "schema": {
-              "type": "string",
-              "enum": ["NGN", "GHS", "KES", "ZAR", "XAF", "TZS"],
-              "default": "NGN"
-            },
-            "required": true,
-            "description": "Currency to be settled in based of generated quote"
           },
           {
             "in": "query",
