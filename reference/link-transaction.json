@@ -1100,7 +1100,7 @@
     "/transactions/v2/idr/rate": {
       "get": {
         "description": "",
-        "operationId": "get_new-endpoint-idr-rate",
+        "operationId": "get-idr-rate",
         "responses": {
           "200": {
             "description": ""
@@ -1111,21 +1111,21 @@
             "name": "amount",
             "in": "query",
             "required": true,
-            "description": "Amount in IDR to convert. Minimum 20,000 IDR",
+            "description": "Amount user wants to on-ramp or off-ramp. Minimum 20,000 IDR or 5 USDC/USDT ",
             "schema": {
               "type": "string",
               "default": ""
             }
           },
-          {
-            "name": "business_id",
+           {
             "in": "query",
-            "required": true,
-            "description": "Your LINK business identifier",
+            "name": "trx_type",
             "schema": {
               "type": "string",
-              "default": ""
-            }
+              "enum": ["onramp", "offramp"]
+            },
+            "description": "Transaction type: \"onramp\" for \"Fiat\"\u2192Stables, \"offramp\" for Stables\u2192\"Fiat\". ",
+            "required": true
           }
         ],
         "tags": ["IDR Ramp"],
@@ -1149,16 +1149,16 @@
                 "properties": {
                   "amount": {
                     "type": "string",
-                    "description": "IDR amount to convert (amount used in to get quote). "
+                    "description": "Amount in IDR to onramp. "
+                  },
+                  "stables": {
+                    "type": "string",
+                    "description": "Stablecoin to receive in.",
+                    "enum": ["USDT, USDC"]
                   },
                   "wallet_address": {
                     "type": "string",
                     "description": "Wallet address where token will be sent to."
-                  },
-                  "stables": {
-                    "type": "string",
-                    "description": "Stablecoin to receive in USDT.",
-                    "enum": ["USDT"]
                   }
                 },
                 "type": "object",
