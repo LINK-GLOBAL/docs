@@ -1087,10 +1087,6 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "business_id": {
-                    "type": "string",
-                    "description": "Your LINK business identifier"
-                  }
                 },
                 "type": "object"
               }
@@ -1115,7 +1111,7 @@
             "name": "amount",
             "in": "query",
             "required": true,
-            "description": "Amount in BRL to convert. Minimum 20,000 IDR",
+            "description": "Amount in IDR to convert. Minimum 20,000 IDR",
             "schema": {
               "type": "string",
               "default": ""
