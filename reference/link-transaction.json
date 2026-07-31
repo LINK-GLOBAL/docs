@@ -1097,7 +1097,7 @@
         "summary": "Onboarding"
       }
     },
-    "/transactions/v2/idr/rate": {
+    "/transactions/v2/idr/ramp_quote": {
       "get": {
         "description": "",
         "operationId": "get-idr-rate",
