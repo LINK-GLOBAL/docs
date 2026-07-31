@@ -426,22 +426,9 @@
         "description": "",
         "operationId": "get_direct_ramppayment_methods",
         "responses": {
-           "status": "Success",
-            "message": "Payment methods retrieved",
-            "data": {
-                "currency": "ZMW",
-                "country": "Zambia",
-                "payment_methods": [
-                    {
-                        "method": "MTN Mobile Money",
-                        "identifier": "mtn_momo"
-                    },
-                    {
-                        "method": "Bank Transfer",
-                        "identifier": "bank_transfer"
-                    }
-                ]
-            }
+          "200": {
+            "description": ""
+          }
         },
         "parameters": [
           {
@@ -537,17 +524,7 @@
         "operationId": "get_ramp_quote",
         "responses": {
           "200": {
-            "status": "Success",
-            "message": "Rate retrieved",
-            "data": {
-                "quoteId": "VHlwZXM6OkNhc2hyYW1wOjpBUEk6OlJhbXBRdW90ZS1jMmExMD......=",
-                "trx_type": "onramp",
-                "amount": "2000",
-                "rate": "132.990",
-                "payoutAmount": "15.04",
-                "validity": "120 seconds",
-                "date": "2026-07-30 13:23"
-            }
+            "description": ""
           }
         },
         "parameters": [
@@ -620,21 +597,7 @@
         "operationId": "get_direct_rampdeposit",
         "responses": {
           "200": {
-            "status": "Pending",
-            "message": "Request created. Send NGN to details provided and confirm transaction with reference.",
-            "data": {
-                "ticketId": "VHlwZXM6OkNhc2hyYW1wOjpBUEk..................",
-                "reference": "zqo-432-140-zco",
-                "sourceAsset": "NGN",
-                "amount": 95000,
-                "rate": 1162.62,
-                "payoutAsset": "USDC",
-                "payoutAmount": 81.71,
-                "vendorDetails": "1123456734\nJohn doe\nZenith Bank",
-                "status": "pending",
-                "expiresAt": "2026-07-30T16:35:40Z",
-                "date": "2026-07-30 16:20"
-            }
+            "description": ""
           }
         },
         "parameters": [
@@ -769,22 +732,7 @@
         "operationId": "get_direct_rampwithdraw",
         "responses": {
           "200": {
-            "status": "Pending",
-            "message": "Request created. Complete Pending task.",
-            "data": {
-                "Task": "Send USDC to the deposit wallet address below",
-                "reference": "uof-093-290-lhf",
-                "sourceAsset": "USDC",
-                "amount": 95,
-                "rate": 1359.15,
-                "payoutAsset": "NGN",
-                "payoutAmount": 129119.25,
-                "wallet_address": "0xef5f3a837...........",
-                "network": "base",
-                "status": "pending",
-                "expiresIn": "5 minutes",
-                "date": "2026-07-30 16:13"
-            }
+            "description": ""
           }
         },
         "parameters": [
