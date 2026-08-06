@@ -47,7 +47,7 @@
           {
             "group": "Business API",
             "pages": [
-              "docs/otc-service",
+              "docs/business-service",
               "docs/business-onramp",
               "docs/business-offramp",
               "docs/cross-border-fx"
