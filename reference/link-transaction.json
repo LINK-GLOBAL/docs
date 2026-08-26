@@ -2303,10 +2303,19 @@
     },
     "/transactions/v2/esp_onramp": {
       "post": {
-        "description": "",
+        "description": "Initiate a fiat → Espees (ESP) conversion. Submit the user's fiat currency, amount, and the bank account they are paying from. LINK returns the vendor banking details the user should send funds to.",
         "responses": {
-          "200": {
-            "description": ""
+          "201": {
+            "description": "Transaction created successfully. Response includes the transaction record and `banking_details` — the account the user must transfer fiat to."
+          },
+          "400": {
+            "description": "Missing or invalid request fields."
+          },
+          "403": {
+            "description": "No banking details available for the requested currency."
+          },
+          "500": {
+            "description": "Rate unavailable or internal server error."
           }
         },
         "parameters": [],
@@ -2317,37 +2326,42 @@
                 "type": "object",
                 "properties": {
                   "currency": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Fiat currency the user is sending.",
+                    "enum": ["AED", "AUD", "BRL", "CAD", "CNY", "DKK", "EUR", "GBP", "HKD", "ILS", "KES", "MXN", "NGN", "PHP", "SGD", "USD", "ZAR"]
                   },
                   "amount": {
-                    "type": "string"
-                  },
-                  "vendorId": {
-                    "type": "string"
+                    "type": "number",
+                    "description": "Amount of fiat to convert."
                   },
                   "bankName": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the bank the user is paying from."
                   },
                   "accountNumber": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Account number the user is paying from."
                   },
                   "walletAddress": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Espees wallet address to credit. Optional — provide at least one identification field."
                   },
                   "kingschatUsername": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "KingsChat username linked to the user's Espees account. Optional — provide at least one identification field."
                   },
                   "espeesCard": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Espees card number. Optional — provide at least one identification field."
                   },
                   "emailAddress": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Email address registered with the user's Espees account. Optional — provide at least one identification field."
                   }
                 },
                 "required": [
                   "currency",
                   "amount",
-                  "vendorId",
                   "bankName",
                   "accountNumber"
                 ]
@@ -2357,15 +2371,21 @@
         },
         "operationId": "post_esp-onramp",
         "tags": ["ESPESS"],
-        "summary": "Initiate ESP Onramp"
+        "summary": "Initiate Espees Onramp"
       }
     },
     "/transactions/v2/esp_offramp": {
       "post": {
-        "description": "",
+        "description": "Initiate an Espees (ESP) → fiat conversion. Submit the Espees amount, target fiat currency, and the recipient bank account. LINK converts at the current Espees rate and initiates fiat disbursement.",
         "responses": {
-          "200": {
-            "description": ""
+          "201": {
+            "description": "Transaction created successfully."
+          },
+          "400": {
+            "description": "Missing or invalid request fields."
+          },
+          "500": {
+            "description": "Rate unavailable or internal server error."
           }
         },
         "parameters": [],
@@ -2376,38 +2396,47 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "amount": {
-                    "type": "string"
-                  },
                   "currency": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Fiat currency the user wants to receive.",
+                    "enum": ["AED", "EUR", "NGN", "SGD"]
+                  },
+                  "amount": {
+                    "type": "number",
+                    "description": "Amount of Espees (ESP) to sell."
                   },
                   "bankName": {
-                    "type": "string"
-                  },
-                  "accountNumber": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Recipient's bank name."
                   },
                   "accountName": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Recipient's account name."
                   },
-                  "walletAddress": {
-                    "type": "string"
+                  "accountNumber": {
+                    "type": "string",
+                    "description": "Recipient's account number."
                   },
                   "kingschatUsername": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "KingsChat username linked to the user's Espees account. Optional — provide at least one identification field."
                   },
                   "espeesCard": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Espees card number. Optional — provide at least one identification field."
+                  },
+                  "emailAddress": {
+                    "type": "string",
+                    "description": "Email address registered with the user's Espees account. Optional — provide at least one identification field."
                   }
                 },
-                "required": ["currency", "amount", "bankName", "accountNumber"]
+                "required": ["currency", "amount", "bankName", "accountName", "accountNumber"]
               }
             }
           }
         },
         "tags": ["ESPESS"],
-        "summary": "Initiate ESP Offramp"
+        "summary": "Initiate Espees Offramp"
       }
     },
     "/checkout/sessions/generate": {

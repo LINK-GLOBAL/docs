@@ -1,0 +1,174 @@
+---
+title: "Espees On-Ramp"
+description: "POST /transactions/v2/esp_onramp — Fiat → Espees"
+---
+
+Initiate a fiat → Espees conversion. You provide the user's fiat currency, amount, and the bank account they will be paying **from**. LINK returns the vendor banking details the user should send funds to.
+
+---
+
+#### Endpoint
+
+```
+POST /transactions/v2/esp_onramp
+```
+
+---
+
+#### Request Body
+
+| Field               | Type   | Required | Description                                                                                                   |
+| ------------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------- |
+| `currency`          | string | ✓        | Fiat currency the user is sending (e.g., `NGN`, `GBP`). See [Supported Currencies](#supported-currencies).   |
+| `amount`            | number | ✓        | Amount of fiat to convert.                                                                                    |
+| `bankName`          | string | ✓        | Name of the bank the user is paying from.                                                                     |
+| `accountNumber`     | string | ✓        | Account number the user is paying from.                                                                       |
+| `walletAddress`     | string | —        | Espees wallet address. Provide at least one of the optional identification fields.                            |
+| `kingschatUsername` | string | —        | KingsChat username linked to the user's Espees account.                                                       |
+| `espeesCard`        | string | —        | Espees card number.                                                                                           |
+| `emailAddress`      | string | —        | Email address registered with the user's Espees account.                                                      |
+
+> **Identification:** `walletAddress`, `kingschatUsername`, `espeesCard`, and `emailAddress` are all optional — but you should provide at least one so LINK can identify which Espees account to credit.
+
+---
+
+#### Supported Currencies
+
+| Currency | Code |
+| -------- | ---- |
+| UAE Dirham | AED |
+| Australian Dollar | AUD |
+| Brazilian Real | BRL |
+| Canadian Dollar | CAD |
+| Chinese Yuan | CNY |
+| Danish Krone | DKK |
+| Euro | EUR |
+| British Pound | GBP |
+| Hong Kong Dollar | HKD |
+| Israeli Shekel | ILS |
+| Kenyan Shilling | KES |
+| Mexican Peso | MXN |
+| Nigerian Naira | NGN |
+| Philippine Peso | PHP |
+| Singapore Dollar | SGD |
+| US Dollar | USD |
+| South African Rand | ZAR |
+
+---
+
+#### Request Example
+
+<CodeGroup>
+
+```json JSON Body
+{
+  "currency": "NGN",
+  "amount": 500000,
+  "bankName": "Access Bank",
+  "accountNumber": "0123456789",
+  "kingschatUsername": "john_doe"
+}
+```
+
+```javascript JavaScript
+const options = {
+  method: 'POST',
+  headers: {
+    'accept': 'application/json',
+    'ngnc-sec-key': 'your_secret_key',
+    'content-type': 'application/json'
+  },
+  body: JSON.stringify({
+    currency: "NGN",
+    amount: 500000,
+    bankName: "Access Bank",
+    accountNumber: "0123456789",
+    kingschatUsername: "john_doe"
+  })
+};
+
+fetch('https://api.linkio.world/transactions/v2/esp_onramp', options)
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(err => console.error(err));
+```
+
+```python Python
+import requests
+
+url = "https://api.linkio.world/transactions/v2/esp_onramp"
+
+payload = {
+    "currency": "NGN",
+    "amount": 500000,
+    "bankName": "Access Bank",
+    "accountNumber": "0123456789",
+    "kingschatUsername": "john_doe"
+}
+
+headers = {
+    "accept": "application/json",
+    "ngnc-sec-key": "your_secret_key",
+    "content-type": "application/json"
+}
+
+response = requests.post(url, json=payload, headers=headers)
+print(response.json())
+```
+
+</CodeGroup>
+
+---
+
+#### Response (201)
+
+```json
+{
+  "code": "TXN_SUCCESSFUL",
+  "status": "Success",
+  "message": "ESP Onramp Transaction Request Successful",
+  "transaction": {
+    "transaction_id": "6839f2a1c4e3b1000d5a9012",
+    "reference": "esp-1717000000000-abc123",
+    "type": "buy_ramp",
+    "stable": "ESP",
+    "currency": "NGN",
+    "amount": "500000 NGN",
+    "esp_rate": 0.00000125,
+    "payout_amount": "0.625 ESP",
+    "transaction_status": "pending",
+    "date_created": "June 19, 2026 14:30"
+  },
+  "banking_details": [
+    {
+      "vendor_id": "vendor_ngn_01",
+      "bank_name": "Zenith Bank",
+      "account_number": "1234567890",
+      "account_name": "LINK Settlement NGN"
+    }
+  ]
+}
+```
+
+> After receiving `banking_details`, instruct the user to transfer the fiat amount to the account shown. LINK will credit the Espees once payment is confirmed.
+
+---
+
+#### Error Codes
+
+| Code                  | HTTP | Description                                              |
+| --------------------- | ---- | -------------------------------------------------------- |
+| `TXN_MISSING_FIELDS`  | 400  | One or more required fields (`currency`, `amount`, `bankName`, `accountNumber`) are missing. |
+| `INVALID_AMOUNT`      | 400  | `amount` is not a positive number.                       |
+| `UNSUPPORTED_CURRENCY`| 400  | `currency` is not in the supported on-ramp list.         |
+| `INVALID_BANK`        | 400  | `bankName` is empty or not a string.                     |
+| `INVALID_ACCOUNT`     | 400  | `accountNumber` is empty or not a string.                |
+| `VENDOR_UNAVAILABLE`  | 403  | No banking details available for the requested currency. |
+| `RATE_UNAVAILABLE`    | 500  | Espees rate could not be fetched for the requested currency.|
+| `TXN_FAILED`          | 500  | Internal server error.                                   |
+
+---
+
+[Espees Overview](/docs/esp-service)
+
+[Espees Off-Ramp](/docs/esp-offramp)

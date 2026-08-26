@@ -45,6 +45,14 @@
             ]
           },
           {
+            "group": "Espees",
+            "pages": [
+              "docs/esp-service",
+              "docs/esp-onramp",
+              "docs/esp-offramp"
+            ]
+          },
+          {
             "group": "Business API",
             "pages": [
               "docs/business-service",

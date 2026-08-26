@@ -1,0 +1,75 @@
+---
+title: "Espees Overview"
+description: "LINK's Espees API enables fiat ↔ Espees (ESP) stablecoin conversions across a range of currencies."
+---
+
+The Espees API lets your platform on-ramp fiat into Espees stablecoins and off-ramp Espees back into fiat. LINK handles FX pricing, settlement routing, and partner bank selection automatically — you only need to provide the user's bank details and optionally their Espees account identifier.
+
+---
+
+### How It Works
+
+#### On-Ramp (Fiat → Espees)
+
+1. Your user initiates a buy request — you submit their fiat currency, amount, and bank details.
+2. LINK returns the transaction record and the **banking details to pay into** (vendor account).
+3. Your user sends the fiat to those banking details.
+4. LINK confirms receipt and credits the Espees (ESP) to the user's account.
+
+#### Off-Ramp (Espees → Fiat)
+
+1. Your user initiates a sell request — you submit the Espees amount, target currency, and recipient bank details.
+2. LINK converts at the current Espees rate and initiates fiat disbursement to the recipient account.
+
+---
+
+### Espees Account Identification
+
+When submitting a transaction, you may optionally include one of the following to identify the Espees account the transaction is linked to:
+
+| Field               | Description                                   |
+| ------------------- | --------------------------------------------- |
+| `walletAddress`     | Espees wallet address *(on-ramp only)*        |
+| `kingschatUsername` | KingsChat username linked to Espees account   |
+| `espeesCard`        | Espees card number                            |
+| `emailAddress`      | Email address registered with Espees          |
+
+You only need to provide **one** of these — not all of them.
+
+---
+
+### Supported Currencies
+
+#### On-Ramp (Fiat → Espees)
+
+AED · AUD · BRL · CAD · CNY · DKK · EUR · GBP · HKD · ILS · KES · MXN · NGN · PHP · SGD · USD · ZAR
+
+#### Off-Ramp (Espees → Fiat)
+
+AED · EUR · NGN · SGD
+
+---
+
+### Endpoints
+
+| Action        | Method | Endpoint                              |
+| ------------- | ------ | ------------------------------------- |
+| On-Ramp       | POST   | `/transactions/v2/esp_onramp`         |
+| Off-Ramp      | POST   | `/transactions/v2/esp_offramp`        |
+| Fetch Rates   | GET    | `/rates/v2/get_esp_rates`             |
+
+---
+
+### Authentication
+
+All requests require your secret key in the request header:
+
+```http
+ngnc-sec-key: your_secret_key
+```
+
+---
+
+[Espees On-Ramp](/docs/esp-onramp)
+
+[Espees Off-Ramp](/docs/esp-offramp)
