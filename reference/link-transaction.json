@@ -2441,10 +2441,54 @@
     },
     "/checkout/sessions/generate": {
       "post": {
-        "description": "",
+        "description": "Create a hosted checkout session. Returns a session ID and a payment URL — redirect your customer to that URL to complete payment.",
         "responses": {
           "200": {
-            "description": ""
+            "description": "Checkout session created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "session_id": {
+                          "type": "string",
+                          "description": "Unique ID of the checkout session.",
+                          "example": "6abb8e396b5c58fcba527a1c"
+                        },
+                        "url": {
+                          "type": "string",
+                          "description": "Hosted payment page. Redirect your customer here to pay.",
+                          "example": "https://checkout.linkio.world/pay?sid=6abb8e396b5c58fcba527a1c"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "session_id": "6abb8e396b5c58fcba527a1c",
+                      "url": "https://checkout.linkio.world/pay?sid=6abb8e396b5c58fcba527a1c"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required field, or currency is not USD."
+          },
+          "401": {
+            "description": "Invalid business ID."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         },
         "parameters": [],
@@ -2456,22 +2500,36 @@
                 "type": "object",
                 "properties": {
                   "business_id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Your unique LINK business ID. Identifies the business collecting the payment."
                   },
                   "amount": {
-                    "type": "integer"
+                    "type": "number",
+                    "description": "Amount the customer pays at checkout, in the currency below.",
+                    "example": 50
                   },
                   "currency": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Checkout currency. USD only.",
+                    "enum": [
+                      "USD"
+                    ],
+                    "default": "USD"
                   },
                   "reference_id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Your own reference for this payment, generated on your side. Use it to match the session back to your records.",
+                    "example": "ORDER-10294"
                   },
                   "success_url": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Where the customer is redirected after a successful payment.",
+                    "example": "https://yourdomain.com/payment/success"
                   },
                   "cancel_url": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Where the customer is redirected if the payment fails or is cancelled.",
+                    "example": "https://yourdomain.com/payment/cancelled"
                   }
                 },
                 "required": [
