@@ -33,13 +33,20 @@ When an event occurs in **LINK Bridge,** we send an **HTTPS POST** request to yo
 
 ***
 
-### 3. Receiving Events
+### 3. Receiving events
 
-When your webhook is triggered, LINK sends a **JSON payload** with event details similar to the example below:
+Every payload has the same envelope — an `event` name and a `payload` object — but the fields inside differ by corridor. Match on `event`, then read the fields for the corridor the transaction belongs to.
+
+<Warning>
+  The two corridors do not share a payload shape. Direct FX identifies a transaction by `transaction_id` and `reference`; the Pan-African Ramp sends `reference` and `business_id` with no transaction id, and carries a human-readable `Notification`. Code that assumes one shape will break on the other.
+</Warning>
+
+#### Direct FX
+
+Sent when a Direct FX on-ramp request is accepted.
 
 <CodeGroup>
-  ```bash bash
-  // Sample webhook payload response
+  ```json transaction_request.successful
   {
       "event": "bridge.events.transaction_request.successful",
       "payload": {
@@ -48,21 +55,87 @@ When your webhook is triggered, LINK sends a **JSON payload** with event details
               "business_id": "0847363729"
           },
           "type": "Buy",
-          "reference": "0984938271",
+          "reference": "ret-mukgw7ax-nmw4wd",
           "amount": 25639.55,
-          "link_account_name": "Okemdinachi Nwaejie",
-          "link_account_number": "8180789670",
-          "link_bank_name": "Wema Bank",
-          "account_number": "3338900202",
-          "bank_name": "Providus Bank",
-          "link_tag": "Link_eng",
-          "network": "Avalanche",
-          "wallet_address": "x.fie9383jEU8394jdnc",
+          "transaction_status": "Pending",
+          "wallet_address": "0x3f1e...a92c",
+          "network": "Base",
           "date_created": "May 11, 2023"
       }
   }
   ```
 </CodeGroup>
+
+#### Pan-African Ramp
+
+The Pan-African corridor reports each stage of the transaction. All four carry `Notification`, `reference`, `business_id`, `payment_type` (`onramp` or `offramp`), `transaction_status` and `date_updated`.
+
+<CodeGroup>
+  ```json 1. Awaiting payment
+  {
+      "event": "bridge.events.transaction_request.updated",
+      "payload": {
+          "Notification": "Deposit requested picked-up. Awaiting NGN payment.",
+          "reference": "par-mukgw7ax-s1kvqb",
+          "business_id": "0847363729",
+          "payment_type": "onramp",
+          "transaction_status": "Pending",
+          "date_updated": "October 03, 2026. 14:22"
+      }
+  }
+  ```
+
+  ```json 2. Payment received
+  {
+      "event": "bridge.events.transaction_request.updated",
+      "payload": {
+          "Notification": "NGN payment received. Processing Transaction.",
+          "business_id": "0847363729",
+          "reference": "par-mukgw7ax-s1kvqb",
+          "payment_type": "onramp",
+          "amount": "500000 NGN",
+          "transaction_status": "Processing",
+          "date_updated": "October 03, 2026. 14:26"
+      }
+  }
+  ```
+
+  ```json 3. Completed
+  {
+      "event": "bridge.events.transaction_request.successful",
+      "payload": {
+          "Notification": "Deposit Request Completed.",
+          "business_id": "0847363729",
+          "reference": "par-mukgw7ax-s1kvqb",
+          "payment_type": "onramp",
+          "payout_amount": "314.88 USDC",
+          "transaction_status": "Successful",
+          "date_updated": "October 03, 2026. 14:28"
+      }
+  }
+  ```
+
+  ```json 4. Cancelled
+  {
+      "event": "bridge.events.transaction_request.updated",
+      "payload": {
+          "Notification": "Deposit Request Cancelled.",
+          "business_id": "0847363729",
+          "reference": "par-mukgw7ax-s1kvqb",
+          "payment_type": "onramp",
+          "payout_amount": "314.88 USDC",
+          "transaction_status": "Cancelled",
+          "date_updated": "October 03, 2026. 14:31"
+      }
+  }
+  ```
+</CodeGroup>
+
+<Info>
+  `Notification` wording follows the direction: an off-ramp reads "Withdrawal Request Completed." where an on-ramp reads "Deposit Request Completed." Branch on `payment_type` and `transaction_status` rather than parsing the sentence.
+</Info>
+
+On an off-ramp, `payout_amount` is the fiat the customer receives; on an on-ramp it is the stablecoin delivered. The unit is part of the string.
 
 ***
 
@@ -71,7 +144,7 @@ When your webhook is triggered, LINK sends a **JSON payload** with event details
 If your webhook endpoint is invalid or fails to respond, LINK will retry the delivery **up to two additional times.**
 
 * If the webhook still does not succeed after the retries, the event is marked as **failed.**
-* Failed events are **not automatically retried** afterward, so it’s important to ensure your endpoint is reliable.
+* Failed events are **not automatically retried** afterward, so it's important to ensure your endpoint is reliable.
 
 ***
 

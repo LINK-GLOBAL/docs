@@ -436,7 +436,7 @@
             "name": "currency",
             "schema": {
               "type": "string",
-              "enum": ["NGN", "GHS", "KES", "SLE", "ZAR", "UGX", "XAF", "ZAR", "ZMW"],
+              "enum": ["NGN", "GHS", "KES", "SLE", "ZAR", "UGX", "XAF", "ZMW"],
               "default": "NGN"
             },
             "required": true,
@@ -524,7 +524,46 @@
         "operationId": "get_ramp_quote",
         "responses": {
           "200": {
-            "description": ""
+            "description": "A priced quote, valid for 120 seconds. Pass quoteId to the deposit or withdraw call.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" },
+                    "message": { "type": "string" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "quoteId": {
+                          "type": "string",
+                          "description": "Pass unchanged to the deposit or withdraw call."
+                        },
+                        "trx_type": { "type": "string" },
+                        "amount": { "type": "string" },
+                        "rate": { "type": "string" },
+                        "payoutAmount": { "type": "string" },
+                        "validity": { "type": "string" },
+                        "date": { "type": "string" }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "Success",
+                  "message": "Rate retrieved",
+                  "data": {
+                    "quoteId": "VHlwZXM6OkNhc2hyYW1wOjpBUEk6OlJhbXBRdW90ZS0yOTJmNjA3ZC0xMzBiLTRjMjctOGVlMy05OGE4Njg0NDVhNjg=",
+                    "trx_type": "onramp",
+                    "amount": "100000",
+                    "rate": "1365.300",
+                    "payoutAmount": "73.24",
+                    "validity": "120 seconds",
+                    "date": "2026-10-03 15:12"
+                  }
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -541,7 +580,7 @@
             "name": "asset",
             "schema": {
               "type": "string",
-              "enum": ["NGN", "GHS", "KES", "SLE", "ZAR", "UGX", "XAF", "ZAR", "ZMW"],
+              "enum": ["NGN", "GHS", "KES", "SLE", "ZAR", "UGX", "XAF", "ZMW"],
               "default": "NGN"
             },
             "required": true,

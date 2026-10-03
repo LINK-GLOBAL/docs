@@ -1,76 +1,212 @@
 ---
 title: "Retail Off-Ramp"
-description: "This endpoint can be used to intiate an Off-ramp transaction."
+description: "Initiate a stablecoin → fiat transaction for a retail user, on either the Direct FX or Pan-African corridor."
 ---
 
-#### Initiate a Sell Transaction.
+Retail off-ramp runs on two corridors, and they do not share an endpoint, a request shape, or a response. Pick the tab for the corridor you are integrating.
 
-Endpoint *POST /v2/offramp*
+| | Direct FX | Pan-African Ramp |
+| --- | --- | --- |
+| Currencies | NGN | NGN, GHS, KES, SLE, ZAR, UGX, ZMW, XAF |
+| Endpoint | `POST /transactions/v2/offramp` | `POST /transactions/v2/direct_ramp/withdraw` |
+| Quote first? | No | Yes — the withdrawal needs a `quoteId` |
+| Payout account | In the request body | Registered beforehand, passed as `payout_id` |
 
-Initiate a stablecoin → fiat offramp for a retail. Endpoint applies only to (NGN & USD).
+---
 
-<CodeGroup>
-  ```bash bash
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'ngnc-sec-key': 'Bridge_Secret_Key',
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      "business_id": "string",  
-      "link_tag": "string", 
-      "type": "string", 
-      "currency": "string",
-      "amount": "string",  
-      "bank_name": "string", 
-      "account_number": "string",
-      "account_name": "string",  
-      "wallet_address": "string",
-      "network": "string",
-      "routing_number": "string",
-      "account_type": "string"
-    });
-  };
+<Tabs>
+  <Tab title="Direct FX">
+    #### Initiate a sell transaction
 
-  fetch('https://api.linkio.world/transactions/v1/offramp', options)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
-  ```
+    ```
+    POST /transactions/v2/offramp
+    ```
 
-  ```bash bash
-  import requests
+    The user sends stablecoin to LINK; LINK pays the fiat out to the bank account in the request.
 
-  url = "https://api.linkio.world/transactions/v1/offramp"
+    #### Body parameters
 
-  payload = {
-      "business_id": "string",  
-      "link_tag": "string", 
-      "type": "string", 
-      "amount": 0,  
-      "account_name": "string", 
-      "account_number": "string", 
-      "bank_name": "string", 
-      "network": "string",
-      "wallet_address": "string"
-  }
-  headers = {
-      "accept": "application/json",
-      "ngnc-sec-key": "Bridge_Secret_Key",
-      "content-type": "application/json"
-  }
+    | Parameter | Type | Required | Description |
+    | --- | --- | --- | --- |
+    | `stables` | string | ✓ | Stablecoin the user is selling, e.g. `USDC` |
+    | `amount` | string | ✓ | Amount of stablecoin |
+    | `currency` | string | ✓ | Fiat to pay out: `NGN` |
+    | `chargeFeeOnRequest` | boolean | | Deduct the fee from the payout rather than the amount sent |
 
-  response = requests.post(url, json=payload, headers=headers)
+    <CodeGroup>
+      ```javascript Node.js
+      const options = {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'ngnc-sec-key': 'YOUR_SECRET_KEY',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          stables: 'USDC',
+          amount: '315',
+          currency: 'NGN',
+          account_name: 'Okemdinachi Nwaejie',
+          account_number: '3338900202',
+          bank_name: 'Providus Bank'
+        })
+      };
 
-  print(response.text)
-  ```
-</CodeGroup>
+      fetch('https://api.linkio.world/transactions/v2/offramp', options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+      ```
 
-### API Reference
+      ```python Python
+      import requests
 
-You can view the API reference for working with Sell Transactions
+      url = "https://api.linkio.world/transactions/v2/offramp"
+
+      payload = {
+          "stables": "USDC",
+          "amount": "315",
+          "currency": "NGN",
+          "account_name": "Okemdinachi Nwaejie",
+          "account_number": "3338900202",
+          "bank_name": "Providus Bank"
+      }
+      headers = {
+          "accept": "application/json",
+          "ngnc-sec-key": "YOUR_SECRET_KEY",
+          "content-type": "application/json"
+      }
+
+      response = requests.post(url, json=payload, headers=headers)
+      print(response.text)
+      ```
+    </CodeGroup>
+
+    #### Response
+
+    `201 Created`
+
+    ```json
+    {
+      "code": "TXN_SUCCESSFUL",
+      "status": "success",
+      "message": "Transaction Request Successful",
+      "transaction": {
+        "transaction_id": "66f2a1c8e4b0f3a7d1c9e5b2",
+        "business": {
+          "business_id": "0847363729"
+        },
+        "reference": "ret-mukgw7ax-fx0jvi",
+        "type": "Sell",
+        "offramp_rate": 1572.4,
+        "offramp_stables": "USDC",
+        "amount": "315 USDC",
+        "payout_currency": "NGN",
+        "payout_amount": "495306 NGN",
+        "transaction_status": "Pending",
+        "account_name": "Okemdinachi Nwaejie",
+        "account_number": "3338900202",
+        "bank_name": "Providus Bank",
+        "date_created": "October 03, 2026 14:31:05",
+        "date_mongo": "2026-10-03T13:31:05.412Z"
+      }
+    }
+    ```
+  </Tab>
+
+  <Tab title="Pan-African Ramp">
+    #### Step 1 — Register the payout account
+
+    ```
+    POST /transactions/v2/direct_ramp/payout_account
+    ```
+
+    The withdrawal references an account by `payout_id`, so register it before the first withdrawal. You only do this once per account.
+
+    #### Step 2 — Get a quote
+
+    ```
+    GET /transactions/v2/direct_ramp/rate_quote
+    ```
+
+    Quotes are valid for 120 seconds. See [Retail Rates](/docs/retail-rates).
+
+    #### Step 3 — Initiate the withdrawal
+
+    ```
+    POST /transactions/v2/direct_ramp/withdraw
+    ```
+
+    Parameters are sent as **query parameters**, not a JSON body.
+
+    | Parameter | Type | Required | Description |
+    | --- | --- | --- | --- |
+    | `quoteId` | string | ✓ | From the quote in step 2 |
+    | `payout_id` | string | ✓ | The registered payout account |
+    | `sender_address` | string | ✓ | Wallet the stablecoin is sent from |
+    | `network` | string | ✓ | Chain the stablecoin is sent on |
+
+    <CodeGroup>
+      ```javascript Node.js
+      const params = new URLSearchParams({
+        quoteId: 'ba7f1d2c-9e44-4c0b-9a3f-2b7c5d8e1a66',
+        payout_id: '7c2e9f10-4a85-4a0e-bd21-9f3c6e5d8b14',
+        sender_address: '0x3f1e...a92c',
+        network: 'Base'
+      });
+
+      const options = {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'ngnc-sec-key': 'YOUR_SECRET_KEY'
+        }
+      };
+
+      fetch(`https://api.linkio.world/transactions/v2/direct_ramp/withdraw?${params}`, options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+      ```
+
+      ```python Python
+      import requests
+
+      url = "https://api.linkio.world/transactions/v2/direct_ramp/withdraw"
+
+      params = {
+          "quoteId": "ba7f1d2c-9e44-4c0b-9a3f-2b7c5d8e1a66",
+          "payout_id": "7c2e9f10-4a85-4a0e-bd21-9f3c6e5d8b14",
+          "sender_address": "0x3f1e...a92c",
+          "network": "Base"
+      }
+      headers = {
+          "accept": "application/json",
+          "ngnc-sec-key": "YOUR_SECRET_KEY"
+      }
+
+      response = requests.post(url, params=params, headers=headers)
+      print(response.text)
+      ```
+    </CodeGroup>
+
+    #### Response
+
+    `200 OK`
+
+    ```json
+    {
+      "status": "Success",
+      "message": "offramp transaction, reference par-mukgw7ax-qrg0ii has been initiated.",
+      "date": "2026-10-03 14:35"
+    }
+    ```
+
+    <Warning>
+      This response carries no amounts, rate or transaction id — only the reference inside `message`. Keep the `quoteId` and reference from your own records, and rely on [webhooks](/docs/webhook) for the payout amount and final status.
+    </Warning>
+  </Tab>
+</Tabs>
 
 ***
 

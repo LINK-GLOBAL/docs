@@ -1,78 +1,225 @@
 ---
 title: "Retail On-Ramp"
-description: "This endpoint can be used to intiate an On-ramp transaction."
+description: "Initiate a fiat → stablecoin transaction for a retail user, on either the Direct FX or Pan-African corridor."
 ---
 
-#### Initiate a Buy Transaction
+Retail on-ramp runs on two corridors, and they do not share an endpoint, a request shape, or a response. Pick the tab for the corridor you are integrating.
 
-Endpoint *POST /v2/onramp*
+| | Direct FX | Pan-African Ramp |
+| --- | --- | --- |
+| Currencies | NGN | NGN, GHS, KES, SLE, ZAR, UGX, ZMW, XAF |
+| Endpoint | `POST /transactions/v2/onramp` | `POST /transactions/v2/direct_ramp/deposit` |
+| Quote first? | No | Yes — the deposit needs a `quoteId` |
+| Settlement | Manual: the user pays LINK's account, LINK confirms | Automated through local rails |
 
-Initiate a fiat → stablecoin onramp for a retail. Endpoint applies only to (NGN & USD).
+---
 
-<CodeGroup>
-  ```bash bash
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'ngnc-sec-key': 'Bridge_Secret_Key',
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      "business_id": "string",
-      "link_tag": "string",
-      "type": "string",
-      "currency": "string",
-      "amount": "string", 
-      "vendor_number": "string",
-      "vendor_name": "string",
-      "vendor_bank": "string",
-      "wallet_address": "string",
-      "network": "string",
-      "bank_name": "string",
-      "account_number": "string",
-    });
-  };
+<Tabs>
+  <Tab title="Direct FX">
+    #### Initiate a buy transaction
 
-  fetch('https://api.linkio.world/transactions/v1/onramp', options)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
-  ```
+    ```
+    POST /transactions/v2/onramp
+    ```
 
-  ```bash bash
-  import requests
+    Returns the LINK account the user should pay into. The transaction settles once LINK confirms receipt.
 
-  url = "https://api.linkio.world/transactions/v1/onramp"
+    #### Body parameters
 
-  payload = {
-      "business_id": "string",
-      "link_tag": "string",
-      "type": "string",
-      "amount": 0, 
-      "vendor_number": "string",
-      "vendor_name": "string",
-      "vendor_bank": "string",
-      "account_number": "string",
-      "bank_name": "string",
-      "network": "string",
-      "wallet_address": "string"
-  }
-  headers = {
-      "accept": "application/json",
-      "ngnc-sec-key": "Bridge_Secret_Key",
-      "content-type": "application/json"
-  }
+    | Parameter | Type | Required | Description |
+    | --- | --- | --- | --- |
+    | `currency` | string | ✓ | Fiat the user pays in: `NGN` |
+    | `amount` | string | ✓ | Amount in that fiat currency |
+    | `stables` | string | ✓ | Stablecoin to deliver, e.g. `USDC` |
+    | `wallet_address` | string | ✓ | Where the stablecoin is sent |
+    | `network` | string | ✓ | Chain for the payout, e.g. `Base` |
+    | `addMarkUp` | boolean | | Apply your developer markup to this transaction |
+    | `markupPercentage` | number | | Markup to apply, up to 2% |
 
-  response = requests.post(url, json=payload, headers=headers)
+    <CodeGroup>
+      ```javascript Node.js
+      const options = {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'ngnc-sec-key': 'YOUR_SECRET_KEY',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          currency: 'NGN',
+          amount: '500000',
+          stables: 'USDC',
+          wallet_address: '0x3f1e...a92c',
+          network: 'Base'
+        })
+      };
 
-  print(response.text)
-  ```
-</CodeGroup>
+      fetch('https://api.linkio.world/transactions/v2/onramp', options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+      ```
 
-### API Reference
+      ```python Python
+      import requests
 
-You can view the [API reference]() for working with Buy Transactions
+      url = "https://api.linkio.world/transactions/v2/onramp"
+
+      payload = {
+          "currency": "NGN",
+          "amount": "500000",
+          "stables": "USDC",
+          "wallet_address": "0x3f1e...a92c",
+          "network": "Base"
+      }
+      headers = {
+          "accept": "application/json",
+          "ngnc-sec-key": "YOUR_SECRET_KEY",
+          "content-type": "application/json"
+      }
+
+      response = requests.post(url, json=payload, headers=headers)
+      print(response.text)
+      ```
+    </CodeGroup>
+
+    #### Response
+
+    `201 Created`
+
+    ```json
+    {
+      "code": "TXN_SUCCESSFUL",
+      "status": "Success",
+      "message": "Transaction Request Successful",
+      "transaction": {
+        "transaction_id": "66f2a1c8e4b0f3a7d1c9e5b2",
+        "business": {
+          "business_id": "0847363729"
+        },
+        "reference": "ret-mukgw7ax-nmw4wd",
+        "type": "Buy",
+        "onramp_rate": 1587.9,
+        "amount": "500000 NGN",
+        "payout_amount": "314.88 USDC",
+        "transaction_status": "Pending",
+        "link_account_name": "LINK GLOBAL",
+        "link_account_number": "8180789670",
+        "link_bank_name": "Wema Bank",
+        "wallet_address": "0x3f1e...a92c",
+        "network": "Base",
+        "date_created": "October 03, 2026 14:22"
+      }
+    }
+    ```
+
+    <Info>
+      Show `link_account_name`, `link_account_number` and `link_bank_name` to your user — that is the account they pay into. The transaction stays `Pending` until LINK confirms the deposit, then a webhook reports the change.
+    </Info>
+  </Tab>
+
+  <Tab title="Pan-African Ramp">
+    #### Step 1 — Get a quote
+
+    ```
+    GET /transactions/v2/direct_ramp/rate_quote
+    ```
+
+    The deposit call needs a `quoteId`, so always quote first. Quotes are valid for 120 seconds. See [Retail Rates](/docs/retail-rates) for the full parameters.
+
+    #### Step 2 — Initiate the deposit
+
+    ```
+    POST /transactions/v2/direct_ramp/deposit
+    ```
+
+    Parameters are sent as **query parameters**, not a JSON body.
+
+    | Parameter | Type | Required | Description |
+    | --- | --- | --- | --- |
+    | `quoteId` | string | ✓ | From the quote in step 1 |
+    | `address` | string | ✓ | Wallet that receives the stablecoin |
+    | `network` | string | ✓ | Chain for the payout |
+    | `phone_number` | string | | Customer's phone number |
+    | `bankaccount_number` | string | | Customer's bank account number |
+
+    <CodeGroup>
+      ```javascript Node.js
+      const params = new URLSearchParams({
+        quoteId: 'ba7f1d2c-9e44-4c0b-9a3f-2b7c5d8e1a66',
+        address: '0x3f1e...a92c',
+        network: 'Base'
+      });
+
+      const options = {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'ngnc-sec-key': 'YOUR_SECRET_KEY'
+        }
+      };
+
+      fetch(`https://api.linkio.world/transactions/v2/direct_ramp/deposit?${params}`, options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+      ```
+
+      ```python Python
+      import requests
+
+      url = "https://api.linkio.world/transactions/v2/direct_ramp/deposit"
+
+      params = {
+          "quoteId": "ba7f1d2c-9e44-4c0b-9a3f-2b7c5d8e1a66",
+          "address": "0x3f1e...a92c",
+          "network": "Base"
+      }
+      headers = {
+          "accept": "application/json",
+          "ngnc-sec-key": "YOUR_SECRET_KEY"
+      }
+
+      response = requests.post(url, params=params, headers=headers)
+      print(response.text)
+      ```
+    </CodeGroup>
+
+    #### Response
+
+    `200 OK`
+
+    ```json
+    {
+      "status": "Pending",
+      "message": "Request created. Send NGN to details provided and confirm transaction with reference.",
+      "data": {
+        "ticketId": "c91f4e7a-55b2-4c8d-8f1e-3a6b9d2c7e40",
+        "reference": "par-mukgw7ax-nmw4wd",
+        "sourceAsset": "NGN",
+        "amount": 500000,
+        "rate": 1587.9,
+        "payoutAsset": "USDC",
+        "payoutAmount": 314.88,
+        "vendorDetails": "Wema Bank 8180789670 LINK GLOBAL",
+        "status": "created",
+        "expiresAt": "2026-10-03T14:52:11Z",
+        "date": "2026-10-03 14:22"
+      }
+    }
+    ```
+
+    <Warning>
+      `vendorDetails` is a single string, not an object — show it to the user as the payment instruction. The ticket expires at `expiresAt`; after that the user must start again with a fresh quote.
+    </Warning>
+  </Tab>
+</Tabs>
+
+---
+
+### Next steps
+
+Both corridors report progress over [webhooks](/docs/webhook), and the events differ per corridor.
 
 ***
 

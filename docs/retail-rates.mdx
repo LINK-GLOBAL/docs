@@ -1,88 +1,192 @@
 ---
 title: "Retail Rates"
-description: "Fetch the current exchange rate for any supported retail currency pair before initiating a transaction."
+description: "Fetch rates before initiating a retail transaction. Direct FX publishes a rate board; the Pan-African Ramp issues a priced quote you must pass into the transaction."
 ---
 
-LINK provides a unified rate endpoint for all retail on-ramp and off-ramp directions. Call this before initiating a transaction to show users the live rate and expected payout amount.
+The two retail corridors price very differently. Direct FX returns a rate board you read; the Pan-African Ramp returns a quote with an id that the deposit or withdrawal then requires.
 
----
-
-#### Endpoint
-
-```
-GET /transactions/v2/rate_quote
-```
-
-#### Query Parameters
-
-| Parameter  | Type   | Required | Description                                       |
-| ---------- | ------ | -------- | ------------------------------------------------- |
-| `currency` | string | ✓        | Fiat currency (e.g. `NGN`, `USD`)                 |
-| `amount`   | string | ✓        | Amount in the fiat currency                       |
-| `trx_type` | string | ✓        | Direction: `onramp` or `offramp`                  |
+| | Direct FX | Pan-African Ramp |
+| --- | --- | --- |
+| Endpoint | `GET /transactions/v2/rate_quote` | `GET /transactions/v2/direct_ramp/rate_quote` |
+| Returns | Current rates for all supported pairs | A single priced quote with an id |
+| Validity | Read at any time, not reserved | 120 seconds |
+| Needed to transact? | No | Yes — `quoteId` is required |
 
 ---
 
-#### Code Examples
+<Tabs>
+  <Tab title="Direct FX">
+    ```
+    GET /transactions/v2/rate_quote
+    ```
 
-<CodeGroup>
+    Returns the live board for every Direct FX pair in the chosen direction.
 
-```bash Node.js
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    'ngnc-sec-key': 'YOUR_SECRET_KEY',
-    'content-type': 'application/json'
-  }
-};
+    #### Query parameters
 
-fetch('https://api.linkio.world/transactions/v2/rate_quote?currency=NGN&amount=500000&trx_type=onramp', options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-```
+    | Parameter | Type | Required | Description |
+    | --- | --- | --- | --- |
+    | `trx_type` | string | ✓ | Direction: `onramp` or `offramp` |
 
-```python Python
-import requests
+    <Warning>
+      This endpoint prices the whole board, not a specific transaction. It returns every supported pair regardless of what you ask for, and it does not calculate a payout amount — multiply the rate yourself.
+    </Warning>
 
-url = "https://api.linkio.world/transactions/v2/rate_quote"
+    <CodeGroup>
+      ```javascript Node.js
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          'ngnc-sec-key': 'YOUR_SECRET_KEY'
+        }
+      };
 
-params = {
-    "currency": "NGN",
-    "amount": "500000",
-    "trx_type": "onramp"
-}
+      fetch('https://api.linkio.world/transactions/v2/rate_quote?trx_type=onramp', options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+      ```
 
-headers = {
-    "accept": "application/json",
-    "ngnc-sec-key": "YOUR_SECRET_KEY",
-    "content-type": "application/json"
-}
+      ```python Python
+      import requests
 
-response = requests.get(url, params=params, headers=headers)
-print(response.text)
-```
+      url = "https://api.linkio.world/transactions/v2/rate_quote"
 
-</CodeGroup>
+      params = {"trx_type": "onramp"}
+      headers = {
+          "accept": "application/json",
+          "ngnc-sec-key": "YOUR_SECRET_KEY"
+      }
 
----
+      response = requests.get(url, params=params, headers=headers)
+      print(response.text)
+      ```
+    </CodeGroup>
 
-#### Response
+    #### Response — on-ramp
 
-```json
-{
-  "message": "Rate retrieved",
-  "data": {
-    "rate": 1580,
-    "payout_amount": 316.46,
-    "paymentMethod": "LOCAL_BANK_TRANSFER"
-  }
-}
-```
+    Keys read fiat → stablecoin. `NGNUSDC` is the naira a user pays for one USDC.
 
----
+    ```json
+    {
+      "NGNUSDC": 1587.9,
+      "USDUSDC": 1.0095
+    }
+    ```
+
+    #### Response — off-ramp
+
+    Keys read stablecoin → fiat. `USDCNGN` is the naira a user receives for one USDC.
+
+    ```json
+    {
+      "USDCNGN": 1572.4,
+      "USDCUSD": 0.9905
+    }
+    ```
+
+    <Info>
+      The key order flips between directions: on-ramp is `NGNUSDC`, off-ramp is `USDCNGN`. Read the direction from the key, not the position.
+    </Info>
+  </Tab>
+
+  <Tab title="Pan-African Ramp">
+    ```
+    GET /transactions/v2/direct_ramp/rate_quote
+    ```
+
+    Prices one transaction and reserves it for 120 seconds. The returned `quoteId` is required by the deposit and withdrawal calls.
+
+    #### Query parameters
+
+    | Parameter | Type | Required | Description |
+    | --- | --- | --- | --- |
+    | `asset` | string | ✓ | Fiat side of the pair: NGN, GHS, KES, SLE, ZAR, UGX, ZMW, XAF |
+    | `stables` | string | ✓ | Stablecoin side, e.g. `USDC` |
+    | `amount` | string | ✓ | Amount in the source asset for this direction |
+    | `trx_type` | string | ✓ | Direction: `onramp` or `offramp` |
+    | `payment_method` | string | ✓ | Rail to settle on — see [Fiat payment methods](/docs/fiat-payment-methods) |
+    | `customer_id` | string | | Links the quote to a registered customer |
+
+    <CodeGroup>
+      ```javascript Node.js
+      const params = new URLSearchParams({
+        asset: 'NGN',
+        stables: 'USDC',
+        amount: '100000',
+        trx_type: 'onramp',
+        payment_method: 'bank_transfer'
+      });
+
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          'ngnc-sec-key': 'YOUR_SECRET_KEY'
+        }
+      };
+
+      fetch(`https://api.linkio.world/transactions/v2/direct_ramp/rate_quote?${params}`, options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+      ```
+
+      ```python Python
+      import requests
+
+      url = "https://api.linkio.world/transactions/v2/direct_ramp/rate_quote"
+
+      params = {
+          "asset": "NGN",
+          "stables": "USDC",
+          "amount": "100000",
+          "trx_type": "onramp",
+          "payment_method": "bank_transfer"
+      }
+      headers = {
+          "accept": "application/json",
+          "ngnc-sec-key": "YOUR_SECRET_KEY"
+      }
+
+      response = requests.get(url, params=params, headers=headers)
+      print(response.text)
+      ```
+    </CodeGroup>
+
+    #### Response
+
+    `200 OK`
+
+    ```json
+    {
+      "status": "Success",
+      "message": "Rate retrieved",
+      "data": {
+        "quoteId": "VHlwZXM6OkNhc2hyYW1wOjpBUEk6OlJhbXBRdW90ZS0yOTJmNjA3ZC0xMzBiLTRjMjctOGVlMy05OGE4Njg0NDVhNjg=",
+        "trx_type": "onramp",
+        "amount": "100000",
+        "rate": "1365.300",
+        "payoutAmount": "73.24",
+        "validity": "120 seconds",
+        "date": "2026-10-03 15:12"
+      }
+    }
+    ```
+
+    <Info>
+      `quoteId` is a long base64 string, not a UUID — pass it through unchanged. `rate` and `payoutAmount` come back as strings, so parse them before doing arithmetic.
+    </Info>
+
+    <Warning>
+      A quote can be used once. After 120 seconds it expires and the deposit or withdrawal is rejected — request a fresh one rather than retrying with the same `quoteId`.
+    </Warning>
+  </Tab>
+</Tabs>
+
+***
 
 [Retail Off-Ramp](/docs/off-ramp)
 
-[B2B Coverage](/docs/otc-service)
+[B2B Coverage](/docs/business-service)
