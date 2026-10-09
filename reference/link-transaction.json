@@ -818,11 +818,41 @@
     },
     "/transactions/v2/direct_ramp/transfer_sent": {
       "post": {
-        "description": "Confirm Deposit(onramp) transaction request using referece id",
+        "description": "Confirm that the customer has sent the fiat transfer for an onramp deposit. Parameters are sent as query string values, not as a JSON body.",
         "operationId": "post_direct_rampdepositpayment_made",
         "responses": {
           "200": {
-            "description": ""
+            "description": "Transfer confirmed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "onramp transaction, reference LNK-8F3K2A has been initiated."
+                    },
+                    "date": {
+                      "type": "string",
+                      "description": "Time the confirmation was processed (UTC, YYYY-MM-DD HH:mm).",
+                      "example": "2026-10-09 11:42"
+                    }
+                  },
+                  "example": {
+                    "status": "Success",
+                    "message": "onramp transaction, reference LNK-8F3K2A has been initiated.",
+                    "date": "2026-10-09 11:42"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing reference, unknown reference, or trx_type is not onramp."
           }
         },
         "parameters": [
@@ -831,9 +861,10 @@
             "name": "trx_type",
             "schema": {
               "type": "string",
-              "enum": ["onramp", "offramp"]
+              "enum": ["onramp"]
             },
-            "required": true
+            "required": true,
+            "description": "Transaction type. Only onramp transfers can be confirmed."
           },
           {
             "in": "query",
@@ -841,7 +872,28 @@
             "schema": {
               "type": "string"
             },
-            "required": true
+            "required": true,
+            "description": "Reference code returned when the deposit was created."
+          },
+          {
+            "in": "query",
+            "name": "proofOfPayment",
+            "schema": {
+              "type": "string",
+              "example": "https://example.com/receipt.png"
+            },
+            "required": false,
+            "description": "Publicly reachable URL of the payment receipt. Forwarded to the liquidity partner as proof the transfer was sent."
+          },
+          {
+            "in": "query",
+            "name": "source",
+            "schema": {
+              "type": "string",
+              "enum": ["sep24"]
+            },
+            "required": false,
+            "description": "Set to sep24 only for deposits created through the SEP-24 anchor flow. Omit for standard API deposits."
           }
         ],
         "tags": ["Pan-Africa Ramp"],
@@ -870,6 +922,84 @@
         "operationId": "get_direct-ramp-payout-status",
         "tags": ["Pan-Africa Ramp"],
         "summary": "Transaction Status"
+      }
+    },
+    "/transactions/v2/direct_ramp/cancel_deposit": {
+      "post": {
+        "description": "Cancel a pending Pan-Africa onramp deposit that the customer has not paid. Pass the reference returned when the deposit was created. Parameters are sent as query string values, not as a JSON body.",
+        "responses": {
+          "200": {
+            "description": "Deposit cancelled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "onramp transaction with reference LNK-8F3K2A: Cancelled"
+                    },
+                    "date": {
+                      "type": "string",
+                      "description": "Time the cancellation was processed (UTC, YYYY-MM-DD HH:mm).",
+                      "example": "2026-10-09 11:42"
+                    }
+                  },
+                  "example": {
+                    "status": "Success",
+                    "message": "onramp transaction with reference LNK-8F3K2A: Cancelled",
+                    "date": "2026-10-09 11:42"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "trx_type is not onramp, the reference was not found, or the deposit can no longer be cancelled."
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "trx_type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "onramp"
+              ]
+            },
+            "required": true,
+            "description": "Transaction type. Only onramp deposits can be cancelled."
+          },
+          {
+            "in": "query",
+            "name": "reference",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Reference code returned when the deposit was created."
+          },
+          {
+            "in": "query",
+            "name": "source",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sep24"
+              ]
+            },
+            "required": false,
+            "description": "Set to sep24 only for deposits created through the SEP-24 anchor flow. Omit for standard API deposits."
+          }
+        ],
+        "operationId": "post_direct-ramp-cancel-deposit",
+        "tags": ["Pan-Africa Ramp"],
+        "summary": "Cancel Deposit"
       }
     },
     "/transactions/v2/direct_ramp/customer": {
