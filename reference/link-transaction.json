@@ -884,16 +884,6 @@
             },
             "required": false,
             "description": "Publicly reachable URL of the payment receipt. Forwarded to the liquidity partner as proof the transfer was sent."
-          },
-          {
-            "in": "query",
-            "name": "source",
-            "schema": {
-              "type": "string",
-              "enum": ["sep24"]
-            },
-            "required": false,
-            "description": "Set to sep24 only for deposits created through the SEP-24 anchor flow. Omit for standard API deposits."
           }
         ],
         "tags": ["Pan-Africa Ramp"],
@@ -983,18 +973,6 @@
             },
             "required": true,
             "description": "Reference code returned when the deposit was created."
-          },
-          {
-            "in": "query",
-            "name": "source",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "sep24"
-              ]
-            },
-            "required": false,
-            "description": "Set to sep24 only for deposits created through the SEP-24 anchor flow. Omit for standard API deposits."
           }
         ],
         "operationId": "post_direct-ramp-cancel-deposit",
