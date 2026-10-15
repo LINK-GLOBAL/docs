@@ -2475,7 +2475,7 @@
                   "currency": {
                     "type": "string",
                     "description": "Fiat currency the user is sending.",
-                    "enum": ["AED", "AUD", "BRL", "CAD", "CNY", "DKK", "EUR", "GBP", "HKD", "ILS", "KES", "MXN", "NGN", "PHP", "SGD", "USD", "ZAR"]
+                    "enum": ["AED", "AUD", "BRL", "CAD", "CNY", "DKK", "EUR", "HKD", "ILS", "KES", "MXN", "NGN", "PHP", "SGD", "USD", "ZAR"]
                   },
                   "amount": {
                     "type": "number",
@@ -2584,6 +2584,265 @@
         },
         "tags": ["ESPESS"],
         "summary": "Initiate Espees Offramp"
+      }
+    },
+    "/transactions/v2/esp_transactions": {
+      "get": {
+        "description": "Retrieve the Espees (ESP) ramp transactions recorded for your business. Supports filtering by direction, status, and date range, with results sorted newest first. The key you authenticate with selects the data set — a test key returns test transactions, a live key returns live ones.",
+        "responses": {
+          "200": {
+            "description": "Transactions retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "example": "TXN_RETRIEVED"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Test ESP transactions retrieved."
+                    },
+                    "summary": {
+                      "type": "object",
+                      "description": "Totals across both directions. Ignores the `type` filter so the counts stay stable while you page through one side of the book.",
+                      "properties": {
+                        "total_transactions": {
+                          "type": "integer",
+                          "example": 20,
+                          "description": "Total Espees transactions matching the date and status filters."
+                        },
+                        "total_onramps": {
+                          "type": "integer",
+                          "example": 16,
+                          "description": "Fiat → Espees transactions within the applied filters."
+                        },
+                        "total_offramps": {
+                          "type": "integer",
+                          "example": 4,
+                          "description": "Espees → fiat transactions within the applied filters."
+                        }
+                      }
+                    },
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "transaction_id": {
+                            "type": "string",
+                            "example": "68f1c0b4a2d93e4471c0a8e2"
+                          },
+                          "transaction_reference": {
+                            "type": "string",
+                            "example": "link-esp-12345678"
+                          },
+                          "transaction_type": {
+                            "type": "string",
+                            "description": "Direction of the ramp.",
+                            "enum": ["onramp", "offramp"]
+                          },
+                          "stable": {
+                            "type": "string",
+                            "description": "Always `ESP` on this endpoint.",
+                            "example": "ESP"
+                          },
+                          "currency": {
+                            "type": "string",
+                            "description": "Fiat currency on the other side of the ramp.",
+                            "example": "NGN"
+                          },
+                          "amount": {
+                            "type": "number",
+                            "description": "On an onramp, the fiat amount sent in. On an offramp, the Espees amount sold.",
+                            "example": 150000
+                          },
+                          "payout_amount": {
+                            "type": "number",
+                            "description": "On an onramp, the Espees amount credited. On an offramp, the fiat amount disbursed.",
+                            "example": 92.45
+                          },
+                          "rate": {
+                            "type": "number",
+                            "description": "Espees rate applied to the transaction.",
+                            "example": 1622.5
+                          },
+                          "bank_name": {
+                            "type": "string",
+                            "example": "Access Bank"
+                          },
+                          "account_name": {
+                            "type": "string",
+                            "example": "Adaeze Okonkwo"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": "0123456789"
+                          },
+                          "esp_method": {
+                            "type": "object",
+                            "description": "The Espees identification fields supplied when the transaction was created — whichever of `kingschatUsername`, `espeesCard` or `emailAddress` the caller sent.",
+                            "properties": {
+                              "kingschatUsername": {
+                                "type": "string",
+                                "example": "adaeze.o"
+                              },
+                              "espeesCard": {
+                                "type": "string",
+                                "example": "4921887766554433"
+                              },
+                              "emailAddress": {
+                                "type": "string",
+                                "example": "adaeze@example.com"
+                              }
+                            }
+                          },
+                          "transaction_status": {
+                            "type": "string",
+                            "example": "Completed"
+                          },
+                          "transaction_date": {
+                            "type": "string",
+                            "description": "Formatted as `MMMM DD, YYYY HH:mm:ss`.",
+                            "example": "June 05, 2026 14:30:00"
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "example": 20,
+                          "description": "Total matching transactions across all pages."
+                        },
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "example": 20
+                        },
+                        "total_pages": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unrecognised `status` value (`INVALID_STATUS`) or an unparseable `from` / `to` date (`INVALID_DATE`).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "example": "INVALID_DATE"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid 'from' date."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid `ngnc-sec-key`."
+          },
+          "500": {
+            "description": "Internal server error (`TXN_FAILED`)."
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number (1-based). Defaults to 1.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of transactions per page. Defaults to 20, maximum 100.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "description": "Filter by ramp direction. Omit to return both onramp and offramp transactions.",
+            "schema": {
+              "type": "string",
+              "enum": ["onramp", "offramp"]
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "Filter by transaction status. Omit to return transactions of all statuses.",
+            "schema": {
+              "type": "string",
+              "enum": ["Pending", "Completed", "Failed", "Cancelled"]
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "Start of date range (ISO 8601, e.g. 2026-01-01). Inclusive.",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2026-01-01"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "description": "End of date range (ISO 8601, e.g. 2026-06-30). Inclusive — covers the full day up to 23:59:59.",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2026-06-30"
+            }
+          }
+        ],
+        "operationId": "get_esp-transactions",
+        "tags": ["ESPESS"],
+        "summary": "Espees Transactions"
       }
     },
     "/checkout/sessions/generate": {
