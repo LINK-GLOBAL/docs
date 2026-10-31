@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "maple",
   "name": "Build with LINK",
   "home": "docs/getting-started",
   "colors": {
@@ -144,5 +144,9 @@
   "color": {
     "dark": "#171616"
   }
+},
+"banner": {
+  "content": "HEADS UP",
+  "type": "warning"
 }
 }
