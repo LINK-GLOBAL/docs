@@ -144,5 +144,8 @@
   "color": {
     "dark": "#171616"
   }
+},
+"banner": {
+  "content": "HEADS UP"
 }
 }
