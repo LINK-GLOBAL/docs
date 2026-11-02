@@ -151,7 +151,7 @@
   }
 },
 "banner": {
-  "content": "Retail API Deprecation Notice: Our Retail APIs will be officially decommissioned on January 2, 2027. Please migrate all existing Retail API integrations to Bridge by LINK before this date to avoid service disruption.",
+  "content": "Our Retail APIs will be officially decommissioned on January 2, 2027. Please migrate all existing Retail API integrations to Bridge by LINK before this date to avoid service disruption.",
   "type": "warning"
 }
 }
