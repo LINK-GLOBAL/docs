@@ -157,7 +157,7 @@
 },
 "api": {
   "playground": {
-    "proxy": false
+    "proxy": true
   }
 }
 }
